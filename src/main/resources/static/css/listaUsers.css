@@ -1,0 +1,274 @@
+/* Variables de color para la tabla */
+:root {
+    --primary-color: #1a5f7a;
+    --secondary-color: #2c7873;
+    --accent-color: #57cc99;
+    --danger-color: #dc3545;
+}
+
+/* Estilos específicos para la tabla de usuarios */
+.tabla-usuarios-container {
+    padding: 20px 0;
+    background-color: #f5f7fa;
+    min-height: calc(100vh - 70px - 80px); /* Usando valor directo */
+}
+
+.header-section {
+    margin-bottom: 30px;
+}
+
+.header-section h1 {
+    font-size: 2rem;
+    color: #1a5f7a; /* primary-color */
+    font-weight: 700;
+    margin-bottom: 8px;
+    position: relative;
+    display: inline-block;
+}
+
+.header-section h1::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #1a5f7a, #2c7873); /* primary to secondary */
+    border-radius: 2px;
+}
+
+.header-section p {
+    color: #2c7873; /* secondary-color */
+    font-size: 1.1rem;
+    margin-top: 20px;
+}
+
+/* Tabla - SOBRESCRIBIENDO Tailwind */
+.table-container {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(26, 95, 122, 0.1); /* primary con transparencia */
+    background: white !important;
+}
+
+.table-container .bg-white {
+    background-color: white !important;
+}
+
+.table-container .bg-gray-50 {
+    background: linear-gradient(135deg, #1a5f7a 0%, #2c7873 100%) !important;
+}
+
+.usuarios-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+/* Cabecera de la tabla */
+.usuarios-table thead {
+    background: linear-gradient(135deg, #1a5f7a 0%, #2c7873 100%) !important;
+}
+
+.usuarios-table thead tr {
+    background: transparent !important;
+}
+
+.table-th {
+    padding: 16px 24px !important;
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.5px !important;
+    color: white !important;
+    text-transform: uppercase !important;
+    border: none !important;
+    position: relative;
+    background: transparent !important;
+}
+
+.table-th:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 20%;
+    height: 60%;
+    width: 1px;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Filas de la tabla */
+.usuarios-table tbody {
+    background-color: white !important;
+}
+
+.usuarios-table tbody tr {
+    background-color: white !important;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05) !important;
+    transition: all 0.3s ease !important;
+}
+
+.usuarios-table tbody tr:hover {
+    background-color: rgba(87, 204, 153, 0.05) !important; /* accent con transparencia */
+    transform: translateY(-1px) !important;
+}
+
+.usuarios-table tbody tr .hover\:bg-gray-50:hover {
+    background-color: rgba(87, 204, 153, 0.05) !important;
+}
+
+.table-td {
+    padding: 18px 24px !important;
+    font-size: 0.95rem !important;
+    color: #333 !important;
+    vertical-align: middle !important;
+    background-color: transparent !important;
+}
+
+.table-td.text-gray-800 {
+    color: #333 !important;
+}
+
+.table-td.text-gray-600 {
+    color: #555 !important;
+}
+
+/* Código badge */
+.codigo-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: rgba(26, 95, 122, 0.1); /* primary con transparencia */
+    color: #1a5f7a; /* primary-color */
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    border: 1px solid rgba(26, 95, 122, 0.2);
+    transition: all 0.3s ease;
+}
+
+.usuarios-table tbody tr:hover .codigo-badge {
+    background-color: rgba(26, 95, 122, 0.15);
+    transform: scale(1.05);
+}
+
+/* Botones de acción */
+.action-buttons {
+    display: flex !important;
+    gap: 10px !important;
+    align-items: center !important;
+}
+
+.btn-editar, .btn-eliminar, .btn-nuevo, .btn-volver {
+    padding: 10px 20px !important;
+    border-radius: 8px !important;
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    border: none !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    letter-spacing: 0.3px !important;
+}
+
+.btn-editar {
+    background-color: rgba(87, 204, 153, 0.1) !important; /* accent con transparencia */
+    color: #2c7873 !important; /* secondary-color */
+    border: 1px solid rgba(87, 204, 153, 0.3) !important;
+}
+
+.btn-editar:hover {
+    background-color: #57cc99 !important; /* accent-color */
+    color: white !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(87, 204, 153, 0.3) !important;
+    border-color: #57cc99 !important;
+}
+
+.btn-eliminar {
+    background-color: rgba(220, 53, 69, 0.1) !important; /* danger con transparencia */
+    color: #dc3545 !important; /* danger-color */
+    border: 1px solid rgba(220, 53, 69, 0.3) !important;
+}
+
+.btn-eliminar:hover {
+    background-color: #dc3545 !important; /* danger-color */
+    color: white !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3) !important;
+    border-color: #dc3545 !important;
+}
+
+/* Botones del contenedor */
+.button-container {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 20px !important;
+    margin-top: 40px !important;
+}
+
+.btn-nuevo {
+    background: linear-gradient(135deg, #1a5f7a 0%, #2c7873 100%) !important;
+    color: white !important;
+    padding: 12px 30px !important;
+    border-radius: 10px !important;
+    box-shadow: 0 4px 15px rgba(26, 95, 122, 0.2) !important;
+}
+
+.btn-nuevo:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 25px rgba(26, 95, 122, 0.3) !important;
+}
+
+.btn-volver {
+    background-color: white !important;
+    color: #1a5f7a !important; /* primary-color */
+    border: 2px solid #1a5f7a !important;
+    padding: 12px 30px !important;
+    border-radius: 10px !important;
+}
+
+.btn-volver:hover {
+    background-color: #1a5f7a !important;
+    color: white !important;
+    transform: translateY(-3px) !important;
+    box-shadow: 0 8px 25px rgba(26, 95, 122, 0.2) !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .tabla-usuarios-container {
+        padding: 15px;
+    }
+
+    .header-section h1 {
+        font-size: 1.5rem;
+    }
+
+    .table-th, .table-td {
+        padding: 12px 15px !important;
+    }
+
+    .action-buttons {
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+
+    .btn-editar, .btn-eliminar {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+
+    .button-container {
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+
+    .btn-nuevo, .btn-volver {
+        width: 100% !important;
+        max-width: 300px !important;
+    }
+}

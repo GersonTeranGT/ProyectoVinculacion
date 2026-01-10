@@ -84,22 +84,33 @@
                 </a>
             </div>
         </div>
-        <!--gestion-->
+        <!-- Gestión de Usuarios -->
         <div class="bg-white p-6 rounded-lg shadow-md">
             <div class="text-center mb-6">
-                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Gestión Académica</h2>
+                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Gestión de Usuarios</h2>
             </div>
-            <div class="grid grid-cols-2 gap-4">
-                <a th:href="@{/admin/materias}" class="btn-materias text-white px-4 py-3 rounded-lg flex items-center justify-center">
-                    <i class="fas fa-book mr-2"></i>
-                    <span>Materias</span>
+            <div class="flex flex-col gap-4">
+                <a th:href="@{/listaUsers}" class="btn-lista-usuarios text-white px-6 py-4 rounded-lg flex items-center justify-between group">
+                    <div class="flex items-center">
+                        <i class="fas fa-users text-lg mr-4"></i>
+                        <div class="text-left">
+                            <span class="font-semibold block">Ver Usuarios</span>
+                            <span class="text-sm opacity-90">Lista completa</span>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-right group-hover:translate-x-2 transition-transform"></i>
                 </a>
 
-                <a th:href="@{/admin/cursos}" class="btn-cursos text-white px-4 py-3 rounded-lg flex items-center justify-center">
-                    <i class="fas fa-list mr-2"></i>
-                    <span>Cursos</span>
+                <a th:href="@{/usuario}" class="btn-crear-usuario text-white px-6 py-4 rounded-lg flex items-center justify-between group">
+                    <div class="flex items-center">
+                        <i class="fas fa-user-plus text-lg mr-4"></i>
+                        <div class="text-left">
+                            <span class="font-semibold block">Crear Usuario</span>
+                            <span class="text-sm opacity-90">Nuevo registro</span>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-right group-hover:translate-x-2 transition-transform"></i>
                 </a>
-
             </div>
         </div>
     </div>

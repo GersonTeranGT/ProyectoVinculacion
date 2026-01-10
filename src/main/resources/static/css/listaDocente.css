@@ -1,0 +1,91 @@
+/* --- Estilos de la Tabla --- */
+.table-custom thead th {
+    letter-spacing: 0.05em;
+    border: none;
+}
+
+.table-custom tbody tr:hover {
+    background-color: rgba(26, 95, 122, 0.05) !important;
+    transition: background-color 0.2s ease;
+}
+
+.materia-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    background-color: rgba(87, 204, 153, 0.2);
+    color: var(--secondary-color);
+}
+
+/* --- Botón Nuevo Docente (Cabecera) --- */
+.btn-nuevo-docente {
+    display: inline-flex;
+    align-items: center;
+    background-color: var(--primary-color);
+    color: white !important;
+    font-weight: 500;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    padding: 10px 20px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-nuevo-docente:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+/* --- Botón Actualizar --- */
+.btn-update {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 35px;
+    min-width: 110px;
+    padding: 8px 16px;
+    background-color: var(--warning-color) !important; /* Forzamos el color */
+    color: white !important;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    gap: 8px;
+}
+
+.btn-update:hover {
+    background-color: #e68a00 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 159, 28, 0.3);
+}
+
+/* --- Botón Eliminar --- */
+.btn-delete {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 35px;
+    min-width: 110px;
+    padding: 8px 16px;
+    background-color: #F54927 !important; /* Tu color específico */
+    color: white !important;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    gap: 8px;
+}
+
+.btn-delete:hover {
+    background-color: #bb2d3b !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(245, 73, 39, 0.3);
+}

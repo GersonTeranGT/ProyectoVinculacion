@@ -1,0 +1,66 @@
+/* 1. Fondo nítido y total */
+.fondo-animado {
+    /* Ruta corregida a .png según tu carpeta de imágenes */
+    background-image: url('../images/faviconLogox.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    margin: 0;
+}
+
+/* 2. Capa de contraste (Overlay) */
+.overlay {
+    background-color: rgba(15, 23, 42, 0.7); /* Azul muy oscuro con transparencia */
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+}
+
+/* 3. El "Cuadrito" blanco GRANDE */
+.form-container-card {
+    background-color: #ffffff;
+    padding: 60px;             /* Espacio interno amplio */
+    border-radius: 24px;       /* Bordes muy redondeados */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.8s ease-out;
+}
+
+/* 4. Inputs personalizados */
+.input-personalizado {
+    background-color: #f8fafc;
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.input-personalizado:focus {
+    border-color: #2563eb;     /* Azul brillante al hacer clic */
+    background-color: #ffffff;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
+    outline: none;
+}
+
+/* 5. Botón Azul Institucional */
+.btn-guardar {
+    background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%); /* Degradado Azul */
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-guardar:hover {
+    transform: translateY(-4px); /* Efecto de levante */
+    background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+    box-shadow: 0 10px 20px rgba(30, 58, 138, 0.4);
+}
+
+/* Animación de entrada */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}

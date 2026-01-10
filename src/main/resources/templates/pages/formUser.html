@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro Usuario - Aida Gallegos</title>
+    <link rel="stylesheet" href="css/usuarios.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="fondo-animado">
+
+<div class="overlay">
+    <div class="form-container-card max-w-xl w-full mx-auto">
+
+        <div class="text-center mb-8">
+            <img src="images/faviconLogox.png" alt="Logo Aida Gallegos" class="mx-auto w-32 mb-4">
+            <h1 class="text-3xl font-bold text-gray-800">Ingresar Usuario</h1>
+            <p class="text-gray-500 font-medium">Unidad Educativa Aida Gallegos</p>
+        </div>
+
+        <form action="/guardarUsuario" method="post" class="space-y-6">
+            <input type="number" id="codigo" name="id" hidden>
+
+            <div>
+                <label for="nombre" class="block text-sm font-semibold text-gray-700 mb-2">Nombre</label>
+                <input type="text" id="nombre" name="nombre"
+                       class="input-personalizado block w-full px-4 py-3"
+                       placeholder="Ingrese su nombre" required />
+            </div>
+
+            <div>
+                <label for="username" class="block text-sm font-semibold text-gray-700 mb-2">User Name</label>
+                <input type="text" id="username" name="username"
+                       class="input-personalizado block w-full px-4 py-3"
+                       placeholder="Ingrese su usuario" required />
+            </div>
+
+            <div>
+                <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">Contraseña</label>
+                <input type="password" id="password" name="password"
+                       class="input-personalizado block w-full px-4 py-3"
+                       placeholder="Ingrese su contraseña" required />
+            </div>
+
+            <button type="submit" class="btn-guardar w-full py-4 rounded-xl text-lg font-bold shadow-lg">
+                Guardar Usuario
+            </button>
+        </form>
+    </div>
+</div>
+
+<script src="js/usuarios.js"></script>
+</body>
+</html>

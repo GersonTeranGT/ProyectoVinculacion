@@ -104,6 +104,95 @@
 .bg-white:nth-child(4) {
     animation-delay: 0.4s;
 }
+/* Botones de Gestión de Usuarios */
+
+.btn-lista-usuarios {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    transition: all 0.3s ease;
+}
+
+.btn-crear-usuario {
+    background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+    transition: all 0.3s ease;
+}
+
+/* Efectos hover para botones de usuarios */
+.btn-lista-usuarios:hover,
+.btn-crear-usuario:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Efecto de click para botones de usuarios */
+.btn-lista-usuarios:active,
+.btn-crear-usuario:active {
+    transform: translateY(0);
+    transition: transform 0.1s ease;
+}
+
+/* Efecto en íconos de flecha específico para usuarios */
+.btn-lista-usuarios .group:hover .fa-chevron-right,
+.btn-crear-usuario .group:hover .fa-chevron-right {
+    transform: translateX(5px);
+    transition: transform 0.3s ease;
+}
+
+/* Estilos comunes para botones del panel */
+.btn-lista-usuarios,
+.btn-crear-usuario {
+    color: white;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-radius: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Efecto de brillo al pasar el mouse (opcional, para coincidir con tu otro diseño) */
+.btn-lista-usuarios::before,
+.btn-crear-usuario::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.7s ease;
+}
+
+.btn-lista-usuarios:hover::before,
+.btn-crear-usuario:hover::before {
+    left: 100%;
+}
+
+/* Responsive para botones de usuarios */
+@media (max-width: 768px) {
+    .btn-lista-usuarios,
+    .btn-crear-usuario {
+        padding-left: 1rem;
+        padding-right: 1rem;
+        padding-top: 0.875rem;
+        padding-bottom: 0.875rem;
+        font-size: 0.95rem;
+    }
+
+    .btn-lista-usuarios .font-semibold,
+    .btn-crear-usuario .font-semibold {
+        font-size: 1rem;
+    }
+
+    .btn-lista-usuarios .text-sm,
+    .btn-crear-usuario .text-sm {
+        font-size: 0.85rem;
+    }
+}
 
 /* Responsive */
 @media (max-width: 768px) {

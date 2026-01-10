@@ -1,3 +1,9 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100vh;
+}
 /* 1. Fondo nítido y total */
 .fondo-animado {
     /* Ruta corregida a .png según tu carpeta de imágenes */
@@ -16,7 +22,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 40px;
+    padding: 100px;
 }
 
 /* 3. El "Cuadrito" blanco GRANDE */

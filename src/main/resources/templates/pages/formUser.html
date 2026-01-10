@@ -1,13 +1,17 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Registro Usuario - Aida Gallegos</title>
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
     <link rel="stylesheet" href="css/usuarios.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="fondo-animado">
+
+<div th:replace="fragments/navbar :: navbar"></div>
 
 <div class="overlay">
     <div class="form-container-card max-w-xl w-full mx-auto">
@@ -18,7 +22,7 @@
             <p class="text-gray-500 font-medium">Unidad Educativa Aida Gallegos</p>
         </div>
 
-        <form action="/guardarUsuario" method="post" class="space-y-6">
+        <form>
             <input type="number" id="codigo" name="id" hidden>
 
             <div>
@@ -49,6 +53,75 @@
     </div>
 </div>
 
+<footer class="admin-footer">
+    <!--seccion superior del footer-->
+    <div class="footer-top">
+        <div class="footer-container">
+            <!--informacion de la institucion-->
+            <div class="footer-column">
+                <div class="footer-logo">
+                    <img th:src="@{/images/faviconLogo.png}" alt="Logo U.E. Aida Gallegos" class="footer-logo-img">
+                    <div class="footer-brand">
+                        <h3>Unidad Educativa Aida Gallegos</h3>
+                        <p>Desarrollando líderes para el mañana</p>
+                    </div>
+                </div>
+                <p class="footer-description">
+                    Institución educativa comprometida con la formación integral de estudiantes,
+                    promoviendo valores, excelencia académica y desarrollo comunitario.
+                </p>
+            </div>
+
+            <!--enlaces rapidos-->
+            <div class="footer-column">
+                <h4 class="footer-title">Enlaces Rápidos</h4>
+                <ul class="footer-links">
+                    <li><a th:href="@{/admin/docentes}"><i class="fas fa-chevron-right"></i> Gestión Docente</a></li>
+                    <li><a th:href="@{/admin/calendario}"><i class="fas fa-chevron-right"></i> Calendario Escolar</a></li>
+                </ul>
+            </div>
+            <!--informacion de contacto-->
+            <div class="footer-column">
+                <h4 class="footer-title">Contacto</h4>
+                <ul class="footer-contact">
+                    <li>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Av. Llirañán y Pachamama, sector Quitumbe</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-phone"></i>
+                        <span>(04) 222-2222</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-envelope"></i>
+                        <span>ueagm2320@gmail.com</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-clock"></i>
+                        <span>Lunes a Viernes: 7:00 AM - 4:00 PM</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!--Seccion inferior del footer-->
+    <div class="footer-bottom">
+        <div class="footer-container">
+            <div class="copyright">
+                <p>&copy; <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2026</span> Unidad Educativa Aida Gallegos de Moncayo. Todos los derechos reservados.</p>
+                <p class="version">Sistema de Gestión de Horarios v1.0 </p>
+            </div>
+            <div class="footer-legal">
+                <a target="_blank" th:href="@{https://maps.app.goo.gl/n844U2Nvw3ngkdxa6}" class="sitemap-link">
+                    <i class="fas fa-sitemap"></i> Mapa</a>
+            </div>
+        </div>
+    </div>
+</footer>
 <script src="js/usuarios.js"></script>
+<script th:src="@{/js/footer.js}"></script>
+<script th:src="@{/js/navbar.js}"></script>
+
 </body>
 </html>

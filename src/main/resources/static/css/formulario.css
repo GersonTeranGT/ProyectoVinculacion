@@ -1,0 +1,104 @@
+/* 1. LIMPIEZA TOTAL */
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+/* 2. CONTENEDOR PRINCIPAL */
+#main-container {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    align-items: stretch;
+    background-color: #f4f7f6;
+}
+
+/* 3. LADO IZQUIERDO: AQUÍ ESTÁ EL TRUCO */
+#image-side {
+    flex: 0.9;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-start;
+    padding-top: 50px;
+}
+
+#image-side img {
+    width: 80%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+/* 4. LADO DERECHO: FORMULARIO */
+#form-side {
+    flex: 0.4;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 80px;
+}
+
+/* TARJETA DEL FORMULARIO (AZUL #1a5f7a) */
+#form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 500px;
+    min-height: 600px;
+    padding: 50px;
+    background-color: #1a5f7a;
+    border-radius: 20px;
+    box-sizing: border-box;
+}
+
+/* --- ESTILOS DE TEXTO --- */
+#welcome-line-1 {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 48px;
+    text-align: center;
+}
+
+#welcome-line-2 {
+    color: #ffffff;
+    font-size: 22px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+#input-area {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    width: 100%;
+}
+
+.form-inp {
+    padding: 18px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1.5px solid #ffffff;
+    border-radius: 12px;
+}
+
+.form-inp input, .form-inp select {
+    width: 100%;
+    background: transparent;
+    color: #ffffff;
+    border: none;
+    outline: none;
+}
+
+#submit-button {
+    width: 100%;
+    padding: 18px;
+    background-color: #ffffff;
+    color: #1a5f7a;
+    font-weight: 700;
+    border: none;
+    border-radius: 12px;
+    margin-top: 40px;
+    cursor: pointer;
+}

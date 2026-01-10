@@ -1,0 +1,146 @@
+/* Estilos básicos para el Panel de Administración */
+
+/* Botones principales */
+.btn-docentes {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    transition: all 0.3s ease;
+}
+
+.btn-nuevo-docente {
+    background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+    transition: all 0.3s ease;
+}
+
+.btn-horarios {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    transition: all 0.3s ease;
+}
+
+.btn-nuevo-horario {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    transition: all 0.3s ease;
+}
+
+.btn-estudiantes {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    transition: all 0.3s ease;
+}
+
+.btn-nuevo-estudiante {
+    background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+    transition: all 0.3s ease;
+}
+
+.btn-materias {
+    background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+    transition: all 0.3s ease;
+}
+
+.btn-cursos {
+    background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+    transition: all 0.3s ease;
+}
+
+.btn-calificaciones {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    transition: all 0.3s ease;
+}
+
+.btn-reportes {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    transition: all 0.3s ease;
+}
+
+/* Efectos hover */
+.btn-docentes:hover,
+.btn-nuevo-docente:hover,
+.btn-horarios:hover,
+.btn-nuevo-horario:hover,
+.btn-estudiantes:hover,
+.btn-nuevo-estudiante:hover,
+.btn-materias:hover,
+.btn-cursos:hover,
+.btn-calificaciones:hover,
+.btn-reportes:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Efecto en íconos de flecha */
+.group:hover .fa-chevron-right {
+    transform: translateX(5px);
+    transition: transform 0.3s ease;
+}
+
+/* Animación de entrada para las secciones */
+.bg-white {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Retrasos para cada sección */
+.bg-white:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.bg-white:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+.bg-white:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+.bg-white:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .admin-panel {
+        padding: 1rem;
+    }
+
+    .text-3xl {
+        font-size: 1.75rem;
+    }
+
+    .text-2xl {
+        font-size: 1.5rem;
+    }
+
+    .px-6 {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .py-4 {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+}
+
+/* Efecto de click */
+.btn-docentes:active,
+.btn-nuevo-docente:active,
+.btn-horarios:active,
+.btn-nuevo-horario:active,
+.btn-estudiantes:active,
+.btn-nuevo-estudiante:active,
+.btn-materias:active,
+.btn-cursos:active,
+.btn-calificaciones:active,
+.btn-reportes:active {
+    transform: translateY(0);
+    transition: transform 0.1s ease;
+}

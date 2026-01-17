@@ -5,10 +5,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/users")
 public class UserController {
 
-    @GetMapping("/listaUsers")
+    @GetMapping
     public String listaUsers(){
         return "pages/listaUsers";
+    }
+
+    @GetMapping("/formUser")
+    public String panelAdmin(){
+        return "pages/formUser";
     }
 }

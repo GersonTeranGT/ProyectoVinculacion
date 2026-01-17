@@ -12,4 +12,8 @@ public class HorarioController {
     public String registrarHorario(){
         return "pages/registroHorario";
     }
+    @GetMapping("/listaHorarios")
+            public String listaHorarios(){
+        return "pages/listaHorarios";
+    }
 }

@@ -1,0 +1,251 @@
+:root {
+    --bg-color: #f8f9fa;
+    --primary-color: #4a90e2;
+    --text-main: #333;
+    --text-muted: #777;
+    --card-bg: #ffffff;
+    --border-color: #e0e0e0;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    margin: 0;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    margin-bottom: 5px;
+}
+
+.header p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+.schedule-section {
+    margin-bottom: 50px;
+}
+
+.section-title {
+    font-size: 1.5rem;
+    border-left: 5px solid var(--primary-color);
+    padding-left: 15px;
+    margin-bottom: 20px;
+}
+
+.table-container {
+    overflow-x: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.schedule-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 10px; /* Espacio entre celdas tipo tarjetas */
+}
+
+.schedule-table th {
+    background-color: #ededed;
+    padding: 15px;
+    border-radius: 10px;
+    font-weight: 600;
+    text-align: center !important; /* Importante para vencer a Tailwind */
+    color: #333;
+}
+
+.time-col {
+    background-color: #f1f3f5;
+    font-weight: bold;
+    text-align: center !important;
+    width: 120px;
+    border-radius: 10px;
+    color: #555;
+}
+
+/* Celdas generales */
+.schedule-table td {
+    height: 80px;
+    min-width: 120px;
+    vertical-align: middle;
+    text-align: center !important; /* Importante para centrar botones */
+    border: 2px dashed #eee;
+    border-radius: 12px;
+    transition: all 0.3s;
+}
+
+/* Estilo para el botón "+" */
+.add-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #ccc;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+    display: flex;       /* centrar el +  */
+    align-items: center;
+    justify-content: center;
+}
+
+.add-btn:hover {
+    color: var(--primary-color);
+    background-color: #f0f7ff;
+    border-radius: 10px;
+}
+
+/* Estilo para una materia ya asignada */
+.class-card {
+    border: none !important;
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    border-left: 5px solid var(--primary-color) !important;
+    padding: 10px;
+    text-align: left !important; /* El contenido de la tarjeta sí va a la izq */
+}
+
+.math { border-left-color: #4a90e2 !important; }
+
+/* -------------------------------------------------*/
+/* --- ESTILOS DEL INPUT DESPLEGABLE (DROPDOWN) --- */
+.teacher-select-section {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    z-index: 100;
+}
+
+.section-subtitle {
+    font-size: 1.2rem;
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.custom-dropdown {
+    position: relative;
+    width: 100%;
+    font-family: inherit;
+}
+
+.dropdown-selected {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    padding: 15px 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.dropdown-selected:hover {
+    border-color: var(--primary-color);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.dropdown-selected span {
+    color: #999;
+    font-size: 1.1rem;
+}
+
+.arrow-icon {
+    font-style: normal;
+    font-size: 0.9rem;
+    color: #aaa;
+    transition: transform 0.3s;
+}
+
+.custom-dropdown.active .arrow-icon {
+    transform: rotate(180deg);
+}
+
+.custom-dropdown.active .dropdown-options {
+    display: block;
+}
+
+.dropdown-options {
+    display: none;
+    position: absolute;
+    top: 115%;
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    border: 1px solid #eee;
+    overflow: hidden;
+    z-index: 200;
+}
+
+.dropdown-item {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f9f9f9;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    transition: background 0.2s;
+}
+
+.dropdown-item:hover {
+    background-color: #f5f8ff;
+}
+
+.t-name {
+    display: block;
+    font-weight: 700;
+    color: #333;
+    font-size: 1rem;
+}
+
+.t-subject {
+    font-size: 0.9rem;
+    color: #777;
+}
+
+.teacher-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #eee;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+/* Colores de avatares */
+.c1 { background-color: #4a90e2; }
+.c2 { background-color: #2ecc71; }
+.c3 { background-color: #f1c40f; }
+.c4 { background-color: #9b59b6; }
+
+/* --- Estilos de las Tablas (Jornadas) --- */
+.schedule-section {
+    margin-bottom: 50px;
+}
+.section-title {
+    font-size: 1.5rem;
+    border-left: 5px solid var(--primary-color);
+    padding-left: 15px;
+    margin-bottom: 20px;
+    font-weight: bold; /* Tailwind quita la negrita a veces */
+}

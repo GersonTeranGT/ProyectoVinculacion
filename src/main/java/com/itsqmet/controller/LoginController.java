@@ -4,11 +4,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class TeacherController {
+public class LoginController {
 
-    @GetMapping("/listaDocente")
-    public String mostrarListaDocente(){
-        return "pages/listaDocente";
+    @GetMapping("/home")
+    public String index(){
+        return "index";
     }
+
 
 }

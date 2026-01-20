@@ -25,12 +25,12 @@ public class User {
 
     @NotBlank(message = "El nombre de usuario es obligatorio")
     @Size(min = 3, max = 20, message = "El usuario debe tener entre 3 y 20 caracteres")
-    @Column(nullable = false, unique = true) //CAMPO OBLIGATORIO Y UNICO
+    @Column(nullable = false, unique = true)
     private String username;
 
     @NotBlank(message = "La contraseña es obligatoria")
     @Size(min = 4, message = "La contraseña debe tener al menos 4 caracteres")
-    @Column(nullable = false) //CAMPO OBLIGATORIO
+    @Column(nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)

@@ -7,8 +7,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class DocenteController {
 
     @GetMapping("/form")
-    public String form(){
+    public String form() {
         return "/pages/formularioDocente";
+    }
+
+    @GetMapping("/listaDocente")
+    public String mostrarListaDocente() {
+        return "pages/listaDocente";
     }
 
 }

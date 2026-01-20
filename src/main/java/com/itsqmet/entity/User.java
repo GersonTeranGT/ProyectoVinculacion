@@ -36,4 +36,6 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Rol rol;
+
+    private String materia;
 }

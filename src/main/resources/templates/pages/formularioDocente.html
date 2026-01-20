@@ -1,39 +1,28 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" class="h-full" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org" class="h-full">
 <head>
     <meta charset="UTF-8">
     <title>Formulario</title>
-
-    <!--favicon-->
     <link rel="icon" th:href="@{/images/faviconLogo.png}">
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
     <link rel="stylesheet" th:href="@{/css/footer.css}">
     <link rel="stylesheet" th:href="@{/css/panelAdmin.css}">
-
-    <!-- conexion a css formualario -->
     <link rel="stylesheet" th:href="@{/css/formulario.css}">
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
 </head>
 <body>
 
-<!--barra de navegacion-->
 <div th:replace="fragments/navbar :: navbar"></div>
 
-<!-- From Uiverse.io by AnthonyPreite -->
-
 <div id="main-container">
-
     <div id="image-side">
         <img th:src="@{/images/escudo2.png}" alt="Imagen Decorativa">
     </div>
 
     <div id="form-side">
         <div id="form-ui">
-            <form action="" method="post" id="form">
+            <form th:action="@{/admin/guardarDocente}" th:object="${docente}" method="post" id="form">
                 <div id="form-body">
                     <div id="welcome-lines">
                         <div id="welcome-line-1">Registro</div>
@@ -42,14 +31,14 @@
 
                     <div id="input-area">
                         <div class="form-inp">
-                            <input placeholder="Nombre del docente" type="text">
+                            <input placeholder="Nombre del docente" type="text" th:field="*{nombre}" required>
                         </div>
                         <div class="form-inp">
-                            <select name="materia" id="materia-select">
-                                <option value="matematicas">Matemáticas</option>
-                                <option value="lengua">Lengua y Literatura</option>
-                                <option value="ciencias">Ciencias Naturales</option>
-                                <option value="sociales">Estudios Sociales</option>
+                            <select th:field="*{materia}" id="materia-select">
+                                <option value="Matemáticas">Matemáticas</option>
+                                <option value="Lengua y Literatura">Lengua y Literatura</option>
+                                <option value="Ciencias Naturales">Ciencias Naturales</option>
+                                <option value="Estudios Sociales">Estudios Sociales</option>
                             </select>
                         </div>
                     </div>
@@ -62,78 +51,6 @@
     </div>
 </div>
 
+<footer th:replace="~{pages/listaDocente :: footer}"></footer>
 </body>
-
-<!--footer-->
-<footer class="admin-footer">
-    <!--seccion superior del footer-->
-    <div class="footer-top">
-        <div class="footer-container">
-            <!--informacion de la institucion-->
-            <div class="footer-column">
-                <div class="footer-logo">
-                    <img th:src="@{/images/faviconLogo.png}" alt="Logo U.E. Aida Gallegos" class="footer-logo-img">
-                    <div class="footer-brand">
-                        <h3>Unidad Educativa Aida Gallegos</h3>
-                        <p>Desarrollando líderes para el mañana</p>
-                    </div>
-                </div>
-                <p class="footer-description">
-                    Institución educativa comprometida con la formación integral de estudiantes,
-                    promoviendo valores, excelencia académica y desarrollo comunitario.
-                </p>
-            </div>
-
-            <!--enlaces rapidos-->
-            <div class="footer-column">
-                <h4 class="footer-title">Enlaces Rápidos</h4>
-                <ul class="footer-links">
-                    <li><a th:href="@{/admin/docentes}"><i class="fas fa-chevron-right"></i> Gestión Docente</a></li>
-                    <li><a th:href="@{/admin/calendario}"><i class="fas fa-chevron-right"></i> Calendario Escolar</a></li>
-                </ul>
-            </div>
-            <!--informacion de contacto-->
-            <div class="footer-column">
-                <h4 class="footer-title">Contacto</h4>
-                <ul class="footer-contact">
-                    <li>
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Av. Llirañán y Pachamama, sector Quitumbe</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-phone"></i>
-                        <span>(04) 222-2222</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-envelope"></i>
-                        <span>ueagm2320@gmail.com</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-clock"></i>
-                        <span>Lunes a Viernes: 7:00 AM - 4:00 PM</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <!--Seccion inferior del footer-->
-    <div class="footer-bottom">
-        <div class="footer-container">
-            <div class="copyright">
-                <p>&copy; <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2026</span> Unidad Educativa Aida Gallegos de Moncayo. Todos los derechos reservados.</p>
-                <p class="version">Sistema de Gestión de Horarios v1.0 </p>
-            </div>
-            <div class="footer-legal">
-                <a target="_blank" th:href="@{https://maps.app.goo.gl/n844U2Nvw3ngkdxa6}" class="sitemap-link">
-                    <i class="fas fa-sitemap"></i> Mapa</a>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<script th:src="@{/js/footer.js}"></script>
-<script th:src="@{/js/navbar.js}"></script>
-<script th:src="@{/js/panelAdmin.js}"></script>
-
 </html>

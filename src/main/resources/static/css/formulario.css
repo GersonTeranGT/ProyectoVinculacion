@@ -16,19 +16,22 @@ html, body {
 
 /* 3. LADO IZQUIERDO: AQUÍ ESTÁ EL TRUCO */
 #image-side {
-    flex: 0.9;
+    flex: 1;
     overflow: hidden;
     display: flex;
-    align-items: flex-start;
-    padding-top: 50px;
+    align-items: center;      /* centra verticalmente */
+    justify-content: center;  /* centra horizontalmente */
+    padding: 20px;            /* opcional, da aire alrededor */
 }
 
 #image-side img {
-    width: 80%;
-    height: 100%;
-    object-fit: contain;
+    max-width: 80%;           /* ocupa hasta el 80% del ancho disponible */
+    max-height: 80%;          /* ocupa hasta el 80% de la altura disponible */
+    object-fit: contain;      /* mantiene proporciones */
+    height: auto;             /* evita deformación */
     display: block;
 }
+
 
 /* 4. LADO DERECHO: FORMULARIO */
 #form-side {
@@ -51,6 +54,7 @@ html, body {
     background-color: #1a5f7a;
     border-radius: 20px;
     box-sizing: border-box;
+    margin-top: 65px;
 }
 
 /* --- ESTILOS DE TEXTO --- */
@@ -81,12 +85,13 @@ html, body {
     background: rgba(255, 255, 255, 0.1);
     border: 1.5px solid #ffffff;
     border-radius: 12px;
+    background: #ffffff;
 }
 
 .form-inp input, .form-inp select {
     width: 100%;
-    background: transparent;
-    color: #ffffff;
+    background: #ffffff;
+    color: "black";
     border: none;
     outline: none;
 }

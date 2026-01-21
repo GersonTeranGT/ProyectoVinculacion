@@ -30,29 +30,28 @@
                 <label for="nombre" class="block text-sm font-semibold text-gray-700 mb-2">Nombre</label>
                 <input type="text" th:field="*{nombre}"
                        class="input-personalizado block w-full px-4 py-3"
-                       placeholder="Ingrese su nombre" required />
+                       placeholder="Ingrese su nombre" required/>
             </div>
 
             <div>
                 <label for="username" class="block text-sm font-semibold text-gray-700 mb-2">User Name</label>
                 <input type="text" th:field="*{username}"
                        class="input-personalizado block w-full px-4 py-3"
-                       placeholder="Ingrese su usuario" required />
+                       placeholder="Ingrese su usuario" required/>
             </div>
 
             <div>
                 <label for="password" class="block text-sm font-semibold text-gray-700 mb-2">Contraseña</label>
                 <input type="password" th:field="*{password}"
                        class="input-personalizado block w-full px-4 py-3"
-                       placeholder="Ingrese su contraseña" required />
+                       placeholder="Ingrese su contraseña" required/>
             </div>
 
             <div>
                 <label for="rol" class="block text-sm font-semibold text-gray-700 mb-2">Rol</label>
                 <select th:field="*{rol}" class="input-personalizado block w-full px-4 py-3 bg-white">
                     <option value="ROLE_ADMIN">Administrador</option>
-                    <option value="ROLE_DOCENTE">Docente</option>
-                    <option value="ROLE_INSPECTOR">Inspector</option>
+
                 </select>
             </div>
 

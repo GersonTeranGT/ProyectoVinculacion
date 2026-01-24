@@ -16,23 +16,27 @@ public class DocenteController {
 
     @Autowired
     private UserService userService;
-
-    @GetMapping("/admin/nuevoDocente")
-    public String form(Model model) {
-        model.addAttribute("docente", new User());
-        return "pages/formularioDocente";
-    }
-
-    @PostMapping("/admin/guardarDocente")
-    public String guardarDocente(@ModelAttribute("docente") User docente) {
-        userService.guardarUsuario(docente);
-        return "redirect:/listaDocente";
-    }
-
-    @GetMapping("/listaDocente")
-    public String mostrarListaDocente(Model model) {
-        List<User> usuarios = userService.listarUsuarios();
-        model.addAttribute("docentes", usuarios);
+    @GetMapping("/listaDocentes")
+    public String lista(){
         return "pages/listaDocente";
     }
+
+//    @GetMapping("/admin/nuevoDocente")
+//    public String form(Model model) {
+//        model.addAttribute("docente", new User());
+//        return "pages/formularioDocente";
+//    }
+//
+//    @PostMapping("/admin/guardarDocente")
+//    public String guardarDocente(@ModelAttribute("docente") User docente) {
+//        userService.guardarUsuario(docente);
+//        return "redirect:/listaDocente";
+//    }
+//
+//    @GetMapping("/listaDocente")
+//    public String mostrarListaDocente(Model model) {
+//        List<User> usuarios = userService.listarUsuarios();
+//        model.addAttribute("docentes", usuarios);
+//        return "pages/listaDocente";
+//    }
 }

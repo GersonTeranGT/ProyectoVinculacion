@@ -22,7 +22,8 @@
 
     <div id="form-side">
         <div id="form-ui">
-            <form th:action="@{/admin/guardarDocente}" th:object="${docente}" method="post" id="form">
+<!--            th:action="@{/admin/guardarDocente}" th:object="${docente}" method="post" -->
+            <form id="form">
                 <div id="form-body">
                     <div id="welcome-lines">
                         <div id="welcome-line-1">Registro</div>
@@ -31,10 +32,12 @@
 
                     <div id="input-area">
                         <div class="form-inp">
-                            <input placeholder="Nombre del docente" type="text" th:field="*{nombre}" required>
+<!--                            th:field="*{nombre}"-->
+                            <input placeholder="Nombre del docente" type="text"  required>
                         </div>
                         <div class="form-inp">
-                            <select th:field="*{materia}" id="materia-select">
+<!--                            h:field="*{materia}"-->
+                            <select t id="materia-select">
                                 <option value="Matemáticas">Matemáticas</option>
                                 <option value="Lengua y Literatura">Lengua y Literatura</option>
                                 <option value="Ciencias Naturales">Ciencias Naturales</option>

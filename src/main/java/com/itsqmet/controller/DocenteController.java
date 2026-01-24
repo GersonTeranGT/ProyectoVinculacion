@@ -21,6 +21,11 @@ public class DocenteController {
         return "pages/listaDocente";
     }
 
+    @GetMapping("/nuevoDocente")
+    public String formulario(){
+        return "pages/formularioDocente";
+    }
+
 //    @GetMapping("/admin/nuevoDocente")
 //    public String form(Model model) {
 //        model.addAttribute("docente", new User());

@@ -1,52 +1,107 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" class="h-full">
+<html lang="es" xmlns:th="http://www.thymeleaf.org" class="h-full">
 <head>
     <meta charset="UTF-8">
-    <title>Formulario</title>
+    <title>Registro de Docente</title>
     <link rel="icon" th:href="@{/images/faviconLogo.png}">
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
     <link rel="stylesheet" th:href="@{/css/footer.css}">
-    <link rel="stylesheet" th:href="@{/css/panelAdmin.css}">
     <link rel="stylesheet" th:href="@{/css/formulario.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-
 <div th:replace="fragments/navbar :: navbar"></div>
 
 <div id="main-container">
     <div id="image-side">
-        <img th:src="@{/images/faviconLogox.png}" alt="Imagen Decorativa">
+        <img th:src="@{/images/faviconLogox.png}" alt="Logo Institucional">
     </div>
 
     <div id="form-side">
         <div id="form-ui">
-<!--            th:action="@{/admin/guardarDocente}" th:object="${docente}" method="post" -->
-            <form id="form">
+            <form th:action="@{/guardarDocente}" th:object="${docente}" method="post" id="form">
                 <div id="form-body">
                     <div id="welcome-lines">
-                        <div id="welcome-line-1">Registro</div>
-                        <div id="welcome-line-2">Aida Gallegos</div>
+                        <div id="welcome-line-1">Registro del Docente</div>
+                        <div id="welcome-line-2">Unidad Educativa Aida Gallegos</div>
                     </div>
 
                     <div id="input-area">
-                        <div class="form-inp">
-<!--                            th:field="*{nombre}"-->
-                            <input placeholder="Nombre del docente" type="text"  required>
+                        <div class="input-group">
+                            <label class="input-label">Ingrese el nombre del docente</label>
+                            <div class="form-inp">
+                                <i class="fas fa-user"></i>
+                                <input placeholder="Ej: Juan Pérez" type="text" th:field="*{nombre}" required>
+                            </div>
                         </div>
-                        <div class="form-inp">
-<!--                            h:field="*{materia}"-->
-                            <select t id="materia-select">
-                                <option value="Matemáticas">Matemáticas</option>
-                                <option value="Lengua y Literatura">Lengua y Literatura</option>
-                                <option value="Ciencias Naturales">Ciencias Naturales</option>
-                                <option value="Estudios Sociales">Estudios Sociales</option>
-                            </select>
+
+                        <div class="input-group">
+                            <label class="input-label">Seleccione el curso a cargo</label>
+                            <div class="form-inp">
+                                <i class="fas fa-graduation-cap"></i>
+                                <select th:field="*{cursoAsignado}" required>
+                                    <option value="" disabled selected>Elegir curso...</option>
+                                    <option value="Educacion Basica">Educacion Basica</option>
+                                    <option value="Bachillerato">Bachillerato</option>
+                                    <option value="Hibrido">Hibrido</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label class="input-label">Seleccione la jornada laboral</label>
+                            <div class="form-inp">
+                                <i class="fas fa-sun"></i>
+                                <select th:field="*{jornada}" required>
+                                    <option value="" disabled selected>Elegir jornada...</option>
+                                    <option value="Matutina">Matutina</option>
+                                    <option value="Vespertina">Vespertina</option>
+                                    <option value="Hibrido">Hibrida</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label class="input-label">Materia que imparte</label>
+                            <div class="form-inp">
+                                <i class="fas fa-book"></i>
+                                <select th:field="*{materia}" required>
+                                    <option value="" disabled selected>Elegir materia...</option>
+                                    <option value="Matemáticas">Matemáticas</option>
+                                    <option value="Lengua y Literatura">Lengua y Literatura</option>
+                                    <option value="Ciencias Naturales">Ciencias Naturales</option>
+                                    <option value="Estudios Sociales">Estudios Sociales</option>
+                                    <option value="Ingles">Ingles</option>
+                                    <option value="Educacion Fisica">Educacion Fisica</option>
+                                    <option value="ECA">ECA</option>
+                                    <option value="ANIM LECT">ANIM LECT</option>
+                                    <option value="OBP">OBP</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label class="input-label">Correo electrónico institucional</label>
+                            <div class="form-inp">
+                                <i class="fas fa-envelope"></i>
+                                <input placeholder="docente@ejemplo.com" type="email" th:field="*{email}" required>
+                            </div>
+                        </div>
+
+                        <div class="input-group">
+                            <label class="input-label">Número de contacto</label>
+                            <div class="form-inp">
+                                <i class="fas fa-phone"></i>
+                                <input placeholder="0987654321" type="tel" th:field="*{telefono}" required>
+                            </div>
                         </div>
                     </div>
+
                     <div id="submit-button-cvr">
-                        <button id="submit-button" type="submit">REGISTRAR</button>
+                        <button id="submit-button" type="submit">
+                            <i class="fas fa-user-plus"></i> REGISTRAR DOCENTE
+                        </button>
                     </div>
                 </div>
             </form>

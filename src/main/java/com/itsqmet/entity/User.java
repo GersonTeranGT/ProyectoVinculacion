@@ -2,6 +2,7 @@ package com.itsqmet.entity;
 
 import com.itsqmet.role.Rol;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -40,5 +41,21 @@ public class User {
     @Column(nullable = false)
     private Rol rol;
 
+    @NotBlank(message = "La materia es obligatoria")
     private String materia;
+
+    @NotBlank(message = "El curso asignado es obligatorio")
+    private String cursoAsignado;
+
+    @NotBlank(message = "La jornada es obligatoria")
+    private String jornada;
+
+    @NotBlank(message = "El email es obligatorio")
+    @Email(message = "Debe ingresar un formato de correo válido")
+    @Column(unique = true)
+    private String email;
+
+    @NotBlank(message = "El teléfono es obligatorio")
+    @Pattern(regexp = "^[0-9]{10}$", message = "El teléfono debe tener 10 dígitos numéricos")
+    private String telefono;
 }

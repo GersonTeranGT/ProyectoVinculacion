@@ -1,109 +1,145 @@
-/* 1. LIMPIEZA TOTAL */
+/* 1. LIMPIEZA Y BASE */
 html, body {
     margin: 0;
     padding: 0;
     width: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* 2. CONTENEDOR PRINCIPAL */
 #main-container {
     display: flex;
     width: 100%;
     min-height: 100vh;
-    align-items: stretch;
-    background-color: #f4f7f6;
+    background-color: #f0f4f8;
 }
 
-/* 3. LADO IZQUIERDO: AQUÍ ESTÁ EL TRUCO */
+/* 2. LADO IZQUIERDO (LOGO) */
 #image-side {
     flex: 1;
-    overflow: hidden;
     display: flex;
-    align-items: center;      /* centra verticalmente */
-    justify-content: center;  /* centra horizontalmente */
-    padding: 20px;            /* opcional, da aire alrededor */
+    align-items: center;
+    justify-content: center;
+    background: white;
 }
 
 #image-side img {
-    max-width: 80%;           /* ocupa hasta el 80% del ancho disponible */
-    max-height: 80%;          /* ocupa hasta el 80% de la altura disponible */
-    object-fit: contain;      /* mantiene proporciones */
-    height: auto;             /* evita deformación */
-    display: block;
+    max-width: 60%; /* Un poco más pequeño para dar aire */
+    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
+    animation: fadeIn 1.5s ease-in-out;
 }
 
-
-/* 4. LADO DERECHO: FORMULARIO */
+/* 3. LADO DERECHO (FORMULARIO) */
 #form-side {
-    flex: 0.4;
+    flex: 0.6; /* Aumentamos un poco el espacio de este lado */
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-end; /* Empuja la tarjeta a la derecha */
     align-items: center;
-    padding-right: 80px;
+    padding: 40px 100px 40px 40px; /* Mucho aire a la derecha (100px) */
 }
 
-/* TARJETA DEL FORMULARIO (AZUL #1a5f7a) */
 #form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 500px;
-    min-height: 600px;
-    padding: 50px;
+    width: 100%;
+    max-width: 480px; /* Un poco más angosto para que se vea más estilizado */
     background-color: #1a5f7a;
-    border-radius: 20px;
-    box-sizing: border-box;
-    margin-top: 65px;
+    padding: 40px;
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+    color: white;
 }
 
-/* --- ESTILOS DE TEXTO --- */
 #welcome-line-1 {
-    color: #ffffff;
-    font-weight: 700;
-    font-size: 48px;
+    font-size: 28px; /* Tamaño más equilibrado */
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     text-align: center;
 }
 
 #welcome-line-2 {
-    color: #ffffff;
-    font-size: 22px;
-    margin-top: 10px;
+    font-size: 15px;
+    opacity: 0.8;
     text-align: center;
+    margin-bottom: 25px;
 }
 
-#input-area {
-    margin-top: 40px;
+/* 4. GRUPOS DE ENTRADA Y ETIQUETAS */
+.input-group {
     display: flex;
     flex-direction: column;
-    gap: 25px;
-    width: 100%;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.input-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #cbd5e0;
+    margin-left: 5px;
 }
 
 .form-inp {
-    padding: 18px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1.5px solid #ffffff;
-    border-radius: 12px;
-    background: #ffffff;
+    display: flex;
+    align-items: center;
+    background: white;
+    padding: 10px 15px; /* Más compacto */
+    border-radius: 10px;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.form-inp:focus-within {
+    border-color: #ffd700;
+    box-shadow: 0 0 12px rgba(255, 215, 0, 0.2);
+}
+
+.form-inp i {
+    color: #1a5f7a;
+    margin-right: 10px;
+    font-size: 16px;
 }
 
 .form-inp input, .form-inp select {
-    width: 100%;
-    background: #ffffff;
-    color: "black";
+    flex: 1;
     border: none;
     outline: none;
+    font-size: 14px;
+    color: #333;
+    background: transparent;
+}
+
+/* 5. BOTÓN REGISTRAR (MÁS PEQUEÑO) */
+#submit-button-cvr {
+    display: flex;
+    justify-content: center; /* Centra el botón pequeño */
+    width: 100%;
 }
 
 #submit-button {
-    width: 100%;
-    padding: 18px;
-    background-color: #ffffff;
+    width: auto; /* Ya no ocupa todo el ancho */
+    min-width: 200px; /* Pero tiene un tamaño mínimo decente */
+    padding: 12px 25px; /* Menos alto, más ancho a los lados */
+    background: #ffd700;
     color: #1a5f7a;
-    font-weight: 700;
+    font-size: 14px;
+    font-weight: 800;
     border: none;
-    border-radius: 12px;
-    margin-top: 40px;
+    border-radius: 30px; /* Más redondeado (estilo píldora) */
     cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+#submit-button:hover {
+    background: #ffffff;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateX(-20px); } /* Viene desde la izquierda */
+    to { opacity: 1; transform: translateX(0); }
 }

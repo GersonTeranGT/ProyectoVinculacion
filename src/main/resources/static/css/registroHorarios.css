@@ -1,251 +1,375 @@
+/* --- VARIABLES GLOBALES --- */
 :root {
-    --bg-color: #f8f9fa;
-    --primary-color: #4a90e2;
-    --text-main: #333;
-    --text-muted: #777;
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --bg-color: #f3f4f6;
     --card-bg: #ffffff;
-    --border-color: #e0e0e0;
+    --text-main: #1f2937;
+    --text-muted: #6b7280;
+    --border-color: #e5e7eb;
+    --radius-md: 12px;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif !important;
     background-color: var(--bg-color);
     color: var(--text-main);
     margin: 0;
+    -webkit-font-smoothing: antialiased;
 }
 
+/* --- HEADER --- */
 .header {
     text-align: center;
+    padding: 40px 0 30px;
+    background: white;
+    box-shadow: var(--shadow-sm);
     margin-bottom: 40px;
 }
 
 .header h1 {
-    font-size: 2.5rem;
-    color: #2c3e50;
-    margin-bottom: 5px;
+    font-size: 2.2rem;
+    color: var(--text-main);
+    margin: 0 0 10px 0;
+    font-weight: 800;
+    letter-spacing: -0.5px;
 }
 
 .header p {
     color: var(--text-muted);
     font-size: 1.1rem;
+    margin: 0;
 }
 
-.schedule-section {
-    margin-bottom: 50px;
+/* --- BARRA DE SELECCIÓN (CURSO / PARALELO) --- */
+.selection-bar-container {
+    max-width: 1100px;
+    margin: 0 auto 50px auto;
+    padding: 0 20px;
 }
 
-.section-title {
-    font-size: 1.5rem;
-    border-left: 5px solid var(--primary-color);
-    padding-left: 15px;
-    margin-bottom: 20px;
+.selection-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
 }
 
-.table-container {
-    overflow-x: auto;
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+.selector-label {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding-left: 5px;
 }
 
-.schedule-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 10px; /* Espacio entre celdas tipo tarjetas */
-}
-
-.schedule-table th {
-    background-color: #ededed;
-    padding: 15px;
-    border-radius: 10px;
-    font-weight: 600;
-    text-align: center !important; /* Importante para vencer a Tailwind */
-    color: #333;
-}
-
-.time-col {
-    background-color: #f1f3f5;
-    font-weight: bold;
-    text-align: center !important;
-    width: 120px;
-    border-radius: 10px;
-    color: #555;
-}
-
-/* Celdas generales */
-.schedule-table td {
-    height: 80px;
-    min-width: 120px;
-    vertical-align: middle;
-    text-align: center !important; /* Importante para centrar botones */
-    border: 2px dashed #eee;
-    border-radius: 12px;
-    transition: all 0.3s;
-}
-
-/* Estilo para el botón "+" */
-.add-btn {
-    background: none;
-    border: none;
-    font-size: 24px;
-    color: #ccc;
-    cursor: pointer;
-    width: 100%;
-    height: 100%;
-    display: flex;       /* centrar el +  */
-    align-items: center;
-    justify-content: center;
-}
-
-.add-btn:hover {
-    color: var(--primary-color);
-    background-color: #f0f7ff;
-    border-radius: 10px;
-}
-
-/* Estilo para una materia ya asignada */
-.class-card {
-    border: none !important;
-    background-color: #fff;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    border-left: 5px solid var(--primary-color) !important;
-    padding: 10px;
-    text-align: left !important; /* El contenido de la tarjeta sí va a la izq */
-}
-
-.math { border-left-color: #4a90e2 !important; }
-
-/* -------------------------------------------------*/
-/* --- ESTILOS DEL INPUT DESPLEGABLE (DROPDOWN) --- */
-.teacher-select-section {
-    margin-top: 20px;
-    margin-bottom: 30px;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-    z-index: 100;
-}
-
-.section-subtitle {
-    font-size: 1.2rem;
-    color: #333;
-    font-weight: 600;
-    margin-bottom: 10px;
-}
-
+/* Dropdowns Estilizados */
 .custom-dropdown {
     position: relative;
     width: 100%;
-    font-family: inherit;
 }
 
 .dropdown-selected {
-    background-color: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
+    background: var(--card-bg);
+    border: 2px solid transparent;
     padding: 15px 20px;
+    border-radius: var(--radius-md);
     cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    box-shadow: var(--shadow-md);
+    transition: all 0.2s ease;
 }
 
 .dropdown-selected:hover {
-    border-color: var(--primary-color);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
 }
 
-.dropdown-selected span {
-    color: #999;
-    font-size: 1.1rem;
+.custom-dropdown.active .dropdown-selected {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+
+.dropdown-selected span.active-text {
+    color: var(--text-main);
+    font-weight: 700;
 }
 
 .arrow-icon {
-    font-style: normal;
-    font-size: 0.9rem;
-    color: #aaa;
+    color: var(--primary-color);
+    font-size: 1.2rem;
     transition: transform 0.3s;
 }
 
-.custom-dropdown.active .arrow-icon {
+.custom-dropdown.show .arrow-icon {
     transform: rotate(180deg);
-}
-
-.custom-dropdown.active .dropdown-options {
-    display: block;
 }
 
 .dropdown-options {
     display: none;
     position: absolute;
-    top: 115%;
+    top: calc(100% + 10px);
     left: 0;
     width: 100%;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    border: 1px solid #eee;
+    background: white;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    z-index: 50;
     overflow: hidden;
-    z-index: 200;
+    border: 1px solid var(--border-color);
+    animation: slideDown 0.2s ease-out;
 }
 
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.dropdown-options.show { display: block; }
+
 .dropdown-item {
-    padding: 15px 20px;
-    border-bottom: 1px solid #f9f9f9;
+    padding: 14px 20px;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 15px;
+    border-bottom: 1px solid #f3f4f6;
+    color: var(--text-main);
     transition: background 0.2s;
 }
 
+.dropdown-item:last-child { border-bottom: none; }
 .dropdown-item:hover {
-    background-color: #f5f8ff;
+    background-color: #eff6ff;
+    color: var(--primary-color);
+    font-weight: 600;
 }
 
-.t-name {
-    display: block;
-    font-weight: 700;
-    color: #333;
-    font-size: 1rem;
-}
-
-.t-subject {
-    font-size: 0.9rem;
-    color: #777;
-}
-
-.teacher-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: #eee;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-    flex-shrink: 0;
-}
-
-/* Colores de avatares */
-.c1 { background-color: #4a90e2; }
-.c2 { background-color: #2ecc71; }
-.c3 { background-color: #f1c40f; }
-.c4 { background-color: #9b59b6; }
-
-/* --- Estilos de las Tablas (Jornadas) --- */
+/* --- TABLA DE HORARIOS --- */
 .schedule-section {
-    margin-bottom: 50px;
+    max-width: 1400px;
+    margin: 0 auto 60px;
+    padding: 0 20px;
 }
+
 .section-title {
     font-size: 1.5rem;
-    border-left: 5px solid var(--primary-color);
-    padding-left: 15px;
-    margin-bottom: 20px;
-    font-weight: bold; /* Tailwind quita la negrita a veces */
+    color: var(--text-main);
+    font-weight: 800;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+}
+
+.section-title::before {
+    content: '';
+    display: inline-block;
+    width: 6px;
+    height: 30px;
+    background: var(--primary-color);
+    margin-right: 15px;
+    border-radius: 4px;
+}
+
+.table-container {
+    background: white;
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: var(--shadow-md);
+    overflow-x: auto;
+}
+
+.schedule-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 12px;
+}
+
+.schedule-table th {
+    text-align: center;
+    padding: 15px;
+    color: var(--text-muted);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+}
+
+/* Centrado de las horas en la columna de tiempo */
+.time-col {
+    background-color: #f8fafc;
+    color: var(--text-main);
+    font-weight: 700;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    border: 1px solid var(--border-color);
+    text-align: center; /* Centrado horizontal */
+    vertical-align: middle; /* Centrado vertical */
+    padding: 10px;
+}
+
+.schedule-table td:not(.time-col) {
+    height: 120px; /* Altura fija para las celdas */
+    vertical-align: top;
+    border-radius: var(--radius-md);
+    border: 2px dashed #e5e7eb;
+    background: #fafafa;
+    transition: all 0.2s;
+    position: relative;
+    padding: 0;
+}
+
+.schedule-table td:not(.time-col):hover {
+    border-color: var(--primary-color);
+    background: white;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Botón + */
+.add-btn {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: transparent;
+    font-size: 2rem;
+    color: #d1d5db;
+    cursor: pointer;
+    border-radius: var(--radius-md);
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-btn:hover {
+    background-color: #eff6ff;
+    color: var(--primary-color);
+}
+
+/* --- TARJETA DE CLASE ASIGNADA (NUEVO DISEÑO) --- */
+.class-card {
+    height: 100%;
+    padding: 12px;
+    border-radius: var(--radius-md) !important;
+    background: white;
+    box-shadow: var(--shadow-sm);
+    border-left-width: 6px;
+    border-left-style: solid;
+    /* El color se define inline en el JS */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative; /* Para posicionar el botón de eliminar */
+}
+
+@keyframes popIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.card-subject {
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--text-main);
+    line-height: 1.2;
+    margin-bottom: 4px;
+}
+
+.card-teacher {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+}
+
+.card-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto; /* Empuja hacia abajo */
+}
+
+.card-aula {
+    background-color: #f3f4f6;
+    color: var(--text-main);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.card-time-info {
+    text-align: right;
+}
+
+.card-hours {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.card-duration {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.btn-delete-card {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    color: #ef4444;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.class-card:hover .btn-delete-card { opacity: 1; }
+.btn-delete-card:hover { background: #fef2f2; }
+
+/* --- MODAL ESTILO PREMIUM --- */
+.modal-overlay {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.modal-content {
+    background: white;
+    border-radius: 16px;
+    box-shadow: var(--shadow-lg);
+    padding: 24px;
+    animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Selector de Color */
+.color-picker .color-option.selected {
+    ring-color: var(--text-main);
+    transform: scale(1.1);
 }

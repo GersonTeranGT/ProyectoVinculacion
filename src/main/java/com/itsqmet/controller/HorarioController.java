@@ -10,6 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class HorarioController {
     @GetMapping
     public String registrarHorario(){
-        return "pages/registroHorario";
+        return "pages/crearHorarioBachillerato";
     }
 }

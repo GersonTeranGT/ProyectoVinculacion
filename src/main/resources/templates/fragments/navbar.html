@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <body>
 <!--navbar-->
+
 <nav th:fragment="navbar" class="admin-navbar">
     <div class="navbar-container">
         <!--logo y nombre-->
@@ -17,36 +18,57 @@
         <div class="navbar-menu">
             <ul class="nav-menu">
                 <li class="nav-item">
-                    <a  class="nav-link active">
+                    <a th:href="@{/admin}" class="nav-link active">
                         <i class="fas fa-home"></i>
                         <span>Inicio</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a  class="nav-link">
-                        <i class="fas fa-chalkboard-teacher"></i>
-                        <span>Docentes</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a  class="nav-link">
-                        <i class="fas fa-book"></i>
-                        <span>Cursos</span>
-                    </a>
-                </li>
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle">
-                        <i class="fas fa-cog"></i>
-                        <span>Configuración</span>
+                        <i class="fas fa-chalkboard-teacher"></i>
+                        <span>Docentes</span>
                         <i class="fas fa-chevron-down dropdown-icon"></i>
                     </a>
                     <div class="dropdown-menu">
-                        <a  class="dropdown-item">
+                        <a th:href="@{/listaDocentes}" class="dropdown-item">
                             <i class="fas fa-users-cog"></i>
-                            Usuarios
+                            Lista docentes
+                        </a>
+
+                    </div>
+
+                </li>
+<!--                <li class="nav-item">-->
+<!--                    <a th:href="@{/admin/docentes}" class="nav-link">-->
+<!--                    <i class="fas fa-chalkboard-teacher"></i>-->
+<!--                        <span>Docentes</span>-->
+<!--                    </a>-->
+<!--                </li>-->
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle">
+                        <i class="fas fa-book"></i>
+                        <span>Cursos</span>
+                        <i class="fas fa-chevron-down dropdown-icon"></i>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a th:href="@{/admin/usuarios}" class="dropdown-item">
+                            <i class="fas fa-book"></i>
+                            Por docente
+                        </a>
+                        <a th:href="@{/admin/usuarios}" class="dropdown-item">
+                            <i class="fas fa-book"></i>
+                            Por paralelo
                         </a>
                     </div>
+
                 </li>
+<!--                <li class="nav-item">-->
+<!--                    <a  class="nav-link">-->
+<!--                        <i class="fas fa-book"></i>-->
+<!--                        <span>Cursos</span>-->
+<!--                    </a>-->
+<!--                </li>-->
+
             </ul>
         </div>
 

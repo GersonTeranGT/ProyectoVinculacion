@@ -17,160 +17,107 @@
 <div th:replace="fragments/navbar :: navbar"></div>
 
 <!--panel administracion-->
-<div class="admin-panel max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+<div class="admin-panel max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 mb-16 md:mb-20">
     <div class="text-center mb-10">
         <h1 class="text-3xl font-bold text-gray-800 mb-2">Panel de Administración</h1>
         <p class="text-gray-600">Unidad Educativa Aida Gallegos</p>
     </div>
 
     <!--grid-->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <!--docentes-->
-        <div class="bg-white p-6 rounded-lg shadow-md">
-            <div class="text-center mb-6">
-                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Gestión de Docentes</h2>
-            </div>
-            <div class="flex flex-col gap-4">
-                <a th:href="@{/admin/docentes}" class="btn-docentes text-white px-6 py-4 rounded-lg flex items-center justify-between group">
-                    <div class="flex items-center">
-                        <i class="fas fa-list-alt text-lg mr-4"></i>
-                        <div class="text-left">
-                            <span class="font-semibold block">Ver Docentes</span>
-                            <span class="text-sm opacity-90">Lista completa</span>
+    <div class="w-full px-4 md:px-8 lg:px-16">
+        <div class="grid grid-cols-1 md:grid-cols-1 gap-8 max-w-7xl mx-100">
+            <!--        &lt;!&ndash;docentes&ndash;&gt;-->
+            <!--        <div class="bg-white p-6 rounded-lg shadow-md">-->
+            <!--            <div class="text-center mb-6">-->
+            <!--                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Gestión de Docentes</h2>-->
+            <!--            </div>-->
+            <!--            <div class="flex flex-col gap-4">-->
+            <!--                <a th:href="@{/listaDocente}" class="btn-docentes text-white px-6 py-4 rounded-lg flex items-center justify-between group">-->
+            <!--                    <div class="flex items-center">-->
+            <!--                        <i class="fas fa-list-alt text-lg mr-4"></i>-->
+            <!--                        <div class="text-left">-->
+            <!--                            <span class="font-semibold block">Ver Docentes</span>-->
+            <!--                            <span class="text-sm opacity-90">Lista completa</span>-->
+            <!--                        </div>-->
+            <!--                    </div>-->
+            <!--                    <i class="fas fa-chevron-right"></i>-->
+            <!--                </a>-->
+
+            <!--                <a th:href="@{/admin/nuevoDocente}" class="btn-nuevo-docente text-white px-6 py-4 rounded-lg flex items-center justify-between group">-->
+            <!--                    <div class="flex items-center">-->
+            <!--                        <i class="fas fa-user-plus text-lg mr-4"></i>-->
+            <!--                        <div class="text-left">-->
+            <!--                            <span class="font-semibold block">Agregar Docente</span>-->
+            <!--                            <span class="text-sm opacity-90">Nuevo registro</span>-->
+            <!--                        </div>-->
+            <!--                    </div>-->
+            <!--                    <i class="fas fa-chevron-right"></i>-->
+            <!--                </a>-->
+            <!--            </div>-->
+            <!--        </div>-->
+
+
+            <!-- Gestión de Usuarios -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <div class="text-center mb-6">
+                    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Gestión de Usuarios</h2>
+                </div>
+                <div class="flex flex-col gap-4">
+                    <a th:href="@{/nuevoDocente}"
+                       class="btn-lista-usuarios text-white px-6 py-4 rounded-lg flex items-center justify-between group">
+                        <div class="flex items-center">
+                            <i class="fas fa-user-plus text-lg mr-4"></i>
+                            <div class="text-left">
+                                <span class="font-semibold block">Agregar Docente</span>
+                                <span class="text-sm opacity-90">Nuevo registro</span>
+                            </div>
                         </div>
-                    </div>
-                    <i class="fas fa-chevron-right"></i>
-                </a>
+                        <i class="fas fa-chevron-right group-hover:translate-x-2 transition-transform"></i>
+                    </a>
 
-                <a th:href="@{/admin/docentes/nuevo}" class="btn-nuevo-docente text-white px-6 py-4 rounded-lg flex items-center justify-between group">
-                    <div class="flex items-center">
-                        <i class="fas fa-user-plus text-lg mr-4"></i>
-                        <div class="text-left">
-                            <span class="font-semibold block">Agregar Docente</span>
-                            <span class="text-sm opacity-90">Nuevo registro</span>
+                    <div class="crear-usuario-dropdown relative">
+                        <button class="btn-crear-usuario text-white px-6 py-4 rounded-lg flex items-center justify-between w-full group">
+                            <div class="flex items-center">
+                                <i class="fas fa-calendar-plus text-lg mr-4"></i>
+                                <div class="text-left">
+                                    <span class="font-semibold block">Crear horario</span>
+                                    <span class="text-sm opacity-90">Nuevo registro</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-chevron-down ml-4 text-sm transition-transform duration-300"></i>
+                            </div>
+                        </button>
+
+                        <!-- Menú desplegable -->
+                        <div class="dropdown-menu absolute top-full left-0 w-full mt-1 bg-white rounded-lg shadow-lg border border-gray-200 z-50 opacity-0 invisible transition-all duration-300 transform translate-y-2">
+                            <a th:href="@{/users/formUser?nivel=basica}"
+                               class="dropdown-item flex items-center px-4 py-3 hover:bg-blue-50 transition-colors border-b border-gray-100 last:border-b-0">
+                                <i class="fas fa-graduation-cap text-blue-600 mr-3"></i>
+                                <div class="flex-1">
+                                    <span class="font-medium text-gray-800 block">Educación Básica</span>
+                                    <span class="text-xs text-gray-500">Crear horario de nivel básico</span>
+                                </div>
+                            </a>
+                            <a th:href="@{/users/formUser?nivel=bachillerato}"
+                               class="dropdown-item flex items-center px-4 py-3 hover:bg-green-50 transition-colors">
+                                <i class="fas fa-university text-green-600 mr-3"></i>
+                                <div class="flex-1">
+                                    <span class="font-medium text-gray-800 block">Bachillerato</span>
+                                    <span class="text-xs text-gray-500">Crear horario de bachillerato</span>
+                                </div>
+                            </a>
                         </div>
-                    </div>
-                    <i class="fas fa-chevron-right"></i>
-                </a>
-            </div>
-        </div>
-
-        <!--horarios-->
-        <div class="bg-white p-6 rounded-lg shadow-md">
-            <div class="text-center mb-6">
-                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Gestión de Horarios</h2>
-            </div>
-            <div class="flex flex-col gap-4">
-                <a th:href="@{/admin/horarios}" class="btn-horarios text-white px-6 py-4 rounded-lg flex items-center justify-between group">
-                    <div class="flex items-center">
-                        <i class="fas fa-calendar-check text-lg mr-4"></i>
-                        <div class="text-left">
-                            <span class="font-semibold block">Ver Horarios</span>
-                            <span class="text-sm opacity-90">Todos los horarios</span>
-                        </div>
-                    </div>
-                    <i class="fas fa-chevron-right"></i>
-                </a>
-
-                <a th:href="@{/registroHorario}" class="btn-nuevo-horario text-white px-6 py-4 rounded-lg flex items-center justify-between group">
-                    <div class="flex items-center">
-                        <i class="fas fa-plus-circle text-lg mr-4"></i>
-                        <div class="text-left">
-                            <span class="font-semibold block">Crear Horario</span>
-                            <span class="text-sm opacity-90">Nueva planificación</span>
-                        </div>
-                    </div>
-                    <i class="fas fa-chevron-right"></i>
-                </a>
-            </div>
-        </div>
-        <!--gestion-->
-        <div class="bg-white p-6 rounded-lg shadow-md">
-            <div class="text-center mb-6">
-                <h2 class="text-2xl font-semibold text-gray-800 mb-4">Gestión Académica</h2>
-            </div>
-            <div class="grid grid-cols-2 gap-4">
-                <a th:href="@{/admin/materias}" class="btn-materias text-white px-4 py-3 rounded-lg flex items-center justify-center">
-                    <i class="fas fa-book mr-2"></i>
-                    <span>Materias</span>
-                </a>
-
-                <a th:href="@{/admin/cursos}" class="btn-cursos text-white px-4 py-3 rounded-lg flex items-center justify-center">
-                    <i class="fas fa-list mr-2"></i>
-                    <span>Cursos</span>
-                </a>
-
-            </div>
-        </div>
-    </div>
-</div>
-<!--footer-->
-<footer class="admin-footer">
-    <!--seccion superior del footer-->
-    <div class="footer-top">
-        <div class="footer-container">
-            <!--informacion de la institucion-->
-            <div class="footer-column">
-                <div class="footer-logo">
-                    <img th:src="@{/images/faviconLogo.png}" alt="Logo U.E. Aida Gallegos" class="footer-logo-img">
-                    <div class="footer-brand">
-                        <h3>Unidad Educativa Aida Gallegos</h3>
-                        <p>Desarrollando líderes para el mañana</p>
                     </div>
                 </div>
-                <p class="footer-description">
-                    Institución educativa comprometida con la formación integral de estudiantes,
-                    promoviendo valores, excelencia académica y desarrollo comunitario.
-                </p>
-            </div>
-
-            <!--enlaces rapidos-->
-            <div class="footer-column">
-                <h4 class="footer-title">Enlaces Rápidos</h4>
-                <ul class="footer-links">
-                    <li><a th:href="@{/admin/docentes}"><i class="fas fa-chevron-right"></i> Gestión Docente</a></li>
-                    <li><a th:href="@{/admin/calendario}"><i class="fas fa-chevron-right"></i> Calendario Escolar</a></li>
-                </ul>
-            </div>
-            <!--informacion de contacto-->
-            <div class="footer-column">
-                <h4 class="footer-title">Contacto</h4>
-                <ul class="footer-contact">
-                    <li>
-                        <i class="fas fa-map-marker-alt"></i>
-                        <span>Av. Llirañán y Pachamama, sector Quitumbe</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-phone"></i>
-                        <span>(04) 222-2222</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-envelope"></i>
-                        <span>ueagm2320@gmail.com</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-clock"></i>
-                        <span>Lunes a Viernes: 7:00 AM - 4:00 PM</span>
-                    </li>
-                </ul>
             </div>
         </div>
     </div>
 
-    <!--Seccion inferior del footer-->
-    <div class="footer-bottom">
-        <div class="footer-container">
-            <div class="copyright">
-                <p>&copy; <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2026</span> Unidad Educativa Aida Gallegos de Moncayo. Todos los derechos reservados.</p>
-                <p class="version">Sistema de Gestión de Horarios v1.0 </p>
-            </div>
-            <div class="footer-legal">
-                <a target="_blank" th:href="@{https://maps.app.goo.gl/n844U2Nvw3ngkdxa6}" class="sitemap-link">
-                    <i class="fas fa-sitemap"></i> Mapa</a>
-            </div>
-        </div>
-    </div>
-</footer>
+</div>
+
+<!--footer-->
+<div th:replace="fragments/footer :: footer"></div>
 
 <script th:src="@{/js/footer.js}"></script>
 <script th:src="@{/js/navbar.js}"></script>

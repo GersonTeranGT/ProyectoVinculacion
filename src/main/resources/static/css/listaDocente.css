@@ -1,0 +1,76 @@
+/* --- Estilos de la Tabla --- */
+.table-custom thead th {
+    letter-spacing: 0.05em;
+    border: none;
+    white-space: nowrap;
+}
+
+.table-custom tbody tr:hover {
+    background-color: rgba(26, 95, 122, 0.05) !important;
+    transition: background-color 0.2s ease;
+}
+
+.materia-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    background-color: rgba(87, 204, 153, 0.15);
+    color: #2E8B57;
+    border: 1px solid rgba(87, 204, 153, 0.3);
+}
+
+/* --- Botón Nuevo Docente (Cabecera) --- */
+.btn-nuevo-docente {
+    display: inline-flex;
+    align-items: center;
+    background-color: var(--primary-color);
+    color: white !important;
+    font-weight: 500;
+    border-radius: 8px;
+    font-size: 0.875rem;
+    padding: 10px 20px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-nuevo-docente:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+/* --- Botones de Acción (Iconos) --- */
+.btn-update, .btn-delete {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px; /* Botón cuadrado */
+    height: 32px;
+    border-radius: 6px;
+    color: white !important;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+/* Color Actualizar (Amarillo/Naranja) */
+.btn-update {
+    background-color: var(--warning-color) !important;
+}
+.btn-update:hover {
+    background-color: #e68a00 !important;
+    box-shadow: 0 2px 4px rgba(255, 159, 28, 0.3);
+}
+
+/* Color Eliminar (Rojo) */
+.btn-delete {
+    background-color: #ef4444 !important;
+}
+.btn-delete:hover {
+    background-color: #dc2626 !important;
+    box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
+}

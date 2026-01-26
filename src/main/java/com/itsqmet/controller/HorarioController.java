@@ -13,7 +13,7 @@ public class HorarioController {
         return "pages/crearHorarioBachillerato";
     }
     @GetMapping("/listaHorarios")
-            public String listaHorarios(){
+    public String listaHorarios(){
         return "pages/listaHorarios";
     }
 }

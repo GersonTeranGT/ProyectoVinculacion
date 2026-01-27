@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping ("/registroHorario")
+@RequestMapping ("/horario")
 
 public class HorarioController {
     @GetMapping
@@ -15,5 +15,9 @@ public class HorarioController {
     @GetMapping("/listaHorarios")
     public String listaHorarios(){
         return "pages/listaHorarios";
+    }
+    @GetMapping ("/listaPorDocente")
+    public String verHorarioDocente(){
+        return "pages/listaHorariosDocente";
     }
 }

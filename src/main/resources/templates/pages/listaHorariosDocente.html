@@ -1,10 +1,131 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Horario por Docente | U.E. Aida Gallegos</title>
+    <link rel="icon" th:href="@{/images/faviconLogo.png}">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet"/>
+
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" th:href="@{/css/horarioDocente.css}">
+
+    <style th:inline="css">
+        @media print {
+            .no-print, nav, footer { display: none !important; }
+            body { background-color: white !important; }
+            .main-container { margin-top: 0 !important; width: 100% !important; }
+        }
+    </style>
 </head>
-<body>
+<body class="bg-gray-50">
+
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
+
+<div class="max-w-7xl mx-auto p-4 mt-10 main-container">
+
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Horario por Docente</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 mb-12 px-8 no-print">
+        <div>
+            <label class="block text-xl font-bold text-gray-800 mb-2">Buscar por Docente</label>
+            <select class="w-full p-2 border border-gray-300 rounded-md bg-white focus:outline-none appearance-none">
+                <option value="" disabled selected>Seleccione un docente...</option>
+            </select>
+        </div>
+        <div>
+            <label class="block text-xl font-bold text-gray-800 mb-2">Buscar por Materia</label>
+            <select class="w-full p-2 border border-gray-300 rounded-md bg-white focus:outline-none appearance-none">
+                <option value="" disabled selected>Seleccione una materia...</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="px-8 mb-10">
+        <p class="font-bold text-gray-900 mb-4 text-2xl uppercase tracking-wider">Jornada Matutina</p>
+        <div class="overflow-x-auto">
+            <table class="w-full table-manual">
+                <thead>
+                <tr class="uppercase text-xs text-gray-500">
+                    <th class="w-1/6">Hora</th>
+                    <th class="w-1/6">Lunes</th>
+                    <th class="w-1/6">Martes</th>
+                    <th class="w-1/6">Miércoles</th>
+                    <th class="w-1/6">Jueves</th>
+                    <th class="w-1/6">Viernes</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr><td class="p-4 bg-white text-center font-bold text-gray-700">07:00 - 07:45</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td class="p-4 bg-white text-center font-bold text-gray-700">07:45 - 08:30</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td class="p-4 bg-white text-center font-bold text-gray-700">08:30 - 09:15</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td class="p-4 bg-white text-center font-bold text-gray-700">09:15 - 10:00</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr class="bg-gray-50">
+                    <td class="p-4 text-center font-bold text-gray-500">10:00 - 10:30</td>
+                    <td class="text-center font-bold text-gray-400">R</td>
+                    <td class="text-center font-bold text-gray-400">E</td>
+                    <td class="text-center font-bold text-gray-400">C</td>
+                    <td class="text-center font-bold text-gray-400">R</td>
+                    <td class="text-center font-bold text-gray-400">EO</td>
+                </tr>
+                <tr><td class="p-4 bg-white text-center font-bold text-gray-700">10:30 - 11:15</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td class="p-4 bg-white text-center font-bold text-gray-700">11:15 - 12:00</td><td></td><td></td><td></td><td></td><td></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="px-8 mb-16">
+        <p class="font-bold text-gray-900 mb-4 text-2xl uppercase tracking-wider">Jornada Vespertina</p>
+        <div class="overflow-x-auto">
+            <table class="w-full table-manual">
+                <thead>
+                <tr class="uppercase text-xs text-gray-500">
+                    <th class="w-1/6">Hora</th>
+                    <th class="w-1/6">Lunes</th>
+                    <th class="w-1/6">Martes</th>
+                    <th class="w-1/6">Miércoles</th>
+                    <th class="w-1/6">Jueves</th>
+                    <th class="w-1/6">Viernes</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr><td class="p-4 bg-white text-center font-bold text-gray-700">13:00 - 13:45</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td class="p-4 bg-white text-center font-bold text-gray-700">13:45 - 14:30</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td class="p-4 bg-white text-center font-bold text-gray-700">14:30 - 15:15</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td class="p-4 bg-white text-center font-bold text-gray-700">15:15 - 16:00</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td class="p-4 bg-white text-center font-bold text-gray-700">16:00 - 16:45</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tr><td class="p-4 bg-white text-center font-bold text-gray-700">16:45 - 17:30</td><td></td><td></td><td></td><td></td><td></td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="flex flex-col items-center mt-10 no-print mb-20">
+        <div class="relative group">
+            <button class="btn-print-main py-2 px-10 rounded-full flex items-center gap-3 uppercase tracking-widest text-sm font-bold shadow-md">
+                IMPRIMIR <i class="fas fa-chevron-right text-xs"></i>
+            </button>
+
+            <div class="absolute top-0 left-full ml-4 bg-white border border-gray-200 rounded-xl p-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity shadow-xl min-w-[100px]">
+                <button onclick="window.print()" class="flex items-center justify-between hover:text-blue-600 font-bold text-xs px-1">
+                    <span>PDF</span><i class="fas fa-file-pdf text-red-500 text-lg"></i>
+                </button>
+                <div class="h-[1px] bg-gray-100 w-full"></div>
+                <button class="flex items-center justify-between hover:text-green-600 font-bold text-xs px-1">
+                    <span>EXCEL</span><i class="fas fa-file-excel text-green-600 text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+<script th:src="@{/js/navbar.js}"></script>
 
 </body>
 </html>

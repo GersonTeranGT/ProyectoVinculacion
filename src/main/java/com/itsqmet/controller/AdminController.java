@@ -31,4 +31,8 @@ public class AdminController {
     public String usuarios() {
         return "pages/listaUsers";
     }
+
+    @GetMapping("/horario-docente")
+    public String horarioDocente() {return "pages/listaHorariosDocente";
+    }
 }

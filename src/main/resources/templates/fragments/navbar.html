@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <body>
-<!--navbar-->
-
 <nav th:fragment="navbar" class="admin-navbar">
     <div class="navbar-container">
-        <!--logo y nombre-->
         <div class="navbar-brand">
             <img th:src="@{/images/faviconLogox.png}" alt="Logo U.E. Fiscal" class="navbar-logo">
             <div class="brand-text">
@@ -14,7 +11,6 @@
             </div>
         </div>
 
-        <!--menu de navegacion-->
         <div class="navbar-menu">
             <ul class="nav-menu">
                 <li class="nav-item">
@@ -23,6 +19,7 @@
                         <span>Inicio</span>
                     </a>
                 </li>
+
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle">
                         <i class="fas fa-chalkboard-teacher"></i>
@@ -34,48 +31,30 @@
                             <i class="fas fa-users-cog"></i>
                             Lista docentes
                         </a>
-
                     </div>
-
                 </li>
-<!--                <li class="nav-item">-->
-<!--                    <a th:href="@{/admin/docentes}" class="nav-link">-->
-<!--                    <i class="fas fa-chalkboard-teacher"></i>-->
-<!--                        <span>Docentes</span>-->
-<!--                    </a>-->
-<!--                </li>-->
+
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle">
-                        <i class="fas fa-book"></i>
-                        <span>Cursos</span>
+                        <i class="fas fa-calendar-alt"></i> <span>Horarios</span>
                         <i class="fas fa-chevron-down dropdown-icon"></i>
                     </a>
                     <div class="dropdown-menu">
-                        <a th:href="@{/admin/usuarios}" class="dropdown-item">
-                            <i class="fas fa-book"></i>
+                        <a th:href="@{/horario/listaPorDocente}" class="dropdown-item">
+                            <i class="fas fa-chalkboard-teacher"></i>
                             Por docente
                         </a>
-                        <a th:href="@{/admin/usuarios}" class="dropdown-item">
-                            <i class="fas fa-book"></i>
+                        <a th:href="@{/admin/horario-paralelo}" class="dropdown-item">
+                            <i class="fas fa-users"></i>
                             Por paralelo
                         </a>
                     </div>
-
                 </li>
-<!--                <li class="nav-item">-->
-<!--                    <a  class="nav-link">-->
-<!--                        <i class="fas fa-book"></i>-->
-<!--                        <span>Cursos</span>-->
-<!--                    </a>-->
-<!--                </li>-->
-
             </ul>
         </div>
 
-        <!--logout-->
         <div class="navbar-profile">
             <div class="profile-menu-items">
-                <!--cerrar sesion-->
                 <form th:action="@{/logout}" method="post" class="logout-form">
                     <button type="submit" class="logout-btn">
                         <i class="fas fa-sign-out-alt"></i>
@@ -85,13 +64,10 @@
             </div>
         </div>
     </div>
-    <!--menu movil-->
+
     <button class="mobile-menu-btn">
         <i class="fas fa-bars"></i>
     </button>
-    </div>
-    </div>
-
 </nav>
 </body>
 </html>

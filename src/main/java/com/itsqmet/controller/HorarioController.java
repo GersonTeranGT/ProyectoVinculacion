@@ -20,4 +20,8 @@ public class HorarioController {
     public String verHorarioDocente(){
         return "pages/listaHorariosDocente";
     }
+    @GetMapping("/basica")
+    public String mostrarHorarioBasica() {
+        return "pages/crearHorarioBasica";
+    }
 }

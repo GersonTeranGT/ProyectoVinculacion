@@ -19,5 +19,10 @@ public class HorarioController {
     @GetMapping ("/listaPorDocente")
     public String verHorarioDocente(){
         return "pages/listaHorariosDocente";
+
+    }
+    @GetMapping("/listaPorCurso")
+    public String verHorarioCurso(){
+        return "pages/listaHorariosCurso";
     }
 }

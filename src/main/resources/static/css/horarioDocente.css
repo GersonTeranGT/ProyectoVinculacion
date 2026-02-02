@@ -1,0 +1,42 @@
+/* --- Estilos Generales --- */
+:root {
+    --border-manual: #e5e7eb;
+}
+
+/* --- Tabla --- */
+.table-manual {
+    border-separate: separate;
+    border-spacing: 10px;
+}
+
+.table-manual th {
+    border: 1px solid var(--border-manual) !important;
+    background-color: white;
+    padding: 12px;
+    border-radius: 4px;
+    color: #374151;
+}
+
+.table-manual td {
+    border: 1px solid var(--border-manual) !important;
+    background-color: white;
+    border-radius: 4px;
+    height: 60px;
+    min-width: 120px;
+}
+
+/* Recreo estático (solo fondo gris suave) */
+tr.bg-gray-50 td {
+    background-color: #f9fafb !important;
+    color: #94a3b8 !important;
+}
+
+/* --- Botón Imprimir --- */
+.btn-print-main {
+    background-color: #111827; /* Negro sólido */
+    color: white;
+}
+
+.btn-print-main:hover {
+    background-color: #374151;
+}

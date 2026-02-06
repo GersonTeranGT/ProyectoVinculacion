@@ -2,6 +2,7 @@ package com.itsqmet.service;
 
 import com.itsqmet.entity.User;
 import com.itsqmet.repository.UserRepository;
+import com.itsqmet.role.Rol;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -21,20 +24,46 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        // BUSCAR USUARIO EN LA BASE DE DATOS
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado: " + username));
 
-        // CONVERTIR EL ROL DE LA ENTITY USER A GRANTEDAUTHORITY
         Collection<GrantedAuthority> authorities = Collections.singletonList(
                 new SimpleGrantedAuthority(user.getRol().name())
         );
 
-        // RETORNAR USERDETAILS DE SPRING SECURITY
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),
                 authorities
         );
+    }
+
+    // --- MÉTODOS QUE FALTABAN PARA EL DOCENTE CONTROLLER ---
+
+    public void guardarUsuario(User user) {
+        if (user.getId() == null) {
+            if (user.getUsername() == null || user.getUsername().isEmpty()) {
+                user.setUsername(user.getNombre().toLowerCase().replace(" ", "") + (int) (Math.random() * 100));
+            }
+            if (user.getPassword() == null || user.getPassword().isEmpty()) {
+                user.setPassword("1234");
+            }
+            if (user.getRol() == null) {
+                user.setRol(Rol.ROLE_DOCENTE);
+            }
+        }
+        userRepository.save(user);
+    }
+
+    public List<User> listarUsuarios() {
+        return userRepository.findAll();
+    }
+
+    public void eliminarUsuario(Long id) {
+        userRepository.deleteById(id);
+    }
+
+    public Optional<User> buscarPorId(Long id) {
+        return userRepository.findById(id);
     }
 }

@@ -8,8 +8,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/admin")
 public class AdminController {
 
+    // Panel principal
     @GetMapping
-    public String panelAdmin(){
+    public String panelAdmin() {
         return "pages/panelAdmin";
+    }
+
+    // Docentes
+    @GetMapping("/docentes")
+    public String docentes() {
+        return "pages/listaDocente";
+    }
+
+    // Cursos
+    @GetMapping("/cursos")
+    public String cursos() {
+        return "pages/cursos";
+    }
+
+    // Usuarios
+    @GetMapping("/usuarios")
+    public String usuarios() {
+        return "pages/listaUsers";
+    }
+
+    @GetMapping("/horario-docente")
+    public String horarioDocente() {return "pages/listaHorariosDocente";
     }
 }

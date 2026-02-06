@@ -1,251 +1,254 @@
+/* --- VARIABLES GLOBALES --- */
 :root {
-    --bg-color: #f8f9fa;
-    --primary-color: #4a90e2;
-    --text-main: #333;
-    --text-muted: #777;
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --bg-color: #f3f4f6;
     --card-bg: #ffffff;
-    --border-color: #e0e0e0;
+    --text-main: #1f2937;
+    --text-muted: #6b7280;
+    --border-color: #e5e7eb;
+    --radius-md: 12px;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif !important;
     background-color: var(--bg-color);
     color: var(--text-main);
     margin: 0;
+    -webkit-font-smoothing: antialiased;
 }
 
+/* --- HEADER --- */
 .header {
     text-align: center;
+    padding: 40px 20px 30px;
+    background: white;
+    box-shadow: var(--shadow-sm);
     margin-bottom: 40px;
 }
 
 .header h1 {
-    font-size: 2.5rem;
-    color: #2c3e50;
-    margin-bottom: 5px;
+    font-size: clamp(1.5rem, 5vw, 2.2rem); /* Tamaño fluido para zoom y móvil */
+    color: var(--text-main);
+    margin: 0 0 10px 0;
+    font-weight: 800;
+    letter-spacing: -0.5px;
 }
 
 .header p {
     color: var(--text-muted);
     font-size: 1.1rem;
+    margin: 0;
 }
 
-.schedule-section {
-    margin-bottom: 50px;
+/* --- BARRA DE SELECCIÓN (CURSO / PARALELO) --- */
+.selection-bar-container {
+    max-width: 1100px;
+    margin: 0 auto 50px auto;
+    padding: 0 20px;
 }
 
-.section-title {
-    font-size: 1.5rem;
-    border-left: 5px solid var(--primary-color);
-    padding-left: 15px;
-    margin-bottom: 20px;
+.selection-grid {
+    display: grid;
+    /* Se ajusta automáticamente: si no caben dos de 300px, se pone uno solo */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
 }
 
-.table-container {
-    overflow-x: auto;
-    background: white;
-    padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+.selector-label {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.schedule-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 10px; /* Espacio entre celdas tipo tarjetas */
-}
-
-.schedule-table th {
-    background-color: #ededed;
-    padding: 15px;
-    border-radius: 10px;
-    font-weight: 600;
-    text-align: center !important; /* Importante para vencer a Tailwind */
-    color: #333;
-}
-
-.time-col {
-    background-color: #f1f3f5;
-    font-weight: bold;
-    text-align: center !important;
-    width: 120px;
-    border-radius: 10px;
-    color: #555;
-}
-
-/* Celdas generales */
-.schedule-table td {
-    height: 80px;
-    min-width: 120px;
-    vertical-align: middle;
-    text-align: center !important; /* Importante para centrar botones */
-    border: 2px dashed #eee;
-    border-radius: 12px;
-    transition: all 0.3s;
-}
-
-/* Estilo para el botón "+" */
-.add-btn {
-    background: none;
-    border: none;
-    font-size: 24px;
-    color: #ccc;
-    cursor: pointer;
-    width: 100%;
-    height: 100%;
-    display: flex;       /* centrar el +  */
-    align-items: center;
-    justify-content: center;
-}
-
-.add-btn:hover {
-    color: var(--primary-color);
-    background-color: #f0f7ff;
-    border-radius: 10px;
-}
-
-/* Estilo para una materia ya asignada */
-.class-card {
-    border: none !important;
-    background-color: #fff;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    border-left: 5px solid var(--primary-color) !important;
-    padding: 10px;
-    text-align: left !important; /* El contenido de la tarjeta sí va a la izq */
-}
-
-.math { border-left-color: #4a90e2 !important; }
-
-/* -------------------------------------------------*/
-/* --- ESTILOS DEL INPUT DESPLEGABLE (DROPDOWN) --- */
-.teacher-select-section {
-    margin-top: 20px;
-    margin-bottom: 30px;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-    position: relative;
-    z-index: 100;
-}
-
-.section-subtitle {
-    font-size: 1.2rem;
-    color: #333;
-    font-weight: 600;
-    margin-bottom: 10px;
-}
-
+/* Dropdowns Estilizados */
 .custom-dropdown {
     position: relative;
     width: 100%;
-    font-family: inherit;
 }
 
 .dropdown-selected {
-    background-color: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 12px;
+    background: var(--card-bg);
+    border: 2px solid transparent;
     padding: 15px 20px;
+    border-radius: var(--radius-md);
     cursor: pointer;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    box-shadow: var(--shadow-md);
+    transition: all 0.2s ease;
 }
 
 .dropdown-selected:hover {
-    border-color: var(--primary-color);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-}
-
-.dropdown-selected span {
-    color: #999;
-    font-size: 1.1rem;
-}
-
-.arrow-icon {
-    font-style: normal;
-    font-size: 0.9rem;
-    color: #aaa;
-    transition: transform 0.3s;
-}
-
-.custom-dropdown.active .arrow-icon {
-    transform: rotate(180deg);
-}
-
-.custom-dropdown.active .dropdown-options {
-    display: block;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
 }
 
 .dropdown-options {
     display: none;
     position: absolute;
-    top: 115%;
+    top: calc(100% + 5px);
     left: 0;
     width: 100%;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-    border: 1px solid #eee;
-    overflow: hidden;
-    z-index: 200;
+    background: white;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    z-index: 100; /* Asegura que no se tape con la tabla */
+    border: 1px solid var(--border-color);
 }
 
-.dropdown-item {
-    padding: 15px 20px;
-    border-bottom: 1px solid #f9f9f9;
+.dropdown-options.show { display: block; }
+
+/* --- TABLA DE HORARIOS (EL "CUBITO" FLEXIBLE) --- */
+.schedule-section {
+    max-width: 1400px;
+    margin: 0 auto 60px;
+    padding: 0 20px;
+}
+
+.section-title {
+    display: block;
+    width: 100%;
+    font-size: 2.2rem;           /* Tamaño grande */
+    font-weight: 800;            /* Muy negrita */
+    color: #1a202c;              /* Negro elegante */
+    margin: 45px 0 15px 0;       /* Espaciado arriba y abajo */
+    padding-bottom: 12px;        /* Espacio sobre la línea */
+    border-bottom: 2px solid #e2e8f0; /* La línea gris de tu ejemplo */
+    letter-spacing: -0.5px;      /* Estilo moderno y compacto */
+    text-align: left;            /* Alineado a la izquierda */
+}
+
+.table-container {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: var(--shadow-md);
+    overflow-x: auto; /* Scroll lateral para ZOOM 150% y Móvil */
+    width: 100%;
+    display: block;
+}
+
+.schedule-table {
+    width: 100%;
+    min-width: 900px; /* Protege los cubitos para que no se aplasten */
+    border-collapse: separate;
+    border-spacing: 10px;
+}
+
+.schedule-table th {
+    text-align: center;
+    padding: 15px;
+    color: var(--text-muted);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+.time-col {
+    background-color: #f8fafc;
+    color: var(--text-main);
+    font-weight: 700;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    border: 1px solid var(--border-color);
+    text-align: center;
+    vertical-align: middle;
+    padding: 10px;
+    min-width: 100px;
+}
+
+.schedule-table td:not(.time-col) {
+    height: 120px;
+    min-width: 150px; /* Ancho mínimo para mantener forma de cubo */
+    vertical-align: top;
+    border-radius: var(--radius-md);
+    border: 2px dashed #e5e7eb;
+    background: #fafafa;
+    position: relative;
+    padding: 0;
+}
+
+/* Botón + */
+.add-btn {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: transparent;
+    font-size: 2rem;
+    color: #d1d5db;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 15px;
-    transition: background 0.2s;
-}
-
-.dropdown-item:hover {
-    background-color: #f5f8ff;
-}
-
-.t-name {
-    display: block;
-    font-weight: 700;
-    color: #333;
-    font-size: 1rem;
-}
-
-.t-subject {
-    font-size: 0.9rem;
-    color: #777;
-}
-
-.teacher-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: #eee;
-    color: white;
-    display: flex;
     justify-content: center;
+}
+
+/* --- TARJETA DE CLASE ASIGNADA --- */
+.class-card {
+    height: 100%;
+    padding: 10px;
+    border-radius: 10px !important;
+    background: white;
+    border-left: 6px solid;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.card-subject {
+    font-weight: 800;
+    font-size: 0.9rem;
+    word-break: break-word; /* Evita desbordes por palabras largas */
+    line-height: 1.2;
+}
+
+/* --- MODAL ADAPTATIVO --- */
+.modal-overlay {
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
     align-items: center;
-    font-weight: bold;
-    flex-shrink: 0;
+    justify-content: center;
+    z-index: 1000;
 }
 
-/* Colores de avatares */
-.c1 { background-color: #4a90e2; }
-.c2 { background-color: #2ecc71; }
-.c3 { background-color: #f1c40f; }
-.c4 { background-color: #9b59b6; }
-
-/* --- Estilos de las Tablas (Jornadas) --- */
-.schedule-section {
-    margin-bottom: 50px;
+.modal-content {
+    background: white;
+    border-radius: 16px;
+    padding: 24px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90vh; /* Scroll interno si el zoom es muy alto */
+    overflow-y: auto;
 }
-.section-title {
-    font-size: 1.5rem;
-    border-left: 5px solid var(--primary-color);
-    padding-left: 15px;
-    margin-bottom: 20px;
-    font-weight: bold; /* Tailwind quita la negrita a veces */
+
+/* --- MEDIA QUERIES PARA MÓVIL Y ZOOM EXTREMO --- */
+
+@media (max-width: 768px) {
+    .header { padding: 20px 10px; }
+    .selection-grid { grid-template-columns: 1fr; }
+    .table-container { padding: 10px; }
+    .schedule-table { border-spacing: 5px; }
+    .schedule-table td:not(.time-col) { height: 100px; }
+}
+
+/* Ajuste específico para cuando el zoom hace que la pantalla sea "pequeña" */
+@media (max-width: 1100px) {
+    .selection-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+
 }

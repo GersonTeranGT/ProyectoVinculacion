@@ -233,3 +233,168 @@
     transform: translateY(0);
     transition: transform 0.1s ease;
 }
+/* Estilos para el dropdown de crear usuario */
+
+.crear-usuario-dropdown {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.btn-crear-usuario {
+    background: linear-gradient(135deg, #10b981 0%, #047857 100%);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-crear-usuario:hover {
+    background: linear-gradient(135deg, #0fa968 0%, #036646 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+}
+
+/* Efecto de brillo al pasar el mouse */
+.btn-crear-usuario::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.7s ease;
+}
+
+.btn-crear-usuario:hover::before {
+    left: 100%;
+}
+
+/* Mostrar el dropdown al hacer hover en el contenedor */
+.crear-usuario-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.crear-usuario-dropdown:hover .fa-chevron-down {
+    transform: rotate(180deg);
+}
+
+/* Estilos del menú desplegable */
+.dropdown-menu {
+    min-width: 280px;
+    border-radius: 10px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.98);
+}
+
+.dropdown-item {
+    color: #333;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.dropdown-item:hover {
+    background: linear-gradient(90deg, rgba(16, 185, 129, 0.05), rgba(16, 185, 129, 0.1));
+    padding-left: 20px;
+}
+
+.dropdown-item:first-child {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.dropdown-item:last-child {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+/* Iconos específicos para cada opción */
+.dropdown-item i {
+    font-size: 1.1rem;
+    width: 24px;
+    text-align: center;
+}
+
+/* Efecto hover en el texto */
+.dropdown-item:hover .font-medium {
+    color: #047857;
+}
+
+/* Versión alternativa con flecha animada */
+.btn-crear-usuario .fa-chevron-down {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Para dispositivos táctiles (tablets y móviles) */
+@media (max-width: 768px) {
+    .crear-usuario-dropdown {
+        position: static;
+    }
+
+    .dropdown-menu {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%) translateY(2px);
+        width: 95%;
+        max-width: 300px;
+    }
+
+    .crear-usuario-dropdown:hover .dropdown-menu {
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* Indicador visual de que tiene opciones */
+.btn-crear-usuario::after {
+    content: '';
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 8px;
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 6px rgba(255, 255, 255, 0);
+    }
+
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+    }
+}
+/* Espacio para el footer y evitar que el dropdown se corte */
+.admin-panel {
+    min-height: calc(100vh - 200px); /* Ajusta según la altura de tu navbar y footer */
+    padding-bottom: 80px !important; /* Espacio extra en la parte inferior */
+}
+
+/* Asegurar que el dropdown tenga espacio para mostrarse */
+.crear-usuario-dropdown {
+    z-index: 40; /* Mayor que el footer */
+}
+
+
+
+/* Contenedor principal de la página */
+.main-container {
+    position: relative;
+    min-height: 100vh;
+}

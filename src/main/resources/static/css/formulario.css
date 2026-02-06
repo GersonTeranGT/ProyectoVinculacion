@@ -143,3 +143,37 @@ html, body {
     from { opacity: 0; transform: translateX(-20px); } /* Viene desde la izquierda */
     to { opacity: 1; transform: translateX(0); }
 }
+/* Estilos para campos hidden */
+input[type="hidden"] {
+    display: none !important;
+    visibility: hidden !important;
+    position: absolute !important;
+    left: -9999px !important;
+    width: 0 !important;
+    height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: 0 !important;
+}
+
+/* Asegurar que el contenedor mantenga su tamaño */
+#form-body {
+    position: relative;
+}
+
+/* Estilos específicos para selects con opciones seleccionadas */
+.form-inp select option:first-child[disabled] {
+    color: #999;
+}
+
+.form-inp select option {
+    color: #333;
+}
+
+/* Mantener el tamaño del formulario */
+#form-ui {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+    position: relative;
+}

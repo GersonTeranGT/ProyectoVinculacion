@@ -2,7 +2,7 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org" class="h-full">
 <head>
     <meta charset="UTF-8">
-    <title>Registro de Docente</title>
+    <title th:text="${docente.id != null} ? 'Editar Docente' : 'Registro de Docente'">Registro de Docente</title>
     <link rel="icon" th:href="@{/images/faviconLogo.png}">
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
     <link rel="stylesheet" th:href="@{/css/footer.css}">
@@ -20,10 +20,22 @@
 
     <div id="form-side">
         <div id="form-ui">
-            <form th:action="@{/guardarDocente}" th:object="${docente}" method="post" id="form">
+            <form th:action="@{/guardarDocente}" th:object="${docente}" method="post" id="form" novalidate>
+                <!-- Campo hidden para ID -->
+                <input type="hidden" th:field="*{id}" id="id">>
+
+                <!-- Campo hidden para contraseña (en edición) -->
+                <input type="hidden" th:field="*{password}" th:if="${docente.id != null}">
+
+                <!-- Campo hidden para username (en edición) -->
+                <input type="hidden" th:field="*{username}" th:if="${docente.id != null}">
+
+                <!-- Campo hidden para rol -->
+                <input type="hidden" th:field="*{rol}" th:if="${docente.id != null}">
+
                 <div id="form-body">
                     <div id="welcome-lines">
-                        <div id="welcome-line-1">Registro del Docente</div>
+                        <div id="welcome-line-1" th:text="${docente.id != null} ? 'Editar Docente' : 'Registro del Docente'"></div>
                         <div id="welcome-line-2">Unidad Educativa Aida Gallegos</div>
                     </div>
 
@@ -32,75 +44,95 @@
                             <label class="input-label">Ingrese el nombre del docente</label>
                             <div class="form-inp">
                                 <i class="fas fa-user"></i>
-                                <input placeholder="Ej: Juan Pérez" type="text" th:field="*{nombre}" required>
+                                <input placeholder="Ej: Juan Pérez"
+                                       type="text"
+                                       th:field="*{nombre}"
+                                       id="nombre"
+                                       required>
                             </div>
+                            <div class="error-message" id="nombreError"></div>
                         </div>
 
                         <div class="input-group">
                             <label class="input-label">Seleccione el curso a cargo</label>
                             <div class="form-inp">
                                 <i class="fas fa-graduation-cap"></i>
-                                <select th:field="*{cursoAsignado}" required>
-                                    <option value="" disabled selected>Elegir curso...</option>
-                                    <option value="Educacion Basica">Educacion Basica</option>
-                                    <option value="Bachillerato">Bachillerato</option>
-                                    <option value="Hibrido">Hibrido</option>
+                                <select th:field="*{cursoAsignado}" id="cursoAsignado" required>
+                                    <option value="" disabled>Elegir curso...</option>
+                                    <option value="Educacion Basica" th:selected="${docente.cursoAsignado == 'Educacion Basica'}">Educacion Basica</option>
+                                    <option value="Bachillerato" th:selected="${docente.cursoAsignado == 'Bachillerato'}">Bachillerato</option>
+                                    <option value="Hibrido" th:selected="${docente.cursoAsignado == 'Hibrido'}">Hibrido</option>
                                 </select>
                             </div>
+                            <div class="error-message" id="cursoError"></div>
                         </div>
 
                         <div class="input-group">
                             <label class="input-label">Seleccione la jornada laboral</label>
                             <div class="form-inp">
                                 <i class="fas fa-sun"></i>
-                                <select th:field="*{jornada}" required>
-                                    <option value="" disabled selected>Elegir jornada...</option>
-                                    <option value="Matutina">Matutina</option>
-                                    <option value="Vespertina">Vespertina</option>
-                                    <option value="Hibrido">Hibrida</option>
+                                <select th:field="*{jornada}" id="jornada" required>
+                                    <option value="" disabled>Elegir jornada...</option>
+                                    <option value="Matutina" th:selected="${docente.jornada == 'Matutina'}">Matutina</option>
+                                    <option value="Vespertina" th:selected="${docente.jornada == 'Vespertina'}">Vespertina</option>
+                                    <option value="Hibrido" th:selected="${docente.jornada == 'Hibrido'}">Hibrida</option>
                                 </select>
                             </div>
+                            <div class="error-message" id="jornadaError"></div>
                         </div>
 
                         <div class="input-group">
                             <label class="input-label">Materia que imparte</label>
                             <div class="form-inp">
                                 <i class="fas fa-book"></i>
-                                <select th:field="*{materia}" required>
-                                    <option value="" disabled selected>Elegir materia...</option>
-                                    <option value="Matemáticas">Matemáticas</option>
-                                    <option value="Lengua y Literatura">Lengua y Literatura</option>
-                                    <option value="Ciencias Naturales">Ciencias Naturales</option>
-                                    <option value="Estudios Sociales">Estudios Sociales</option>
-                                    <option value="Ingles">Ingles</option>
-                                    <option value="Educacion Fisica">Educacion Fisica</option>
-                                    <option value="ECA">ECA</option>
-                                    <option value="ANIM LECT">ANIM LECT</option>
-                                    <option value="OBP">OBP</option>
+                                <select th:field="*{materia}" id="materia" required>
+                                    <option value="" disabled>Elegir materia...</option>
+                                    <option value="Matemáticas" th:selected="${docente.materia == 'Matemáticas'}">Matemáticas</option>
+                                    <option value="Lengua y Literatura" th:selected="${docente.materia == 'Lengua y Literatura'}">Lengua y Literatura</option>
+                                    <option value="Ciencias Naturales" th:selected="${docente.materia == 'Ciencias Naturales'}">Ciencias Naturales</option>
+                                    <option value="Estudios Sociales" th:selected="${docente.materia == 'Estudios Sociales'}">Estudios Sociales</option>
+                                    <option value="Ingles" th:selected="${docente.materia == 'Ingles'}">Ingles</option>
+                                    <option value="Educacion Fisica" th:selected="${docente.materia == 'Educacion Fisica'}">Educacion Fisica</option>
+                                    <option value="ECA" th:selected="${docente.materia == 'ECA'}">ECA</option>
+                                    <option value="ANIM LECT" th:selected="${docente.materia == 'ANIM LECT'}">ANIM LECT</option>
+                                    <option value="OBP" th:selected="${docente.materia == 'OBP'}">OBP</option>
                                 </select>
                             </div>
+                            <div class="error-message" id="materiaError"></div>
                         </div>
 
                         <div class="input-group">
                             <label class="input-label">Correo electrónico institucional</label>
                             <div class="form-inp">
                                 <i class="fas fa-envelope"></i>
-                                <input placeholder="docente@ejemplo.com" type="email" th:field="*{email}" required>
+                                <input placeholder="docente@ejemplo.com"
+                                       type="email"
+                                       th:field="*{email}"
+                                       id="email"
+                                       required>
                             </div>
+                            <div class="error-message" id="emailError"></div>
                         </div>
 
                         <div class="input-group">
                             <label class="input-label">Número de contacto</label>
                             <div class="form-inp">
                                 <i class="fas fa-phone"></i>
-                                <input placeholder="0987654321" type="tel" th:field="*{telefono}" required>
+                                <input placeholder="0987654321"
+                                       type="tel"
+                                       th:field="*{telefono}"
+                                       id="telefono"
+                                       required>
                             </div>
+                            <div class="error-message" id="telefonoError"></div>
                         </div>
                     </div>
 
                     <div id="submit-button-cvr">
                         <button id="submit-button" type="submit">
-                            <i class="fas fa-user-plus"></i> REGISTRAR DOCENTE
+                            <i class="fas fa-user-plus" th:if="${docente.id == null}"></i>
+                            <i class="fas fa-save" th:if="${docente.id != null}"></i>
+                            <span th:text="${docente.id != null} ? 'ACTUALIZAR DOCENTE' : 'REGISTRAR DOCENTE'"></span>
                         </button>
                     </div>
                 </div>
@@ -109,6 +141,8 @@
     </div>
 </div>
 
-<footer th:replace="~{pages/listaDocente :: footer}"></footer>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+
+<script th:src="@{/js/formulario.js}"></script>
 </body>
 </html>

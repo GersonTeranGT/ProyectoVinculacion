@@ -321,3 +321,170 @@ body {
     margin-top: 5px;
     font-size: 0.8rem;
 }
+/* Estilos para el formulario docente */
+#main-container {
+    display: flex;
+    max-width: 1200px;
+    width: 100%;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    min-height: 700px;
+    margin: 40px auto;
+}
+
+#image-side {
+    flex: 1;
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+}
+
+#image-side img {
+    max-width: 300px;
+    height: auto;
+    object-fit: contain;
+}
+
+#form-side {
+    flex: 1.5;
+    padding: 50px;
+    display: flex;
+    align-items: center;
+}
+
+#form-ui {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+#form-body {
+    width: 100%;
+}
+
+#welcome-lines {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+#welcome-line-1 {
+    color: #2a5298;
+    font-size: 2.2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+#welcome-line-2 {
+    color: #666;
+    font-size: 1.2rem;
+}
+
+#input-area {
+    margin-bottom: 30px;
+}
+
+.input-group {
+    margin-bottom: 25px;
+}
+
+.input-label {
+    display: block;
+    margin-bottom: 8px;
+    color: #444;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.form-inp {
+    position: relative;
+}
+
+.form-inp i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.form-inp input,
+.form-inp select {
+    width: 100%;
+    padding: 14px 15px 14px 45px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: #f8f9fa;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.form-inp select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%23666' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+    background-size: 12px;
+    padding-right: 40px;
+}
+
+.form-inp input:focus,
+.form-inp select:focus {
+    outline: none;
+    border-color: #2a5298;
+    background-color: white;
+    box-shadow: 0 0 0 3px rgba(42, 82, 152, 0.1);
+}
+
+#submit-button-cvr {
+    margin-top: 10px;
+}
+
+#submit-button {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+#submit-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 7px 15px rgba(42, 82, 152, 0.3);
+}
+
+/* Estilos para mensajes de error */
+.error-message {
+    color: #c62828;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    min-height: 18px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.form-inp input.error,
+.form-inp select.error {
+    border-color: #c62828;
+    background-color: #ffebee;
+}
+
+.form-inp input.valid,
+.form-inp select.valid {
+    border-color: #2e7d32;
+    background-color: #e8f5e9;
+}

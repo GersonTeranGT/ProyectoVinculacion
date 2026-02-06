@@ -25,10 +25,6 @@ public class User {
     @Column(nullable = false)
     private String nombre;
 
-    @NotBlank(message = "El nombre de usuario es obligatorio")
-    @Size(min = 3, max = 20, message = "El usuario debe tener entre 3 y 20 caracteres")
-    @Pattern(regexp = "^[a-zA-Z0-9._-]+$",
-            message = "El nombre de usuario solo puede contener letras, números, puntos, guiones medios y guiones bajos")
     @Column(nullable = false, unique = true)
     private String username;
 
@@ -56,6 +52,6 @@ public class User {
     private String email;
 
     @NotBlank(message = "El teléfono es obligatorio")
-    @Pattern(regexp = "^[0-9]{10}$", message = "El teléfono debe tener 10 dígitos numéricos")
+    @Pattern(regexp = "^0[0-9]{9}$", message = "El teléfono debe empezar con 0 y tener 10 dígitos")
     private String telefono;
 }

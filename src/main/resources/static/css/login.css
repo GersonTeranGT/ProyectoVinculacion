@@ -276,6 +276,11 @@ body {
     justify-content: center;
     gap: 10px;
 }
+.btn-login:disabled {
+     opacity: 0.6;
+     cursor: not-allowed;
+ }
+
 
 .btn-login:hover {
     transform: translateY(-2px);

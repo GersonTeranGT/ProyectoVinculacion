@@ -3,16 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>Inicio</title>
-    <!--favicon-->
-    <link rel="icon" th:href="@{images/faviconLogo.png}">
-    <link rel="stylesheet" th:href="@{css/login.css}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <!-- favicon -->
+    <link rel="icon" th:href="@{images/faviconLogo.png}">
+
+    <!-- estilos -->
+    <link rel="stylesheet" th:href="@{css/login.css}">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
-<!--el inicio seria de una el login del sistema-->
+
 <div class="login-container">
-    <!-- Sección izquierda con logo e información -->
+
+    <!-- ================== IZQUIERDA ================== -->
     <div class="login-left">
         <div class="logo-container">
             <img th:src="@{images/faviconLogox.png}" alt="Logo Institución" class="logo">
@@ -36,30 +41,35 @@
         </div>
     </div>
 
-    <!-- Sección derecha con formulario -->
+    <!-- ================== DERECHA ================== -->
     <div class="login-right">
+
         <div class="form-container">
+
             <div class="form-header">
                 <h2>Iniciar Sesión</h2>
                 <p>Ingresa tus credenciales para acceder al sistema</p>
             </div>
 
-            <!--mensajes de error-success-->
-            <div th:if="${param.error}" class="alert alert-error">
-                <i class="fas fa-exclamation-circle"></i>
-                Credenciales incorrectas. Por favor, intenta nuevamente.
+            <!-- ERROR CLARO -->
+            <div th:if="${param.error}" class="alert alert-error strong-error">
+                <i class="fas fa-triangle-exclamation"></i>
+                <div>
+                    <strong>Credenciales incorrectas</strong>
+                    <p>El usuario o la contraseña no son válidos</p>
+                </div>
             </div>
+
+            <!-- LOGOUT -->
             <div th:if="${param.logout}" class="alert alert-success">
                 <i class="fas fa-check-circle"></i>
                 Has cerrado sesión exitosamente.
             </div>
-<!--            <div th:if="${param.registered}" class="alert alert-success">-->
-<!--                <i class="fas fa-check-circle"></i>-->
-<!--                Usuario registrado exitosamente. Ahora puedes iniciar sesión.-->
-<!--            </div>-->
 
-            <!--formulario de login-->
-            <form th:action="@{/login}" method="post" class="login-form" id="loginForm">
+            <!-- ================== FORMULARIO ================== -->
+            <form th:action="@{/login}" method="post" id="loginForm" class="login-form">
+
+                <!-- USUARIO -->
                 <div class="form-group">
                     <label for="username" class="form-label">
                         <i class="fas fa-user"></i> Usuario
@@ -69,46 +79,53 @@
                            name="username"
                            class="form-input"
                            placeholder="Ingresa tu usuario"
-                           required
                            autocomplete="username">
                 </div>
 
+                <!-- CONTRASEÑA (IGUAL QUE USUARIO) -->
                 <div class="form-group">
                     <label for="password" class="form-label">
                         <i class="fas fa-lock"></i> Contraseña
                     </label>
+
                     <div class="password-container">
                         <input type="password"
                                id="password"
                                name="password"
                                class="form-input"
                                placeholder="Ingresa tu contraseña"
-                               required
                                autocomplete="current-password">
-                        <button type="button" class="password-toggle" id="togglePassword">
+
+                        <!-- MOSTRAR / OCULTAR -->
+                        <button type="button"
+                                class="password-toggle"
+                                id="togglePassword">
                             <i class="fas fa-eye"></i>
                         </button>
                     </div>
                 </div>
 
-
-                <button type="submit" class="btn-login">
-                    <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                <!-- BOTÓN -->
+                <button type="submit" id="btnLogin" class="btn-login">
+                    <span id="btnText">Iniciar Sesión</span>
                 </button>
-<!--                <div class="form-footer">-->
-<!--                    <p>¿No tienes una cuenta?-->
-<!--                        <a th:href="@{/registro}" class="register-link">Regístrate aquí</a>-->
-<!--                    </p>-->
-<!--                </div>-->
+
+
             </form>
         </div>
 
+        <!-- INFO -->
         <div class="system-info">
             <p>Sistema de Gestión de Horarios v1.0</p>
-            <p class="copyright">© 2026 Unidad Educativa Aida Gallegos de Moncayo. Todos los derechos reservados.</p>
+            <p class="copyright">
+                © 2026 Unidad Educativa Aida Gallegos de Moncayo. Todos los derechos reservados.
+            </p>
         </div>
+
     </div>
 </div>
+
+<!-- JS -->
 <script th:src="@{js/login.js}"></script>
 
 </body>

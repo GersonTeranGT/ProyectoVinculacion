@@ -1,14 +1,11 @@
 package com.itsqmet.controller;
 
-import com.itsqmet.entity.User;
-import com.itsqmet.role.Rol;
-import com.itsqmet.service.UserService;
+import com.itsqmet.entity.Docente;
+import com.itsqmet.service.DocenteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -16,29 +13,39 @@ import java.util.List;
 public class DocenteController {
 
     @Autowired
-    private UserService userService;
+    private DocenteService docenteService;
 
     @GetMapping("/nuevoDocente")
     public String form(Model model) {
-        model.addAttribute("docente", new User());
+        model.addAttribute("docente", new Docente());
         return "pages/formularioDocente";
     }
 
     @PostMapping("/guardarDocente")
-    public String guardarDocente(@ModelAttribute("docente") User docente) {
-        if (docente.getUsername() == null || docente.getUsername().isEmpty()) {
-            docente.setUsername(docente.getEmail());
-        }
-        docente.setPassword("12345");
-        docente.setRol(Rol.ROLE_DOCENTE);
-        userService.guardarUsuario(docente);
+    public String guardarDocente(@ModelAttribute("docente") Docente docente) {
+        docenteService.guardarDocente(docente);
         return "redirect:/listaDocentes";
     }
 
     @GetMapping("/listaDocentes")
     public String mostrarListaDocente(Model model) {
-        List<User> usuarios = userService.listarUsuarios();
-        model.addAttribute("docentes", usuarios);
+        List<Docente> docentes = docenteService.listarDocentes();
+        model.addAttribute("docentes", docentes);
         return "pages/listaDocente";
+    }
+
+    @GetMapping("/editarDocente/{id}")
+    public String editarDocente(@PathVariable Long id, Model model) {
+        Docente docente = docenteService.buscarPorId(id);
+        model.addAttribute("docente", docente);
+        return "pages/formularioDocente";
+    }
+
+    @GetMapping("/eliminarDocente/{id}")
+    public String eliminarDocente(@PathVariable Long id) {
+        docenteService.eliminarDocente(id);
+
+        //BRYAN
+        return "redirect:/listaDocentes";
     }
 }

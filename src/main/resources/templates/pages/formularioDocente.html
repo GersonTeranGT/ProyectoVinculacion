@@ -2,7 +2,7 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org" class="h-full">
 <head>
     <meta charset="UTF-8">
-    <title>Registro de Docente</title>
+    <title th:text="${docente.id != null} ? 'Editar Docente' : 'Registro de Docente'">Registro de Docente</title>
     <link rel="icon" th:href="@{/images/faviconLogo.png}">
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
     <link rel="stylesheet" th:href="@{/css/footer.css}">
@@ -11,7 +11,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-<div th:replace="fragments/navbar :: navbar"></div>
+
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
 
 <div id="main-container">
     <div id="image-side">
@@ -21,9 +22,12 @@
     <div id="form-side">
         <div id="form-ui">
             <form th:action="@{/guardarDocente}" th:object="${docente}" method="post" id="form">
+
+                <input type="hidden" th:field="*{id}" />
+
                 <div id="form-body">
                     <div id="welcome-lines">
-                        <div id="welcome-line-1">Registro del Docente</div>
+                        <div id="welcome-line-1" th:text="${docente.id != null} ? 'Actualización de Datos' : 'Registro del Docente'">Registro del Docente</div>
                         <div id="welcome-line-2">Unidad Educativa Aida Gallegos</div>
                     </div>
 
@@ -100,15 +104,21 @@
 
                     <div id="submit-button-cvr">
                         <button id="submit-button" type="submit">
-                            <i class="fas fa-user-plus"></i> REGISTRAR DOCENTE
+                            <i th:class="${docente.id != null} ? 'fas fa-save' : 'fas fa-user-plus'"></i>
+                            <span th:text="${docente.id != null} ? ' GUARDAR CAMBIOS' : ' REGISTRAR DOCENTE'"> REGISTRAR DOCENTE</span>
                         </button>
                     </div>
+
+                    <div style="text-align: center; margin-top: 10px;">
+                        <a th:href="@{/listaDocentes}" class="text-sm text-gray-500 hover:text-gray-800">Cancelar y volver</a>
+                    </div>
+
                 </div>
             </form>
         </div>
     </div>
 </div>
 
-<footer th:replace="~{pages/listaDocente :: footer}"></footer>
+<footer th:replace="~{fragments/footer :: footer}"></footer>
 </body>
 </html>

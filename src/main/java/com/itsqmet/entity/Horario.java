@@ -14,7 +14,11 @@ public class Horario {
     private String curso;
     private String paralelo;
     private String materia;
-    private String docente;
+
+    @ManyToOne
+    @JoinColumn(name = "docente_id")
+    private Docente docente;
+
     private String diaSemana;
     private LocalTime horaInicio;
     private LocalTime horaFin;
@@ -23,7 +27,7 @@ public class Horario {
     public Horario() {
     }
 
-    public Horario(String curso, String paralelo, String materia, String docente, String diaSemana, LocalTime horaInicio, LocalTime horaFin, String jornada) {
+    public Horario(String curso, String paralelo, String materia, Docente docente, String diaSemana, LocalTime horaInicio, LocalTime horaFin, String jornada) {
         this.curso = curso;
         this.paralelo = paralelo;
         this.materia = materia;
@@ -42,8 +46,8 @@ public class Horario {
     public void setParalelo(String paralelo) { this.paralelo = paralelo; }
     public String getMateria() { return materia; }
     public void setMateria(String materia) { this.materia = materia; }
-    public String getDocente() { return docente; }
-    public void setDocente(String docente) { this.docente = docente; }
+    public Docente getDocente() { return docente; }
+    public void setDocente(Docente docente) { this.docente = docente; }
     public String getDiaSemana() { return diaSemana; }
     public void setDiaSemana(String diaSemana) { this.diaSemana = diaSemana; }
     public LocalTime getHoraInicio() { return horaInicio; }

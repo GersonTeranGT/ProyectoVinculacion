@@ -1,19 +1,17 @@
 /* =========================================
    VARIABLES GLOBALES
    ========================================= */
-let currentCell = null;        // Celda que estamos editando
-let selectedColor = '#3b82f6'; // Color seleccionado por defecto (Azul)
+let currentCell = null;
+let selectedColor = '#3b82f6';
 
 /* =========================================
    1. LÓGICA DE BARRAS DE SELECCIÓN (ARRIBA)
    ========================================= */
 
-// Abrir/Cerrar los menús desplegables
 function toggleCustomDropdown(id) {
     const options = document.querySelector(`#${id} .dropdown-options`);
     const arrow = document.querySelector(`#${id} .arrow-icon`);
 
-    // Cerrar otros dropdowns
     document.querySelectorAll('.dropdown-options').forEach(opt => {
         if(opt !== options) opt.classList.remove('show');
     });
@@ -21,16 +19,12 @@ function toggleCustomDropdown(id) {
         if(a !== arrow) a.style.transform = 'rotate(0deg)';
     });
 
-    // Alternar estado
     options.classList.toggle('show');
-    if(options.classList.contains('show')){
-        arrow.style.transform = 'rotate(180deg)';
-    } else {
-        arrow.style.transform = 'rotate(0deg)';
-    }
+    arrow.style.transform = options.classList.contains('show')
+        ? 'rotate(180deg)'
+        : 'rotate(0deg)';
 }
 
-// Seleccionar opción (Curso o Paralelo)
 function selectItem(type, value) {
     let textSpan, dropdownId;
 
@@ -58,14 +52,11 @@ function openModal(buttonElement) {
     const modal = document.getElementById('classModal');
     modal.style.display = 'flex';
 
-    // Guardamos la celda (td) donde se hizo clic.
     currentCell = buttonElement.closest('td');
 
-    // Opcional: Limpiar el formulario al abrir
     document.getElementById('modalMateria').value = '';
     document.getElementById('modalDocente').value = '';
-    document.getElementById('modalAula').value = '';
-    // Resetear color
+
     selectColor(document.querySelector('.color-option.c1'), '#3b82f6');
 }
 
@@ -79,37 +70,42 @@ function closeModal() {
 function selectColor(element, colorHex) {
     document.querySelectorAll('.color-option').forEach(el => {
         el.classList.remove('selected');
-        el.style.ringColor = 'transparent'; // Resetear anillo
     });
+
     element.classList.add('selected');
-    element.style.ringColor = '#1f2937'; // Color del anillo de selección
     selectedColor = colorHex;
 }
 
-// GUARDAR (FUNCIONA PARA AMBAS JORNADAS)
+// GUARDAR (VALIDANDO SOLO MATERIA Y DOCENTE)
 function saveSchedule() {
     if (!currentCell) return;
 
-    // 1. Obtener valores del nuevo formulario
-    const materia = document.getElementById('modalMateria').value || 'Sin Materia';
-    const docente = document.getElementById('modalDocente').value || 'Sin Docente';
-    const aula = document.getElementById('modalAula').value || 'N/A';
-    const horaInicio = document.getElementById('modalHoraInicio').value;
-    const horaFin = document.getElementById('modalHoraFin').value;
+    const materiaInput = document.getElementById('modalMateria');
+    const docenteInput = document.getElementById('modalDocente');
 
-    // Calcular duración (simple)
-    let duracion = '60min'; // Valor por defecto
-    if (horaInicio && horaFin) {
-        const inicio = new Date(`2000-01-01T${horaInicio}`);
-        const fin = new Date(`2000-01-01T${horaFin}`);
-        const diffMs = fin - inicio;
-        const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000);
-        if (diffMins > 0) {
-             duracion = `${diffMins}min`;
-        }
+    const materia = materiaInput.value.trim();
+    const docente = docenteInput.value.trim();
+
+    let error = false;
+
+    // Validación Materia
+    if (materia === '') {
+        materiaInput.classList.add('input-error');
+        error = true;
+    } else {
+        materiaInput.classList.remove('input-error');
     }
 
-    // 2. Generar la tarjeta HTML con el nuevo diseño
+    // Validación Docente
+    if (docente === '') {
+        docenteInput.classList.add('input-error');
+        error = true;
+    } else {
+        docenteInput.classList.remove('input-error');
+    }
+
+    if (error) return;
+
     const cardHtml = `
         <div class="class-card" style="border-left-color: ${selectedColor};">
             <div class="card-header">
@@ -121,33 +117,20 @@ function saveSchedule() {
                     <i class="fas fa-trash-alt"></i>
                 </button>
             </div>
-            <div class="card-details">
-                <span class="card-aula">${aula}</span>
-                <div class="card-time-info">
-                    <div class="card-hours">${horaInicio} - ${horaFin}</div>
-                    <div class="card-duration">${duracion}</div>
-                </div>
-            </div>
         </div>
     `;
 
-    // 3. Insertar en la celda actual
     currentCell.innerHTML = cardHtml;
-
-    // Estilos para quitar borde punteado
     currentCell.style.border = 'none';
     currentCell.style.background = 'transparent';
 
     closeModal();
 }
 
-// ELIMINAR CLASE Y RESTAURAR EL "+"
+// ELIMINAR CLASE
 function clearCell(btnDelete) {
     const cell = btnDelete.closest('td');
-
     cell.innerHTML = '<button class="add-btn" onclick="openModal(this)">+</button>';
-
-    // Restaurar estilos originales
     cell.style.removeProperty('border');
     cell.style.removeProperty('background');
 }
@@ -155,10 +138,14 @@ function clearCell(btnDelete) {
 // CERRAR AL DAR CLIC FUERA
 window.onclick = function(event) {
     const modal = document.getElementById('classModal');
+
     if (event.target == modal) closeModal();
 
-    if (!event.target.closest('.custom-dropdown') && !event.target.closest('.modal-content')) {
-        document.querySelectorAll('.dropdown-options').forEach(opt => opt.classList.remove('show'));
-        document.querySelectorAll('.arrow-icon').forEach(a => a.style.transform = 'rotate(0deg)');
+    if (!event.target.closest('.custom-dropdown') &&
+        !event.target.closest('.modal-content')) {
+        document.querySelectorAll('.dropdown-options')
+            .forEach(opt => opt.classList.remove('show'));
+        document.querySelectorAll('.arrow-icon')
+            .forEach(a => a.style.transform = 'rotate(0deg)');
     }
 }

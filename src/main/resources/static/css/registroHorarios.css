@@ -249,6 +249,166 @@ body {
     .selection-grid {
         grid-template-columns: 1fr !important;
     }
+    /* =========================================
+       FEEDBACK VISUAL UX
+       ========================================= */
+
+    /* Hover en tarjetas */
+    .class-card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .class-card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+    }
+
+    /* Hover botón + */
+    .add-btn:hover {
+        background: #f1f5f9;
+        color: var(--primary-color);
+        border-radius: var(--radius-md);
+    }
+
+    /* Inputs con foco visible */
+    .modal-content input:focus,
+    .modal-content select:focus {
+        outline: none;
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+    }
+
+    /* Botón eliminar feedback */
+    .btn-delete-card {
+        transition: color 0.2s ease;
+    }
+
+    .btn-delete-card:hover {
+        color: #dc2626;
+    }
+    /* CELDAS */
+    .celda-activa {
+        background-color: #e3f2fd !important;
+        transition: 0.3s ease;
+    }
+
+    .guardado {
+        background-color: #d4edda !important;
+        font-weight: bold;
+    }
+
+    /* MODAL */
+    #modalHorario {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.4);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+    }
+
+    #modalHorario.mostrar {
+        display: flex;
+    }
+
+    .modal-contenido {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        width: 320px;
+        animation: aparecer 0.3s ease;
+    }
+
+    @keyframes aparecer {
+        from { transform: scale(0.9); opacity: 0; }
+        to { transform: scale(1); opacity: 1; }
+    }
+
+    .modal-contenido input {
+        width: 100%;
+        padding: 8px;
+        margin-top: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+
+    /* PREVIEW */
+    .preview-vacio {
+        margin-top: 10px;
+        padding: 8px;
+        background: #f1f1f1;
+        border-radius: 6px;
+        font-size: 13px;
+        color: #777;
+    }
+
+    .preview-activo {
+        margin-top: 10px;
+        padding: 8px;
+        background: #007bff;
+        color: white;
+        border-radius: 6px;
+        font-size: 13px;
+    }
+
+    /* BOTONES */
+    .modal-botones {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 15px;
+    }
+
+    .modal-botones button {
+        padding: 6px 12px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    #btnCancelar {
+        background: #dc3545;
+        color: white;
+    }
+
+    #btnGuardar {
+        background: #28a745;
+        color: white;
+    }
+
+    /* SPINNER */
+    .spinner {
+        margin: 10px auto;
+        width: 25px;
+        height: 25px;
+        border: 3px solid #ccc;
+        border-top: 3px solid #007bff;
+        border-radius: 50%;
+        animation: girar 1s linear infinite;
+    }
+
+    @keyframes girar {
+        100% { transform: rotate(360deg); }
+    }
+
+    .oculto {
+        display: none;
+    }
+
+    /* MENSAJES */
+    .exito {
+        color: green;
+        font-size: 13px;
+        margin-top: 8px;
+    }
+
+    .error {
+        color: red;
+        font-size: 13px;
+        margin-top: 8px;
+    }
+
+
 
 
 }

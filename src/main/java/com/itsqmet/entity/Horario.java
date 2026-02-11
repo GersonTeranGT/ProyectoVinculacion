@@ -11,8 +11,12 @@ public class Horario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     private String curso;
     private String paralelo;
+    private String jornada;
+
+
     private String materia;
 
     @ManyToOne
@@ -22,22 +26,10 @@ public class Horario {
     private String diaSemana;
     private LocalTime horaInicio;
     private LocalTime horaFin;
-    private String jornada;
 
-    public Horario() {
-    }
+    public Horario() {}
 
-    public Horario(String curso, String paralelo, String materia, Docente docente, String diaSemana, LocalTime horaInicio, LocalTime horaFin, String jornada) {
-        this.curso = curso;
-        this.paralelo = paralelo;
-        this.materia = materia;
-        this.docente = docente;
-        this.diaSemana = diaSemana;
-        this.horaInicio = horaInicio;
-        this.horaFin = horaFin;
-        this.jornada = jornada;
-    }
-
+    // Getters y Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
     public String getCurso() { return curso; }

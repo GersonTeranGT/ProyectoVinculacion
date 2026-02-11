@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Gestión de Docentes | U.E. Aida Gallegos</title>
-    <link rel="icon" th:href="@{/images/faviconLogo.png}">
+    <link rel="icon" th:href="@{/images/faviconLogo.png}" />
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet"/>
 
-    <link rel="stylesheet" th:href="@{/css/navbar.css}">
-    <link rel="stylesheet" th:href="@{/css/footer.css}">
-    <link rel="stylesheet" th:href="@{/css/listaDocente.css}">
+    <link rel="stylesheet" th:href="@{/css/navbar.css}" />
+    <link rel="stylesheet" th:href="@{/css/footer.css}" />
+    <link rel="stylesheet" th:href="@{/css/listaDocente.css}" />
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50 flex flex-col min-h-screen">
 
 <nav th:replace="~{fragments/navbar :: navbar}"></nav>
 
-<div class="max-w-7xl mx-auto p-4 mt-6">
+<div class="max-w-7xl mx-auto p-4 mt-6 flex-grow w-full">
 
     <div class="flex items-center justify-between mb-6">
         <h2 class="text-2xl font-bold" style="color: var(--primary-color);">
@@ -33,25 +33,41 @@
 
             <div class="form-group">
                 <label for="searchNombre" class="block text-sm font-bold text-gray-700 mb-2">Buscar por nombre</label>
-                <div class="relative">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i class="fas fa-user text-gray-400"></i>
+
+                <div class="flex items-center w-full border border-gray-300 rounded-lg bg-white overflow-hidden focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500 transition-all">
+
+                    <div class="pl-3 pr-2 text-gray-400">
+                        <i class="fas fa-search"></i>
                     </div>
+
                     <input type="text" id="searchNombre"
-                           class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm transition duration-150 ease-in-out"
-                           placeholder="Ej: Juan Pérez">
+                           class="w-full py-2.5 outline-none border-none focus:ring-0 bg-transparent text-sm text-gray-700 placeholder-gray-400"
+                           placeholder="Ej: Juan Pérez" />
+
+                    <button type="button" id="btnLimpiarNombre"
+                            class="px-3 py-2.5 text-gray-400 hover:text-red-500 cursor-pointer focus:outline-none bg-transparent">
+                        <i class="fas fa-times-circle text-lg"></i>
+                    </button>
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="searchMateria" class="block text-sm font-bold text-gray-700 mb-2">Buscar por asignatura</label>
-                <div class="relative">
-                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i class="fas fa-book text-gray-400"></i>
+
+                <div class="flex items-center w-full border border-gray-300 rounded-lg bg-white overflow-hidden focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-blue-500 transition-all">
+
+                    <div class="pl-3 pr-2 text-gray-400">
+                        <i class="fas fa-search"></i>
                     </div>
+
                     <input type="text" id="searchMateria"
-                           class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm transition duration-150 ease-in-out"
-                           placeholder="Ej: Matemáticas">
+                           class="w-full py-2.5 outline-none border-none focus:ring-0 bg-transparent text-sm text-gray-700 placeholder-gray-400"
+                           placeholder="Ej: Matemáticas" />
+
+                    <button type="button" id="btnLimpiarMateria"
+                            class="px-3 py-2.5 text-gray-400 hover:text-red-500 cursor-pointer focus:outline-none bg-transparent">
+                        <i class="fas fa-times-circle text-lg"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -74,54 +90,35 @@
             <tbody class="divide-y divide-gray-100">
 
             <tr th:each="docente : ${docentes}" class="bg-white hover:bg-gray-50 transition-colors">
-
-                <td class="px-4 py-4 font-semibold text-gray-900 name-col" th:text="${docente.nombre}">
-                    Juan Pérez
-                </td>
-
+                <td class="px-4 py-4 font-semibold text-gray-900 name-col" th:text="${docente.nombre}">Juan</td>
                 <td class="px-4 py-4 text-gray-600">
-                        <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded border border-blue-300"
-                              th:text="${docente.cursoAsignado}">
-                            Educación Básica
-                        </span>
+                            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded border border-blue-300"
+                                  th:text="${docente.cursoAsignado}">Básica</span>
                 </td>
-
                 <td class="px-4 py-4 subject-col">
-                        <span class="materia-badge" th:text="${docente.materia}">
-                            Matemáticas
-                        </span>
+                    <span class="materia-badge" th:text="${docente.materia}">Matemáticas</span>
                 </td>
-
                 <td class="px-4 py-4 text-gray-600" th:text="${docente.jornada}">Matutina</td>
-
-                <td class="px-4 py-4 text-gray-600" th:text="${docente.telefono}">0987654321</td>
-
-                <td class="px-4 py-4 text-gray-600" th:text="${docente.email}">docente@ejemplo.com</td>
+                <td class="px-4 py-4 text-gray-600" th:text="${docente.telefono}">099...</td>
+                <td class="px-4 py-4 text-gray-600" th:text="${docente.email}">email@ejemplo.com</td>
 
                 <td class="px-4 py-4">
                     <div class="flex justify-center items-center gap-2">
-
-                        <a th:href="@{/docentes/editar/{id}(id=${docente.id})}" class="btn-update">
+                        <a th:href="@{/docentes/editar/{id}(id=${docente.id})}" class="btn-update text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-3 py-2 mr-2 mb-2 focus:outline-none">
                             <i class="fas fa-edit"></i>
                         </a>
-
-                        <a th:href="@{/docentes/eliminar/{id}(id=${docente.id})}" class="btn-delete flex items-center justify-center cursor-pointer">
+                        <a th:href="@{/docentes/eliminar/{id}(id=${docente.id})}" class="btn-delete text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-3 py-2 mr-2 mb-2 focus:outline-none">
                             <i class="fas fa-trash-alt"></i>
                         </a>
-
                     </div>
                 </td>
             </tr>
 
             <tr th:if="${#lists.isEmpty(docentes)}">
                 <td colspan="7" class="text-center py-8 text-gray-500">
-                    <div class="flex flex-col items-center justify-center">
-                        <i class="fas fa-inbox text-4xl mb-3 text-gray-300"></i>
-                        <p>No hay docentes registrados en el sistema.</p>
-                    </div>
+                    No hay docentes registrados.
                 </td>
             </tr>
-
             </tbody>
         </table>
     </div>

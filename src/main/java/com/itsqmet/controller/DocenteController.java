@@ -17,83 +17,62 @@ public class DocenteController {
     @Autowired
     private UserService userService;
 
-    // ==========================================
-    // 1. LISTAR DOCENTES (Vista Principal)
-    // ==========================================
+    // --- 1. MOSTRAR LISTA ---
     @GetMapping("/listaDocentes")
     public String mostrarListaDocente(Model model) {
         List<User> usuarios = userService.listarUsuarios();
         model.addAttribute("docentes", usuarios);
-        return "pages/listaDocente"; // Asegúrate de que tu HTML esté en templates/pages/
+        return "pages/listaDocente";
     }
 
-    // ==========================================
-    // 2. FORMULARIO NUEVO DOCENTE
-    // ==========================================
+    // --- 2. FORMULARIO NUEVO ---
     @GetMapping("/nuevoDocente")
     public String form(Model model) {
         model.addAttribute("docente", new User());
         return "pages/formularioDocente";
     }
 
-    // ==========================================
-    // 3. GUARDAR / ACTUALIZAR (Con corrección de error)
-    // ==========================================
+    // --- 3. GUARDAR (CORREGIDO ERROR DEL @) ---
     @PostMapping("/guardarDocente")
     public String guardarDocente(@ModelAttribute("docente") User docente) {
 
-        // CORRECCIÓN DEL ERROR DE VALIDACIÓN:
-        // Si no hay usuario, lo creamos a partir del correo pero QUITANDO el @ y lo que sigue.
+        // Si el usuario viene vacío, crearlo desde el email SIN el @
         if (docente.getUsername() == null || docente.getUsername().isEmpty()) {
             String email = docente.getEmail();
             if (email != null && email.contains("@")) {
-                // Ejemplo: juan.perez@gmail.com -> Se guarda: juan.perez
-                docente.setUsername(email.split("@")[0]);
+                docente.setUsername(email.split("@")[0]); // "juan@gmail.com" -> "juan"
             } else {
                 docente.setUsername(email);
             }
         }
 
-        // Contraseña por defecto (Solo si es usuario nuevo)
-        // Si es edición (ID no es null), mantenemos la contraseña que ya tiene en la BD
+        // Contraseña por defecto para nuevos o recuperación para existentes
         if (docente.getId() == null) {
-            docente.setPassword("12345"); // En un futuro, usa BCryptPasswordEncoder aquí
+            docente.setPassword("12345");
         } else {
-            // Si es edición, necesitamos recuperar la contraseña vieja para no perderla
-            // Opcional: si tu formulario no envía password, asegúrate de manejar esto en el servicio
-            // Para este ejemplo simple, asumimos que se mantiene o se gestiona en el servicio.
-            if(docente.getPassword() == null || docente.getPassword().isEmpty()){
-                // Pequeña lógica de seguridad: Si viene vacía, recuperar la anterior o poner una por defecto
-                // Para evitar errores rápidos, dejemos 12345 o recuperamos del servicio si fuera necesario.
+            if (docente.getPassword() == null || docente.getPassword().isEmpty()) {
                 docente.setPassword("12345");
             }
         }
 
-        // Asegurar el rol
         docente.setRol(Rol.ROLE_DOCENTE);
-
         userService.guardarUsuario(docente);
         return "redirect:/listaDocentes";
     }
 
-    // ==========================================
-    // 4. EDITAR DOCENTE
-    // ==========================================
+    // --- 4. IR A EDITAR ---
     @GetMapping("/docentes/editar/{id}")
     public String editarDocente(@PathVariable Long id, Model model) {
         Optional<User> docente = userService.buscarPorId(id);
-
         if (docente.isPresent()) {
             model.addAttribute("docente", docente.get());
-            return "pages/formularioDocente"; // Reutilizamos el formulario de creación
+            return "pages/formularioDocente";
         } else {
             return "redirect:/listaDocentes";
         }
     }
 
-    // ==========================================
-    // 5. ELIMINAR DOCENTE
-    // ==========================================
+    // --- 5. ELIMINAR ---
     @GetMapping("/docentes/eliminar/{id}")
     public String eliminarDocente(@PathVariable Long id) {
         userService.eliminarUsuario(id);

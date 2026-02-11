@@ -1,34 +1,41 @@
 document.addEventListener("DOMContentLoaded", function () {
 
-    // ==========================================
-    // 1. BUSCADOR EN TIEMPO REAL
-    // ==========================================
+    // --- VARIABLES ---
     const searchNombre = document.getElementById("searchNombre");
     const searchMateria = document.getElementById("searchMateria");
+
+    const btnLimpiarNombre = document.getElementById("btnLimpiarNombre");
+    const btnLimpiarMateria = document.getElementById("btnLimpiarMateria");
+
     const table = document.getElementById("docentesTable");
 
-    // Obtenemos las filas del cuerpo de la tabla
-    const tbody = table.getElementsByTagName("tbody")[0];
-    const rows = tbody ? tbody.getElementsByTagName("tr") : [];
-
+    // --- FUNCIÓN FILTRAR ---
     function filtrarTabla() {
-        const textoNombre = searchNombre.value.toLowerCase();
-        const textoMateria = searchMateria.value.toLowerCase();
+        if (!table) return;
+
+        const tbody = table.getElementsByTagName("tbody")[0];
+        const rows = tbody.getElementsByTagName("tr");
+
+        const txtNombre = searchNombre ? searchNombre.value.toLowerCase() : "";
+        const txtMateria = searchMateria ? searchMateria.value.toLowerCase() : "";
 
         for (let i = 0; i < rows.length; i++) {
             let row = rows[i];
 
-            // Columna 0: Nombre | Columna 2: Materia (Indices basados en el HTML)
+            // Ignorar filas que no sean de datos
+            if (row.cells.length < 2) continue;
+
+            // Columna 0: Nombre | Columna 2: Materia
             let nombreTd = row.getElementsByTagName("td")[0];
             let materiaTd = row.getElementsByTagName("td")[2];
 
             if (nombreTd && materiaTd) {
-                let valorNombre = nombreTd.textContent || nombreTd.innerText;
-                let valorMateria = materiaTd.textContent || materiaTd.innerText;
+                let valNombre = nombreTd.textContent || nombreTd.innerText;
+                let valMateria = materiaTd.textContent || materiaTd.innerText;
 
-                // Mostrar solo si coincide con AMBOS filtros (o si están vacíos)
-                if (valorNombre.toLowerCase().indexOf(textoNombre) > -1 &&
-                    valorMateria.toLowerCase().indexOf(textoMateria) > -1) {
+                // Coincidir ambos criterios
+                if (valNombre.toLowerCase().indexOf(txtNombre) > -1 &&
+                    valMateria.toLowerCase().indexOf(txtMateria) > -1) {
                     row.style.display = "";
                 } else {
                     row.style.display = "none";
@@ -37,26 +44,34 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Activamos el filtro cuando el usuario escribe
+    // --- EVENTOS (Escribir) ---
     if(searchNombre) searchNombre.addEventListener("keyup", filtrarTabla);
     if(searchMateria) searchMateria.addEventListener("keyup", filtrarTabla);
 
+    // --- EVENTOS (Limpiar "X") ---
+    if(btnLimpiarNombre && searchNombre) {
+        btnLimpiarNombre.addEventListener("click", function() {
+            searchNombre.value = "";
+            searchNombre.focus();
+            filtrarTabla();
+        });
+    }
 
-    // ==========================================
-    // 2. CONFIRMACIÓN DE ELIMINAR
-    // ==========================================
+    if(btnLimpiarMateria && searchMateria) {
+        btnLimpiarMateria.addEventListener("click", function() {
+            searchMateria.value = "";
+            searchMateria.focus();
+            filtrarTabla();
+        });
+    }
+
+    // --- CONFIRMACIÓN ELIMINAR ---
     const deleteButtons = document.querySelectorAll(".btn-delete");
-
     deleteButtons.forEach(button => {
         button.addEventListener("click", function(event) {
-            // Pregunta de confirmación nativa del navegador
-            const confirmado = confirm("¿Estás seguro de que deseas eliminar este docente? Esta acción no se puede deshacer.");
-
-            if (!confirmado) {
-                // Si dice "Cancelar", detenemos el enlace
+            if (!confirm("¿Estás seguro de que deseas eliminar este docente? Esta acción no se puede deshacer.")) {
                 event.preventDefault();
             }
-            // Si dice "Aceptar", el enlace (href) continúa normalmente al controlador
         });
     });
 });

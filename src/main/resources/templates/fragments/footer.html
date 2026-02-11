@@ -25,8 +25,12 @@
             <div class="footer-column">
                 <h4 class="footer-title">Enlaces Rápidos</h4>
                 <ul class="footer-links">
-                    <li><a th:href="@{/admin/docentes}"><i class="fas fa-chevron-right"></i> Gestión Docente</a></li>
-                    <li><a th:href="@{/admin/calendario}"><i class="fas fa-chevron-right"></i> Calendario Escolar</a></li>
+                    <li><a th:href="@{/listaDocentes}"><i class="fas fa-chevron-right"></i> Gestión Docente</a></li>
+
+                    <li><a th:href="@{/horario/basica}"><i class="fas fa-chevron-right"></i> Crear horario para Básica</a></li>
+                    <li><a th:href="@{/horario}"><i class="fas fa-chevron-right"></i> Crear horario para Bachillerato</a></li>
+                    <li><a th:href="@{/horario/listaPorDocente}"><i class="fas fa-chevron-right"></i> Horario por Docente</a></li>
+                    <li><a th:href="@{/horario/listaPorCurso}"><i class="fas fa-chevron-right"></i> Horarios por Curso</a></li>
                 </ul>
             </div>
             <!--informacion de contacto-->

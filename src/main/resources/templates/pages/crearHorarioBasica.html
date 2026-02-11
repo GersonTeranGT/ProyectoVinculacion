@@ -65,9 +65,14 @@
     </section>
 
     <section class="schedule-section">
-        <h2 class="section-title">Jornada Matutina</h2>
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="section-title">Jornada Matutina</h2>
+            <button onclick="enviarJornada('Matutina')" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-bold shadow-md transition-all">
+                <i class="fas fa-save mr-2"></i> GUARDAR JORNADA MATUTINA
+            </button>
+        </div>
         <div class="table-container">
-            <table class="schedule-table">
+            <table class="schedule-table" id="tablaMatutina">
                 <thead>
                 <tr>
                     <th class="text-center">Hora</th>
@@ -113,11 +118,11 @@
                 </tr>
                 <tr>
                     <td class="time-col text-center">10:00 - 10:30</td>
-                    <td><button class="add-btn" onclick="">R</button></td>
-                    <td><button class="add-btn" onclick="">E</button></td>
-                    <td><button class="add-btn" onclick="">C</button></td>
-                    <td><button class="add-btn" onclick="">R</button></td>
-                    <td><button class="add-btn" onclick="">EO</button></td>
+                    <td><button class="add-btn">R</button></td>
+                    <td><button class="add-btn">E</button></td>
+                    <td><button class="add-btn">C</button></td>
+                    <td><button class="add-btn">R</button></td>
+                    <td><button class="add-btn">EO</button></td>
                 </tr>
                 <tr>
                     <td class="time-col text-center">10:30 - 11:15</td>
@@ -138,126 +143,258 @@
                 </tbody>
             </table>
         </div>
-        <section class="schedule-section">
+    </section>
+
+    <section class="schedule-section mt-10">
+        <div class="flex justify-between items-center mb-4">
             <h2 class="section-title">Jornada Vespertina</h2>
-            <div class="table-container">
-                <table class="schedule-table">
-                    <thead>
-                    <tr>
-                        <th class="text-center">Hora</th>
-                        <th>Lunes</th>
-                        <th>Martes</th>
-                        <th>Miércoles</th>
-                        <th>Jueves</th>
-                        <th>Viernes</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td class="time-col text-center">13:00 - 13:45</td>
-                        <td><button class="add-btn" onclick="openModal(this)">+</button></td>
-                        <td><button class="add-btn" onclick="openModal(this)">+</button></td>
-                        <td><button class="add-btn" onclick="openModal(this)">+</button></td>
-                        <td><button class="add-btn" onclick="openModal(this)">+</button></td>
-                        <td><button class="add-btn" onclick="openModal(this)">+</button></td>
-                    </tr>
-                    <tr>
-                        <td class="time-col text-center">13:45 - 14:30</td>
-                        <td><button class="add-btn" onclick="openModal(this)">+</button></td>
-                        <td><button class="add-btn" onclick="openModal(this)">+</button></td>
-                        <td><button class="add-btn" onclick="openModal(this)">+</button></td>
-                        <td><button class="add-btn" onclick="openModal(this)">+</button></td>
-                        <td><button class="add-btn" onclick="openModal(this)">+</button></td>
-                    </tr>
-                    <tr>
-                        <td class="time-col text-center">14:30 - 15:15</td>
-                        <td><button class="add-btn" onclick="openModal(this)">+</button></td>
-                        <td><button class="add-btn" onclick="openModal(this)">+</button></td>
-                        <td><button class="add-btn" onclick="openModal(this)">+</button></td>
-                        <td><button class="add-btn" onclick="openModal(this)">+</button></td>
-                        <td><button class="add-btn" onclick="openModal(this)">+</button></td>
-                    </tr>
-                    <tr>
-                        <td class="time-col text-center">15:15 - 16:00</td>
-                        <td><button class="add-btn" onclick="openModal(this)">+</button></td>
-                        <td><button class="add-btn" onclick="openModal(this)">+</button></td>
-                        <td><button class="add-btn" onclick="openModal(this)">+</button></td>
-                        <td><button class="add-btn" onclick="openModal(this)">+</button></td>
-                        <td><button class="add-btn" onclick="openModal(this)">+</button></td>
-                    </tr>
-                    <tr>
-                        <td class="time-col text-center">16:00 - 16:45</td>
-                        <td><button class="add-btn" onclick="openModal(this)">+</button></td>
-                        <td><button class="add-btn" onclick="openModal(this)">+</button></td>
-                        <td><button class="add-btn" onclick="openModal(this)">+</button></td>
-                        <td><button class="add-btn" onclick="openModal(this)">+</button></td>
-                        <td><button class="add-btn" onclick="openModal(this)">+</button></td>
-                    </tr>
-                    <tr>
-                        <td class="time-col text-center">16:45 - 17:30</td>
-                        <td><button class="add-btn" onclick="openModal(this)">+</button></td>
-                        <td><button class="add-btn" onclick="openModal(this)">+</button></td>
-                        <td><button class="add-btn" onclick="openModal(this)">+</button></td>
-                        <td><button class="add-btn" onclick="openModal(this)">+</button></td>
-                        <td><button class="add-btn" onclick="openModal(this)">+</button></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+            <button onclick="enviarJornada('Vespertina')" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-bold shadow-md transition-all">
+                <i class="fas fa-save mr-2"></i> GUARDAR JORNADA VESPERTINA
+            </button>
+        </div>
+        <div class="table-container">
+            <table class="schedule-table" id="tablaVespertina">
+                <thead>
+                <tr>
+                    <th class="text-center">Hora</th>
+                    <th>Lunes</th>
+                    <th>Martes</th>
+                    <th>Miércoles</th>
+                    <th>Jueves</th>
+                    <th>Viernes</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="time-col text-center">13:00 - 13:45</td>
+                    <td><button class="add-btn" onclick="openModal(this)">+</button></td>
+                    <td><button class="add-btn" onclick="openModal(this)">+</button></td>
+                    <td><button class="add-btn" onclick="openModal(this)">+</button></td>
+                    <td><button class="add-btn" onclick="openModal(this)">+</button></td>
+                    <td><button class="add-btn" onclick="openModal(this)">+</button></td>
+                </tr>
+                <tr>
+                    <td class="time-col text-center">13:45 - 14:30</td>
+                    <td><button class="add-btn" onclick="openModal(this)">+</button></td>
+                    <td><button class="add-btn" onclick="openModal(this)">+</button></td>
+                    <td><button class="add-btn" onclick="openModal(this)">+</button></td>
+                    <td><button class="add-btn" onclick="openModal(this)">+</button></td>
+                    <td><button class="add-btn" onclick="openModal(this)">+</button></td>
+                </tr>
+                <tr>
+                    <td class="time-col text-center">14:30 - 15:15</td>
+                    <td><button class="add-btn" onclick="openModal(this)">+</button></td>
+                    <td><button class="add-btn" onclick="openModal(this)">+</button></td>
+                    <td><button class="add-btn" onclick="openModal(this)">+</button></td>
+                    <td><button class="add-btn" onclick="openModal(this)">+</button></td>
+                    <td><button class="add-btn" onclick="openModal(this)">+</button></td>
+                </tr>
+                <tr>
+                    <td class="time-col text-center">15:15 - 16:00</td>
+                    <td><button class="add-btn" onclick="openModal(this)">+</button></td>
+                    <td><button class="add-btn" onclick="openModal(this)">+</button></td>
+                    <td><button class="add-btn" onclick="openModal(this)">+</button></td>
+                    <td><button class="add-btn" onclick="openModal(this)">+</button></td>
+                    <td><button class="add-btn" onclick="openModal(this)">+</button></td>
+                </tr>
+                <tr>
+                    <td class="time-col text-center">16:00 - 16:45</td>
+                    <td><button class="add-btn" onclick="openModal(this)">+</button></td>
+                    <td><button class="add-btn" onclick="openModal(this)">+</button></td>
+                    <td><button class="add-btn" onclick="openModal(this)">+</button></td>
+                    <td><button class="add-btn" onclick="openModal(this)">+</button></td>
+                    <td><button class="add-btn" onclick="openModal(this)">+</button></td>
+                </tr>
+                <tr>
+                    <td class="time-col text-center">16:45 - 17:30</td>
+                    <td><button class="add-btn" onclick="openModal(this)">+</button></td>
+                    <td><button class="add-btn" onclick="openModal(this)">+</button></td>
+                    <td><button class="add-btn" onclick="openModal(this)">+</button></td>
+                    <td><button class="add-btn" onclick="openModal(this)">+</button></td>
+                    <td><button class="add-btn" onclick="openModal(this)">+</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
 </main>
 
 <div id="classModal" class="modal-overlay" style="display: none;">
     <div class="modal-content max-w-md w-full m-4">
         <div class="modal-header flex justify-between items-center pb-3">
-            <h3 class="text-xl font-bold text-gray-800">Agregar Clase</h3>
+            <h3 class="text-xl font-bold text-gray-800">Asignar Clase</h3>
             <span class="close-modal cursor-pointer text-gray-500 text-2xl" onclick="closeModal()">&times;</span>
         </div>
+
         <div class="modal-body space-y-4">
             <div class="form-group">
-                <label class="block text-sm font-semibold text-gray-600 mb-1">Materia</label>
-                <input type="text" id="modalMateria" class="form-control w-full p-2 border rounded-md bg-gray-100">
+                <label class="block text-sm font-semibold text-gray-600 mb-1">Profesor Responsable</label>
+                <select id="selectDocente" class="form-control w-full p-2 border rounded-md bg-white" onchange="actualizarMateria()">
+                    <option value="">Seleccione un docente...</option>
+                    <option th:each="docente : ${docentes}"
+                            th:value="${docente.id}"
+                            th:text="${docente.nombre}"
+                            th:data-materia="${docente.materia}"></option>
+                </select>
             </div>
             <div class="form-group">
-                <label class="block text-sm font-semibold text-gray-600 mb-1">Profesor Responsable</label>
-                <input type="text" id="modalDocente" class="form-control w-full p-2 border rounded-md bg-gray-100">
+                <label class="block text-sm font-semibold text-gray-600 mb-1">Materia</label>
+                <input type="text" id="modalMateria" class="form-control w-full p-2 border rounded-md bg-gray-100" readonly>
             </div>
+            <div id="debugInfo" class="text-[10px] text-gray-400 italic"></div>
         </div>
 
         <div class="modal-footer flex justify-end space-x-2 pt-4">
-            <button class="btn-cancel px-4 py-2 border rounded-md" onclick="closeModal()">Cancelar</button>
-            <button class="btn-save px-4 py-2 bg-gray-900 text-white rounded-md" onclick="saveSchedule()">Guardar</button>
-        </div>
-
-
-    </div>
-</div>
-
-
-<div class="flex flex-col items-center mt-10 no-print mb-20 space-y-6">
-
-    <button class="bg-blue-600 hover:bg-blue-700 text-white py-2 px-10 rounded-full flex items-center gap-3 uppercase tracking-widest text-sm font-bold shadow-md transition-all">
-        EDITAR <i class="fas fa-edit text-xs"></i>
-    </button>
-
-    <div class="relative group">
-        <button class="bg-gray-900 text-white py-2 px-10 rounded-full flex items-center gap-3 uppercase tracking-widest text-sm font-bold shadow-md">
-            IMPRIMIR <i class="fas fa-chevron-right text-xs"></i>
-        </button>
-
-        <div class="absolute bottom-full mb-4 left-1/2 -translate-x-1/2 bg-white border border-gray-200 rounded-xl p-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity shadow-xl min-w-[120px] pointer-events-none group-hover:pointer-events-auto">
-            <button onclick="window.print()" class="flex items-center justify-between hover:text-blue-600 font-bold text-xs px-1 py-1 text-gray-700">
-                <span>PDF</span><i class="fas fa-file-pdf text-red-500 text-lg"></i>
-            </button>
-            <div class="h-[1px] bg-gray-100 w-full"></div>
-            <button class="flex items-center justify-between hover:text-green-600 font-bold text-xs px-1 py-1 text-gray-700">
-                <span>EXCEL</span><i class="fas fa-file-excel text-green-600 text-lg"></i>
-            </button>
+            <button type="button" class="btn-cancel px-4 py-2 border rounded-md" onclick="closeModal()">Cancelar</button>
+            <button type="button" class="btn-save px-4 py-2 bg-gray-900 text-white rounded-md" onclick="registrarEnTabla()">Aceptar</button>
         </div>
     </div>
 </div>
 
 <div th:replace="fragments/footer :: footer"></div>
-<script th:src="@{/js/registroHorarios.js}"></script>
+
+<script>
+    let currentButton = null;
+    let horariosTemporales = [];
+
+    function toggleCustomDropdown(id) {
+        document.getElementById(id).classList.toggle('active');
+    }
+
+    function selectItem(type, value) {
+        if (type === 'curso') {
+            document.getElementById('textCurso').innerText = value;
+            document.getElementById('dropdownCurso').classList.remove('active');
+        } else if (type === 'paralelo') {
+            document.getElementById('textParalelo').innerText = "Paralelo " + value;
+            document.getElementById('dropdownParalelo').classList.remove('active');
+        }
+    }
+
+    function openModal(button) {
+        const curso = document.getElementById('textCurso').innerText;
+        const paraleloText = document.getElementById('textParalelo').innerText;
+
+        if (curso === "Seleccionar Curso" || paraleloText === "Seleccionar Paralelo") {
+            alert("Por favor, selecciona primero el Curso y el Paralelo.");
+            return;
+        }
+
+        currentButton = button;
+        document.getElementById('classModal').style.display = 'flex';
+    }
+
+    function registrarEnTabla() {
+        const select = document.getElementById('selectDocente');
+        const docenteId = select.value;
+        const docenteNombre = select.options[select.selectedIndex].text;
+        const materia = document.getElementById('modalMateria').value;
+
+        if (!docenteId) { alert("Seleccione un docente"); return; }
+
+        // Datos de contexto para el objeto
+        const cell = currentButton.parentElement;
+        const cellIndex = cell.cellIndex;
+        const tabla = cell.closest('table');
+        const dia = tabla.querySelectorAll('thead th')[cellIndex].innerText;
+        const fila = cell.closest('tr');
+        const rangoHora = fila.querySelector('.time-col').innerText;
+        const [inicio, fin] = rangoHora.split(' - ');
+        const jornada = cell.closest('.schedule-section').querySelector('.section-title').innerText.includes("Matutina") ? "Matutina" : "Vespertina";
+
+        // 1. Lógica Visual: Pintar la celda
+        cell.innerHTML = `
+            <div class="p-1 border border-blue-200 bg-blue-50 rounded">
+                <div class="text-[10px] font-bold text-blue-900 leading-tight">${materia}</div>
+                <div class="text-[9px] text-gray-700 truncate">${docenteNombre}</div>
+                <button class="text-[8px] text-red-500 mt-1 hover:underline w-full" onclick="resetCell(this, '${inicio}', '${dia}', '${jornada}')">Borrar</button>
+            </div>
+        `;
+
+        // 2. Lógica de Datos: Agregar al array temporal
+        const nuevoRegistro = {
+            curso: document.getElementById('textCurso').innerText,
+            paralelo: document.getElementById('textParalelo').innerText.replace("Paralelo ", ""),
+            jornada: jornada,
+            diaSemana: dia,
+            horaInicio: inicio,
+            horaFin: fin,
+            materia: materia,
+            docente: { id: parseInt(docenteId) }
+        };
+
+        horariosTemporales.push(nuevoRegistro);
+        closeModal();
+    }
+
+    function resetCell(btn, hora, dia, jornada) {
+        const cell = btn.closest('td');
+        cell.innerHTML = `<button class="add-btn" onclick="openModal(this)">+</button>`;
+
+        // Quitar del array temporal
+        horariosTemporales = horariosTemporales.filter(h =>
+            !(h.horaInicio === hora && h.diaSemana === dia && h.jornada === jornada)
+        );
+    }
+
+    async function enviarJornada(jornadaNombre) {
+        const datosAEnviar = horariosTemporales.filter(h => h.jornada === jornadaNombre);
+
+        if (datosAEnviar.length === 0) {
+            alert("No hay cambios para guardar en la jornada " + jornadaNombre);
+            return;
+        }
+
+        const confirmacion = confirm(`¿Desea guardar todos los registros de la jornada ${jornadaNombre} en la base de datos?`);
+        if (!confirmacion) return;
+
+        try {
+            // AJUSTE: Cambia esta URL por la que definas en tu controlador
+            const response = await fetch('/horario/guardarLote', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(datosAEnviar)
+            });
+
+            if (response.ok) {
+                alert(`¡Jornada ${jornadaNombre} guardada con éxito!`);
+                // Opcional: limpiar solo los que ya se enviaron
+                horariosTemporales = horariosTemporales.filter(h => h.jornada !== jornadaNombre);
+            } else {
+                alert("Hubo un problema al guardar los datos.");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Error de conexión con el servidor.");
+        }
+    }
+
+    function actualizarMateria() {
+        const select = document.getElementById('selectDocente');
+        const materiaInput = document.getElementById('modalMateria');
+        const selectedOption = select.options[select.selectedIndex];
+        const materia = selectedOption.getAttribute('data-materia');
+        materiaInput.value = materia ? materia : "";
+    }
+
+    function closeModal() {
+        document.getElementById('classModal').style.display = 'none';
+        document.getElementById('selectDocente').value = "";
+        document.getElementById('modalMateria').value = "";
+    }
+
+    window.onclick = function(event) {
+        if (!event.target.closest('.custom-dropdown')) {
+            document.querySelectorAll('.custom-dropdown').forEach(d => d.classList.remove('active'));
+        }
+    }
+</script>
+
+<style>
+    .custom-dropdown.active .dropdown-options { display: block !important; }
+    /* Estilos para que la celda pintada se vea bien */
+    .schedule-table td div { line-height: 1.2; }
+</style>
+
 </body>
 </html>

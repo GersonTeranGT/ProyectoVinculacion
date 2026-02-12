@@ -30,44 +30,51 @@ public class HorarioController {
         return "pages/crearHorarioBasica";
     }
 
-    // --- NUEVO MÉTODO PARA GUARDAR POR LOTES (Corrige el error 404) ---
-    @PostMapping("/guardarLote")
-    @ResponseBody
-    public ResponseEntity<String> guardarLote(@RequestBody List<Horario> horarios) {
-        try {
-            // Guardamos la lista de objetos que llega desde el fetch de JS
-            horarioRepository.saveAll(horarios);
-            return ResponseEntity.ok("Horario guardado con éxito");
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.status(500).body("Error al guardar los datos: " + e.getMessage());
-        }
-    }
-
-    // Método para procesar el guardado del modal (si decides usar el flujo antiguo)
-    @PostMapping("/guardar")
-    public String guardarHorario(@ModelAttribute Horario horario) {
-        horarioRepository.save(horario);
-        return "redirect:/horario/basica";
-    }
-
     @GetMapping
-    public String registrarHorario(){
+    public String registrarHorario() {
         return "pages/crearHorarioBachillerato";
     }
 
     @GetMapping("/listaHorarios")
-    public String listaHorarios(){
+    public String listaHorarios() {
         return "pages/listaHorarios";
     }
 
     @GetMapping("/listaPorDocente")
-    public String verHorarioDocente(){
+    public String verHorarioDocente(Model model) {
+        List<Docente> docentes = docenteRepository.findAll();
+        model.addAttribute("docentes", docentes);
         return "pages/listaHorariosDocente";
     }
 
     @GetMapping("/listaPorCurso")
-    public String verHorarioCurso(){
+    public String verHorarioCurso() {
         return "pages/listaHorariosCurso";
+    }
+
+    @PostMapping("/guardarLote")
+    @ResponseBody
+    public ResponseEntity<String> guardarLote(@RequestBody List<Horario> horarios) {
+        try {
+            horarioRepository.saveAll(horarios);
+            return ResponseEntity.ok("Horario guardado con éxito");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/buscar")
+    @ResponseBody
+    public List<Horario> buscarHorarios(
+            @RequestParam("curso") String curso,
+            @RequestParam("paralelo") String paralelo,
+            @RequestParam("jornada") String jornada) {
+        return horarioRepository.findByCursoAndParaleloAndJornada(curso, paralelo, jornada);
+    }
+
+    @GetMapping("/buscarPorDocente")
+    @ResponseBody
+    public List<Horario> buscarPorDocente(@RequestParam("docenteId") Long docenteId) {
+        return horarioRepository.findByDocenteId(docenteId);
     }
 }

@@ -25,33 +25,51 @@
         </a>
     </div>
 
+    <!-- DOS BARRAS DE BÚSQUEDA CON ICONOS Y BOTONES LIMPIAR -->
     <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 mb-6 search-section">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- BARRA DE BÚSQUEDA POR NOMBRE -->
             <div class="form-group">
-                <label for="searchNombre" class="block text-sm font-bold text-gray-700 mb-2">Buscar por nombre</label>
+                <label for="searchNombre" class="block text-sm font-bold text-gray-700 mb-2">
+                    <i class="fas fa-user text-blue-600 mr-1"></i>Buscar por Docente
+                </label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i class="fas fa-user text-gray-400"></i>
+                        <i class="fas fa-search text-gray-400"></i>
                     </div>
-                    <input type="text" id="searchNombre" onkeyup="filterTable()"
-                           class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md bg-white focus:ring-blue-500 sm:text-sm"
+                    <input type="text" id="searchNombre"
+                           class="block w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                            placeholder="Ej: Juan Pérez">
+                    <button onclick="limpiarBusqueda('nombre')"
+                            class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
             </div>
 
+            <!-- BARRA DE BÚSQUEDA POR MATERIA -->
             <div class="form-group">
-                <label for="searchMateria" class="block text-sm font-bold text-gray-700 mb-2">Buscar por
-                    asignatura</label>
+                <label for="searchMateria" class="block text-sm font-bold text-gray-700 mb-2">
+                    <i class="fas fa-book text-green-600 mr-1"></i>Buscar por Materia
+                </label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                        <i class="fas fa-book text-gray-400"></i>
+                        <i class="fas fa-search text-gray-400"></i>
                     </div>
-                    <input type="text" id="searchMateria" onkeyup="filterTable()"
-                           class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md bg-white focus:ring-blue-500 sm:text-sm"
+                    <input type="text" id="searchMateria"
+                           class="block w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                            placeholder="Ej: Matemáticas">
+                    <button onclick="limpiarBusqueda('materia')"
+                            class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-times"></i>
+                    </button>
                 </div>
             </div>
         </div>
+        <p class="text-xs text-gray-500 mt-3 text-center">
+            <i class="fas fa-info-circle text-blue-500"></i>
+            Puedes buscar en ambas columnas simultáneamente
+        </p>
     </div>
 
     <div class="relative overflow-x-auto shadow-lg sm:rounded-xl border border-gray-200 bg-white mb-10">
@@ -102,6 +120,6 @@
 <footer th:replace="~{fragments/footer :: footer}"></footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
-
+<script th:src="@{/js/listaDocente.js}"></script>
 </body>
 </html>

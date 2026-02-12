@@ -15,10 +15,21 @@
 
     <style th:inline="css">
         @media print {
+            @page { margin: 1cm; size: landscape; }
             .no-print, nav, footer { display: none !important; }
-            body { background-color: white !important; }
-            .main-container { margin-top: 0 !important; width: 100% !important; }
+            body { background-color: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            .main-container { margin-top: 0 !important; width: 100% !important; padding: 0 !important; }
+
+            /* Mostrar el encabezado de impresión */
+            #tituloImpresion { display: block !important; }
+
+            /* Ajustes de tabla para impresión */
+            table { width: 100% !important; border-collapse: collapse !important; }
+            th, td { border: 1px solid #000 !important; padding: 8px !important; }
         }
+
+        /* Ocultar encabezado de impresión en pantalla normal */
+        #tituloImpresion { display: none; }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -27,18 +38,21 @@
 
 <div class="max-w-7xl mx-auto p-4 mt-10 main-container">
 
-    <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Horario por Docente</h2>
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-12 no-print">Horario por Docente</h2>
+
+    <div id="tituloImpresion" class="mb-6"></div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-16 mb-12 px-8 no-print">
         <div>
             <label class="block text-xl font-bold text-gray-800 mb-2">Buscar por Docente</label>
-            <select class="w-full p-2 border border-gray-300 rounded-md bg-white focus:outline-none appearance-none">
+            <select id="selectDocente" class="w-full p-2 border border-gray-300 rounded-md bg-white focus:outline-none appearance-none">
                 <option value="" disabled selected>Seleccione un docente...</option>
+                <option value="1">Lic. Ejemplo Docente</option>
             </select>
         </div>
         <div>
             <label class="block text-xl font-bold text-gray-800 mb-2">Buscar por Materia</label>
-            <select class="w-full p-2 border border-gray-300 rounded-md bg-white focus:outline-none appearance-none">
+            <select id="selectMateria" class="w-full p-2 border border-gray-300 rounded-md bg-white focus:outline-none appearance-none">
                 <option value="" disabled selected>Seleccione una materia...</option>
             </select>
         </div>
@@ -49,7 +63,7 @@
         <div class="overflow-x-auto">
             <table class="w-full table-manual">
                 <thead>
-                <tr class="uppercase text-xs text-gray-500">
+                <tr class="uppercase text-xs text-gray-500 bg-gray-100">
                     <th class="w-1/6">Hora</th>
                     <th class="w-1/6">Lunes</th>
                     <th class="w-1/6">Martes</th>
@@ -83,7 +97,7 @@
         <div class="overflow-x-auto">
             <table class="w-full table-manual">
                 <thead>
-                <tr class="uppercase text-xs text-gray-500">
+                <tr class="uppercase text-xs text-gray-500 bg-gray-100">
                     <th class="w-1/6">Hora</th>
                     <th class="w-1/6">Lunes</th>
                     <th class="w-1/6">Martes</th>
@@ -105,27 +119,16 @@
     </div>
 
     <div class="flex flex-col items-center mt-10 no-print mb-20">
-        <div class="relative group">
-            <button class="btn-print-main py-2 px-10 rounded-full flex items-center gap-3 uppercase tracking-widest text-sm font-bold shadow-md">
-                IMPRIMIR <i class="fas fa-chevron-right text-xs"></i>
-            </button>
-
-            <div class="absolute top-0 left-full ml-4 bg-white border border-gray-200 rounded-xl p-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity shadow-xl min-w-[100px]">
-                <button onclick="window.print()" class="flex items-center justify-between hover:text-blue-600 font-bold text-xs px-1">
-                    <span>PDF</span><i class="fas fa-file-pdf text-red-500 text-lg"></i>
-                </button>
-                <div class="h-[1px] bg-gray-100 w-full"></div>
-                <button class="flex items-center justify-between hover:text-green-600 font-bold text-xs px-1">
-                    <span>EXCEL</span><i class="fas fa-file-excel text-green-600 text-lg"></i>
-                </button>
-            </div>
-        </div>
+        <button onclick="imprimirHorario('docente')" class="btn-print-main py-2 px-10 rounded-full flex items-center gap-3 uppercase tracking-widest text-sm font-bold shadow-md hover:bg-gray-700 transition-colors">
+            IMPRIMIR HORARIO <i class="fas fa-print text-lg"></i>
+        </button>
     </div>
 </div>
 
 <footer th:replace="~{fragments/footer :: footer}"></footer>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 <script th:src="@{/js/navbar.js}"></script>
+<script th:src="@{/js/export.js}"></script>
 
 </body>
 </html>

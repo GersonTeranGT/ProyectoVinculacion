@@ -40,21 +40,6 @@ public class UserService implements UserDetailsService {
 
     // --- MÉTODOS QUE FALTABAN PARA EL DOCENTE CONTROLLER ---
 
-    public void guardarUsuario(User user) {
-        if (user.getId() == null) {
-            if (user.getUsername() == null || user.getUsername().isEmpty()) {
-                user.setUsername(user.getNombre().toLowerCase().replace(" ", "") + (int) (Math.random() * 100));
-            }
-            if (user.getPassword() == null || user.getPassword().isEmpty()) {
-                user.setPassword("1234");
-            }
-            if (user.getRol() == null) {
-                user.setRol(Rol.ROLE_DOCENTE);
-            }
-        }
-        userRepository.save(user);
-    }
-
     public List<User> listarUsuarios() {
         return userRepository.findAll();
     }

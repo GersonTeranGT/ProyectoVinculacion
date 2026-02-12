@@ -7,7 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Controller
 public class DocenteController {
@@ -47,5 +50,21 @@ public class DocenteController {
 
         //BRYAN
         return "redirect:/listaDocentes";
+    }
+
+    // Endpoint para obtener docentes en formato JSON
+    @GetMapping("/api/docentes")
+    @ResponseBody
+    public List<Map<String, Object>> obtenerDocentesApi() {
+        List<Docente> docentes = docenteService.listarDocentes();
+
+        return docentes.stream().map(docente -> {
+            Map<String, Object> mapa = new HashMap<>();
+            mapa.put("id", docente.getId());
+            mapa.put("nombre", docente.getNombre());
+            mapa.put("materia", docente.getMateria() != null ? docente.getMateria() : "");
+
+            return mapa;
+        }).collect(Collectors.toList());
     }
 }

@@ -21,10 +21,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "El nombre es obligatorio")
-    @Column(nullable = false)
-    private String nombre;
-
     @NotBlank(message = "El nombre de usuario es obligatorio")
     @Size(min = 3, max = 20, message = "El usuario debe tener entre 3 y 20 caracteres")
     @Pattern(regexp = "^[a-zA-Z0-9._-]+$",
@@ -41,21 +37,4 @@ public class User {
     @Column(nullable = false)
     private Rol rol;
 
-    @NotBlank(message = "La materia es obligatoria")
-    private String materia;
-
-    @NotBlank(message = "El curso asignado es obligatorio")
-    private String cursoAsignado;
-
-    @NotBlank(message = "La jornada es obligatoria")
-    private String jornada;
-
-    @NotBlank(message = "El email es obligatorio")
-    @Email(message = "Debe ingresar un formato de correo válido")
-    @Column(unique = true)
-    private String email;
-
-    @NotBlank(message = "El teléfono es obligatorio")
-    @Pattern(regexp = "^[0-9]{10}$", message = "El teléfono debe tener 10 dígitos numéricos")
-    private String telefono;
 }

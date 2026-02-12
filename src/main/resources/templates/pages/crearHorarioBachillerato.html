@@ -208,73 +208,338 @@
 
 <div id="classModal" class="modal-overlay" style="display: none;">
     <div class="modal-content max-w-md w-full m-4">
-        <div class="modal-header flex justify-between items-center pb-3">
-            <h3 class="text-xl font-bold text-gray-800">Agregar Nueva Clase</h3>
-            <span class="close-modal cursor-pointer text-gray-500 text-2xl" onclick="closeModal()">&times;</span>
+        <!-- HEADER - Título y botón cerrar -->
+        <div class="modal-header flex justify-between items-center pb-3 border-b">
+            <h3 class="text-xl font-bold text-gray-800">
+                <i class="fas fa-calendar-plus mr-2 text-blue-600"></i>
+                Agregar Clase
+            </h3>
+            <span class="close-modal cursor-pointer text-gray-500 hover:text-gray-700 text-2xl" onclick="closeModal()">&times;</span>
         </div>
-        <div class="modal-body space-y-4">
+
+        <!-- BODY - Solo los campos necesarios -->
+        <div class="modal-body space-y-4 py-4">
+
+            <!-- BARRA DE BÚSQUEDA DE DOCENTES (estilos corregidos) -->
             <div class="form-group">
-                <label class="block text-sm font-semibold text-gray-600 mb-1">Materia</label>
-                <input type="text" id="modalMateria" class="form-control w-full p-2 border rounded-md bg-gray-100" placeholder="Ej: Matemáticas">
+                <label class="block text-sm font-semibold text-gray-700 mb-1">
+                    <i class="fas fa-search text-blue-600 mr-1"></i>
+                    Buscar Profesor
+                </label>
+                <div class="relative">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    <input type="text"
+                           id="buscarDocente"
+                           class="form-control w-full pl-10 pr-10 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                           placeholder="Escriba para buscar...">
+                    <i class="fas fa-times absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 cursor-pointer"
+                       onclick="limpiarBusqueda()"></i>
+                </div>
             </div>
+
+            <!-- SELECT DE DOCENTES (dinámico desde BD) -->
             <div class="form-group">
-                <label class="block text-sm font-semibold text-gray-600 mb-1">Profesor</label>
-                <input type="text" id="modalDocente" class="form-control w-full p-2 border rounded-md bg-gray-100" placeholder="Ej: Dr. García">
+                <label class="block text-sm font-semibold text-gray-700 mb-1">
+                    <i class="fas fa-chalkboard-teacher text-green-600 mr-1"></i>
+                    Profesor Responsable
+                </label>
+                <select id="modalDocente"
+                        class="form-control w-full p-2.5 border border-gray-300 rounded-lg bg-white focus:ring-2 focus:ring-blue-500"
+                        onchange="actualizarMateriaPorDocente()"
+                        size="4">
+                    <option value="" disabled selected>Cargando docentes...</option>
+                </select>
+                <p class="text-xs text-gray-500 mt-1">
+                    <i class="fas fa-info-circle text-blue-500"></i>
+                    Escriba para filtrar o seleccione de la lista
+                </p>
             </div>
-            <div class="flex space-x-4">
-                <div class="form-group w-1/2">
-                    <label class="block text-sm font-semibold text-gray-600 mb-1">Aula</label>
-                    <input type="text" id="modalAula" class="form-control w-full p-2 border rounded-md bg-gray-100" placeholder="Ej: A-101">
-                </div>
-                <div class="form-group w-1/2">
-                    <label class="block text-sm font-semibold text-gray-600 mb-1">Día</label>
-                    <select id="modalDia" class="form-control w-full p-2 border rounded-md bg-gray-100">
-                        <option value="Lunes">Lunes</option>
-                        <option value="Martes">Martes</option>
-                        <option value="Miércoles">Miércoles</option>
-                        <option value="Jueves">Jueves</option>
-                        <option value="Viernes">Viernes</option>
-                    </select>
-                </div>
-            </div>
-            <div class="flex space-x-4">
-                <div class="form-group w-1/2">
-                    <label class="block text-sm font-semibold text-gray-600 mb-1">Hora Inicio</label>
-                    <input type="time" id="modalHoraInicio" class="form-control w-full p-2 border rounded-md bg-gray-100" value="09:00">
-                </div>
-                <div class="form-group w-1/2">
-                    <label class="block text-sm font-semibold text-gray-600 mb-1">Hora Fin</label>
-                    <input type="time" id="modalHoraFin" class="form-control w-full p-2 border rounded-md bg-gray-100" value="10:00">
-                </div>
-            </div>
-            <div class="form-group bg-gray-100 p-3 rounded-md">
-                <label class="block text-sm font-semibold text-gray-600">Duración: <span id="modalDuracion" class="font-normal">60min</span></label>
-                <p class="text-xs text-gray-500">La clase se ajustará automáticamente en el horario</p>
-            </div>
+
+            <!-- MATERIA (cargada desde el docente seleccionado) -->
             <div class="form-group">
-                <label class="block text-sm font-semibold text-gray-600 mb-2">Color</label>
-                <div class="color-picker flex space-x-3">
-                    <div class="color-option c1 selected w-8 h-8 rounded-full cursor-pointer border-2 border-white ring-2 ring-transparent hover:ring-gray-300" onclick="selectColor(this, '#3b82f6')" style="background-color: #3b82f6;"></div>
-                    <div class="color-option c2 w-8 h-8 rounded-full cursor-pointer border-2 border-white ring-2 ring-transparent hover:ring-gray-300" onclick="selectColor(this, '#ef4444')" style="background-color: #ef4444;"></div>
-                    <div class="color-option c3 w-8 h-8 rounded-full cursor-pointer border-2 border-white ring-2 ring-transparent hover:ring-gray-300" onclick="selectColor(this, '#10b981')" style="background-color: #10b981;"></div>
-                    <div class="color-option c4 w-8 h-8 rounded-full cursor-pointer border-2 border-white ring-2 ring-transparent hover:ring-gray-300" onclick="selectColor(this, '#f59e0b')" style="background-color: #f59e0b;"></div>
-                    <div class="color-option c5 w-8 h-8 rounded-full cursor-pointer border-2 border-white ring-2 ring-transparent hover:ring-gray-300" onclick="selectColor(this, '#8b5cf6')" style="background-color: #8b5cf6;"></div>
-                    <div class="color-option c6 w-8 h-8 rounded-full cursor-pointer border-2 border-white ring-2 ring-transparent hover:ring-gray-300" onclick="selectColor(this, '#06b6d4')" style="background-color: #06b6d4;"></div>
-                    <div class="color-option c7 w-8 h-8 rounded-full cursor-pointer border-2 border-white ring-2 ring-transparent hover:ring-gray-300" onclick="selectColor(this, '#f97316')" style="background-color: #f97316;"></div>
-                    <div class="color-option c8 w-8 h-8 rounded-full cursor-pointer border-2 border-white ring-2 ring-transparent hover:ring-gray-300" onclick="selectColor(this, '#84cc16')" style="background-color: #84cc16;"></div>
-                </div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">
+                    <i class="fas fa-book text-purple-600 mr-1"></i>
+                    Materia
+                </label>
+                <input type="text"
+                       id="modalMateria"
+                       class="form-control w-full p-2.5 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-blue-500"
+                       placeholder="Seleccione un docente"
+                       readonly>
             </div>
+
         </div>
-        <div class="modal-footer flex justify-end space-x-2 pt-4">
-            <button class="btn-cancel px-4 py-2 bg-white border border-gray-300 rounded-md text-gray-700 font-semibold hover:bg-gray-50" onclick="closeModal()">Cancelar</button>
-            <button class="btn-save px-4 py-2 bg-gray-900 text-white rounded-md font-semibold hover:bg-gray-800" onclick="saveSchedule()">Guardar</button>
+
+        <!-- FOOTER - Botones -->
+        <div class="modal-footer flex justify-end space-x-3 pt-4 border-t">
+            <button class="btn-cancel px-5 py-2.5 border border-gray-300 rounded-lg text-gray-700 font-semibold hover:bg-gray-50 transition-colors"
+                    onclick="closeModal()">
+                <i class="fas fa-times mr-1 text-gray-500"></i>
+                Cancelar
+            </button>
+            <button class="btn-save px-5 py-2.5 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-md"
+                    onclick="guardarClase()">
+                <i class="fas fa-save mr-1"></i>
+                Guardar
+            </button>
         </div>
     </div>
 </div>
 
-<!--footer-->
 <div th:replace="fragments/footer :: footer"></div>
 
-<script th:src="@{/js/registroHorarios.js}"></script>
+<script>
+    let currentButton = null;
+    let horariosTemporales = [];
+    let docentesCache = []; // Cache para búsqueda
+
+    // ========== FUNCIONES DEL MODAL Y DOCENTES ==========
+
+    function openModal(button) {
+        const curso = document.getElementById('textCurso').innerText;
+        const paraleloText = document.getElementById('textParalelo').innerText;
+
+        if (curso === "Seleccionar Curso" || paraleloText === "Seleccionar Paralelo") {
+            alert("Por favor, selecciona primero el Curso y el Paralelo.");
+            return;
+        }
+
+        currentButton = button;
+        document.getElementById('classModal').style.display = 'flex';
+
+        // Cargar docentes cuando se abre el modal
+        cargarDocentes();
+    }
+
+    function closeModal() {
+        document.getElementById('classModal').style.display = 'none';
+        document.getElementById('modalDocente').innerHTML = '<option value="" disabled selected>Cargando docentes...</option>';
+        document.getElementById('modalMateria').value = '';
+        document.getElementById('buscarDocente').value = '';
+        currentButton = null;
+    }
+
+    // Cargar docentes desde el backend
+    async function cargarDocentes() {
+        try {
+            const response = await fetch('/api/docentes');
+            if (!response.ok) throw new Error('Error al cargar docentes');
+
+            const docentes = await response.json();
+            console.log('Docentes cargados:', docentes); // Para depuración
+            docentesCache = docentes;
+            renderizarDocentes(docentes);
+        } catch (error) {
+            console.error('Error:', error);
+            const select = document.getElementById('modalDocente');
+            select.innerHTML = '<option value="" disabled>Error al cargar docentes</option>';
+        }
+    }
+
+    // Renderizar la lista de docentes
+    function renderizarDocentes(docentes) {
+    const select = document.getElementById('modalDocente');
+
+    if (!docentes || docentes.length === 0) {
+        select.innerHTML = '<option value="" disabled>No hay docentes disponibles</option>';
+        return;
+    }
+
+    let html = '';
+    docentes.forEach(docente => {
+        const nombre = docente.nombre || 'Sin nombre';
+        const materia = docente.materia || ''; // Guardamos la materia en data-materia pero no la mostramos
+
+        html += `<option value="${docente.id}" data-materia="${materia}">
+            ${nombre}
+        </option>`;
+    });
+
+    select.innerHTML = html;
+}
+
+    function limpiarBusqueda() {
+        document.getElementById('buscarDocente').value = '';
+        renderizarDocentes(docentesCache);
+    }
+
+    function filtrarDocentes() {
+        const busqueda = document.getElementById('buscarDocente').value.toLowerCase().trim();
+
+        if (!busqueda) {
+            renderizarDocentes(docentesCache);
+            return;
+        }
+
+        const filtrados = docentesCache.filter(docente => {
+            const nombre = (docente.nombre || '').toLowerCase();
+            return nombre.includes(busqueda);
+        });
+
+        renderizarDocentes(filtrados);
+    }
+
+    function actualizarMateriaPorDocente() {
+        const select = document.getElementById('modalDocente');
+        const materiaInput = document.getElementById('modalMateria');
+
+        const selectedOption = select.options[select.selectedIndex];
+        if (selectedOption && selectedOption.value) {
+            const materia = selectedOption.getAttribute('data-materia');
+            materiaInput.value = materia || '';
+        } else {
+            materiaInput.value = '';
+        }
+    }
+
+    // ========== FUNCIONES DE LOS DROPDOWNS ==========
+
+    function toggleCustomDropdown(id) {
+        const dropdown = document.getElementById(id);
+        dropdown.classList.toggle('active');
+
+        // Cerrar otros dropdowns
+        document.querySelectorAll('.custom-dropdown').forEach(d => {
+            if (d.id !== id) d.classList.remove('active');
+        });
+    }
+
+    function selectItem(type, value) {
+        if (type === 'curso') {
+            document.getElementById('textCurso').innerText = value;
+            document.getElementById('dropdownCurso').classList.remove('active');
+        } else if (type === 'paralelo') {
+            document.getElementById('textParalelo').innerText = value;
+            document.getElementById('dropdownParalelo').classList.remove('active');
+        }
+    }
+
+    // ========== FUNCIONES DE GUARDADO ==========
+
+    function guardarClase() {
+        const select = document.getElementById('modalDocente'); // ¡FALTABA ESTA LÍNEA!
+
+        if (!select.value) {
+            alert("Seleccione un docente");
+            return;
+        }
+
+        const docenteId = select.value;
+        const docenteNombre = select.options[select.selectedIndex].text.split(' - ')[0];
+        const materia = document.getElementById('modalMateria').value;
+
+        if (!materia || materia === 'Sin materia asignada') {
+            alert("El docente seleccionado no tiene materia asignada");
+            return;
+        }
+
+        // Obtener datos de la celda
+        const cell = currentButton.parentElement;
+        const cellIndex = cell.cellIndex;
+        const tabla = cell.closest('table');
+        const dia = tabla.querySelectorAll('thead th')[cellIndex].innerText;
+        const fila = cell.closest('tr');
+        const rangoHora = fila.querySelector('.time-col').innerText;
+        const [inicio, fin] = rangoHora.split(' - ');
+        const jornada = cell.closest('.schedule-section').querySelector('.section-title').innerText.includes("Matutina") ? "Matutina" : "Vespertina";
+
+        // Actualizar visualmente la celda
+        cell.innerHTML = `
+            <div class="p-1 border border-blue-200 bg-blue-50 rounded">
+                <div class="text-[10px] font-bold text-blue-900 leading-tight">${materia}</div>
+                <div class="text-[9px] text-gray-700 truncate">${docenteNombre}</div>
+                <button class="text-[8px] text-red-500 mt-1 hover:underline w-full" onclick="resetCell(this)">Borrar</button>
+            </div>
+        `;
+
+        // Agregar al array temporal
+        const nuevoRegistro = {
+            curso: document.getElementById('textCurso').innerText,
+            paralelo: document.getElementById('textParalelo').innerText.replace("Paralelo ", ""),
+            jornada: jornada,
+            diaSemana: dia,
+            horaInicio: inicio,
+            horaFin: fin,
+            materia: materia,
+            docente: { id: parseInt(docenteId) }
+        };
+
+        horariosTemporales.push(nuevoRegistro);
+        console.log('Horario guardado:', nuevoRegistro); // Para depuración
+        closeModal();
+    }
+
+    function resetCell(btn) {
+        const cell = btn.closest('td');
+        const hora = cell.closest('tr').querySelector('.time-col').innerText.split(' - ')[0];
+        const dia = cell.closest('table').querySelectorAll('thead th')[cell.cellIndex].innerText;
+        const jornada = cell.closest('.schedule-section').querySelector('.section-title').innerText.includes("Matutina") ? "Matutina" : "Vespertina";
+
+        cell.innerHTML = `<button class="add-btn" onclick="openModal(this)">+</button>`;
+
+        // Quitar del array temporal
+        horariosTemporales = horariosTemporales.filter(h =>
+            !(h.horaInicio === hora && h.diaSemana === dia && h.jornada === jornada)
+        );
+    }
+
+    // ========== GUARDAR JORNADA COMPLETA ==========
+
+    async function enviarJornada(jornadaNombre) {
+        const datosAEnviar = horariosTemporales.filter(h => h.jornada === jornadaNombre);
+
+        if (datosAEnviar.length === 0) {
+            alert("No hay cambios para guardar en la jornada " + jornadaNombre);
+            return;
+        }
+
+        const confirmacion = confirm(`¿Desea guardar todos los registros de la jornada ${jornadaNombre} en la base de datos?`);
+        if (!confirmacion) return;
+
+        try {
+            const response = await fetch('/horario/guardarLote', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(datosAEnviar)
+            });
+
+            if (response.ok) {
+                alert(`¡Jornada ${jornadaNombre} guardada con éxito!`);
+                horariosTemporales = horariosTemporales.filter(h => h.jornada !== jornadaNombre);
+            } else {
+                alert("Hubo un problema al guardar los datos.");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("Error de conexión con el servidor.");
+        }
+    }
+
+    // ========== EVENT LISTENERS ==========
+
+    window.onload = function() {
+        // Agregar event listener para la búsqueda
+        const buscador = document.getElementById('buscarDocente');
+        if (buscador) {
+            buscador.addEventListener('input', filtrarDocentes);
+        }
+    };
+
+    window.onclick = function(event) {
+        const modal = document.getElementById('classModal');
+        if (event.target === modal) {
+            closeModal();
+        }
+
+        if (!event.target.closest('.custom-dropdown')) {
+            document.querySelectorAll('.custom-dropdown').forEach(d => d.classList.remove('active'));
+        }
+    };
+</script>
+<style>
+    .custom-dropdown.active .dropdown-options { display: block !important; }
+    /* Estilos para que la celda pintada se vea bien */
+    .schedule-table td div { line-height: 1.2; }
+</style>
 </body>
 </html>

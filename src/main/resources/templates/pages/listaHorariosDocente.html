@@ -4,21 +4,17 @@
     <meta charset="UTF-8">
     <title>Horario por Docente | U.E. Aida Gallegos</title>
     <link rel="icon" th:href="@{/images/faviconLogo.png}">
-
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet"/>
-
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
     <link rel="stylesheet" th:href="@{/css/footer.css}">
-    <link rel="stylesheet" th:href="@{/css/horarioDocente.css}">
-
-    <style th:inline="css">
-        @media print {
-            .no-print, nav, footer { display: none !important; }
-            body { background-color: white !important; }
-            .main-container { margin-top: 0 !important; width: 100% !important; }
-        }
+    <style>
+        @media print { .no-print, nav, footer { display: none !important; } }
+        .table-manual { border-collapse: collapse; width: 100%; table-layout: fixed; border: 1px solid #e5e7eb; }
+        .table-manual th, .table-manual td { border: 1px solid #e5e7eb; height: 70px; vertical-align: middle; text-align: center; }
+        .materia-badge { font-weight: bold; color: #1e40af; font-size: 0.75rem; text-transform: uppercase; display: block; }
+        .curso-badge { color: #6b7280; font-size: 0.65rem; font-weight: bold; display: block; }
+        .highlight-select { background-color: #fef9c3; transition: background 0.3s; }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -26,106 +22,156 @@
 <nav th:replace="~{fragments/navbar :: navbar}"></nav>
 
 <div class="max-w-7xl mx-auto p-4 mt-10 main-container">
-
     <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Horario por Docente</h2>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-16 mb-12 px-8 no-print">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 px-8 no-print items-end">
         <div>
-            <label class="block text-xl font-bold text-gray-800 mb-2">Buscar por Docente</label>
-            <select class="w-full p-2 border border-gray-300 rounded-md bg-white focus:outline-none appearance-none">
-                <option value="" disabled selected>Seleccione un docente...</option>
+            <label class="block text-sm font-bold text-gray-700 mb-2">1. Escriba el nombre del Docente</label>
+            <input type="text" id="inputBusqueda" oninput="filtrarDocentes()"
+                   placeholder="Ej: Juan Perez..."
+                   class="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <div>
+            <label class="block text-sm font-bold text-gray-700 mb-2">2. Verifique selección</label>
+            <select id="selectDocente"
+                    class="w-full p-2 border border-gray-300 rounded-md bg-white focus:ring-2 focus:ring-blue-500">
+                <option value="" disabled selected>Esperando búsqueda...</option>
+                <option th:each="docente : ${docentes}"
+                        th:value="${docente.id}"
+                        th:text="${docente.nombre}"></option>
             </select>
         </div>
+
         <div>
-            <label class="block text-xl font-bold text-gray-800 mb-2">Buscar por Materia</label>
-            <select class="w-full p-2 border border-gray-300 rounded-md bg-white focus:outline-none appearance-none">
-                <option value="" disabled selected>Seleccione una materia...</option>
-            </select>
+            <button onclick="cargarHorarioDocente()"
+                    class="w-full bg-blue-600 text-white py-2 rounded-md font-bold hover:bg-blue-700 transition-all shadow-md">
+                CONSULTAR HORARIO <i class="fas fa-search ml-2"></i>
+            </button>
         </div>
     </div>
 
     <div class="px-8 mb-10">
-        <p class="font-bold text-gray-900 mb-4 text-2xl uppercase tracking-wider">Jornada Matutina</p>
         <div class="overflow-x-auto">
-            <table class="w-full table-manual">
-                <thead>
+            <table class="table-manual w-full">
+                <thead class="bg-gray-100">
                 <tr class="uppercase text-xs text-gray-500">
-                    <th class="w-1/6">Hora</th>
-                    <th class="w-1/6">Lunes</th>
-                    <th class="w-1/6">Martes</th>
-                    <th class="w-1/6">Miércoles</th>
-                    <th class="w-1/6">Jueves</th>
-                    <th class="w-1/6">Viernes</th>
+                    <th class="p-4">Hora</th>
+                    <th>Lunes</th>
+                    <th>Martes</th>
+                    <th>Miércoles</th>
+                    <th>Jueves</th>
+                    <th>Viernes</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr><td class="p-4 bg-white text-center font-bold text-gray-700">07:00 - 07:45</td><td></td><td></td><td></td><td></td><td></td></tr>
-                <tr><td class="p-4 bg-white text-center font-bold text-gray-700">07:45 - 08:30</td><td></td><td></td><td></td><td></td><td></td></tr>
-                <tr><td class="p-4 bg-white text-center font-bold text-gray-700">08:30 - 09:15</td><td></td><td></td><td></td><td></td><td></td></tr>
-                <tr><td class="p-4 bg-white text-center font-bold text-gray-700">09:15 - 10:00</td><td></td><td></td><td></td><td></td><td></td></tr>
-                <tr class="bg-gray-50">
-                    <td class="p-4 text-center font-bold text-gray-500">10:00 - 10:30</td>
-                    <td class="text-center font-bold text-gray-400">R</td>
-                    <td class="text-center font-bold text-gray-400">E</td>
-                    <td class="text-center font-bold text-gray-400">C</td>
-                    <td class="text-center font-bold text-gray-400">R</td>
-                    <td class="text-center font-bold text-gray-400">EO</td>
-                </tr>
-                <tr><td class="p-4 bg-white text-center font-bold text-gray-700">10:30 - 11:15</td><td></td><td></td><td></td><td></td><td></td></tr>
-                <tr><td class="p-4 bg-white text-center font-bold text-gray-700">11:15 - 12:00</td><td></td><td></td><td></td><td></td><td></td></tr>
+                <tbody id="cuerpoTabla">
                 </tbody>
             </table>
         </div>
     </div>
 
-    <div class="px-8 mb-16">
-        <p class="font-bold text-gray-900 mb-4 text-2xl uppercase tracking-wider">Jornada Vespertina</p>
-        <div class="overflow-x-auto">
-            <table class="w-full table-manual">
-                <thead>
-                <tr class="uppercase text-xs text-gray-500">
-                    <th class="w-1/6">Hora</th>
-                    <th class="w-1/6">Lunes</th>
-                    <th class="w-1/6">Martes</th>
-                    <th class="w-1/6">Miércoles</th>
-                    <th class="w-1/6">Jueves</th>
-                    <th class="w-1/6">Viernes</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr><td class="p-4 bg-white text-center font-bold text-gray-700">13:00 - 13:45</td><td></td><td></td><td></td><td></td><td></td></tr>
-                <tr><td class="p-4 bg-white text-center font-bold text-gray-700">13:45 - 14:30</td><td></td><td></td><td></td><td></td><td></td></tr>
-                <tr><td class="p-4 bg-white text-center font-bold text-gray-700">14:30 - 15:15</td><td></td><td></td><td></td><td></td><td></td></tr>
-                <tr><td class="p-4 bg-white text-center font-bold text-gray-700">15:15 - 16:00</td><td></td><td></td><td></td><td></td><td></td></tr>
-                <tr><td class="p-4 bg-white text-center font-bold text-gray-700">16:00 - 16:45</td><td></td><td></td><td></td><td></td><td></td></tr>
-                <tr><td class="p-4 bg-white text-center font-bold text-gray-700">16:45 - 17:30</td><td></td><td></td><td></td><td></td><td></td></tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <div class="flex flex-col items-center mt-10 no-print mb-20">
-        <div class="relative group">
-            <button class="btn-print-main py-2 px-10 rounded-full flex items-center gap-3 uppercase tracking-widest text-sm font-bold shadow-md">
-                IMPRIMIR <i class="fas fa-chevron-right text-xs"></i>
-            </button>
-
-            <div class="absolute top-0 left-full ml-4 bg-white border border-gray-200 rounded-xl p-3 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity shadow-xl min-w-[100px]">
-                <button onclick="window.print()" class="flex items-center justify-between hover:text-blue-600 font-bold text-xs px-1">
-                    <span>PDF</span><i class="fas fa-file-pdf text-red-500 text-lg"></i>
-                </button>
-                <div class="h-[1px] bg-gray-100 w-full"></div>
-                <button class="flex items-center justify-between hover:text-green-600 font-bold text-xs px-1">
-                    <span>EXCEL</span><i class="fas fa-file-excel text-green-600 text-lg"></i>
-                </button>
-            </div>
-        </div>
+    <div class="flex justify-center no-print mb-20">
+        <button onclick="window.print()"
+                class="bg-gray-800 text-white py-2 px-10 rounded-full font-bold shadow-md hover:bg-black transition-all">
+            IMPRIMIR HORARIO <i class="fas fa-print ml-2"></i>
+        </button>
     </div>
 </div>
 
 <footer th:replace="~{fragments/footer :: footer}"></footer>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
-<script th:src="@{/js/navbar.js}"></script>
 
+<script>
+    const diasIdx = { 'LUNES': 1, 'MARTES': 2, 'MIERCOLES': 3, 'MIÉRCOLES': 3, 'JUEVES': 4, 'VIERNES': 5 };
+    const horas = ['07:00', '07:45', '08:30', '09:15', '10:30', '11:15', '13:00', '13:45', '14:30', '15:45', '16:30', '17:15', '18:00'];
+
+    // FILTRADO DINÁMICO MEJORADO
+    function filtrarDocentes() {
+        const input = document.getElementById('inputBusqueda').value.toUpperCase();
+        const select = document.getElementById('selectDocente');
+        const opciones = select.getElementsByTagName('option');
+        let primeraCoincidencia = null;
+
+        for (let i = 1; i < opciones.length; i++) {
+            const txtValue = opciones[i].textContent || opciones[i].innerText;
+            if (txtValue.toUpperCase().indexOf(input) > -1) {
+                opciones[i].style.display = "";
+                if (!primeraCoincidencia) primeraCoincidencia = opciones[i].value;
+            } else {
+                opciones[i].style.display = "none";
+            }
+        }
+
+        // Si hay una coincidencia clara mientras escribe, la selecciona automáticamente
+        if (primeraCoincidencia && input.length > 2) {
+            select.value = primeraCoincidencia;
+            select.classList.add('highlight-select');
+        } else {
+            select.classList.remove('highlight-select');
+        }
+    }
+
+    function inicializarTabla() {
+        const cuerpo = document.getElementById('cuerpoTabla');
+        cuerpo.innerHTML = '';
+        horas.forEach(h => {
+            const fila = document.createElement('tr');
+            fila.setAttribute('data-hora', h);
+            fila.innerHTML = `<td class="bg-gray-50 font-bold text-gray-600">${h}</td><td></td><td></td><td></td><td></td><td></td>`;
+            cuerpo.appendChild(fila);
+        });
+    }
+
+    async function cargarHorarioDocente() {
+        const select = document.getElementById('selectDocente');
+        const docenteId = select.value;
+        const nombreDocente = select.options[select.selectedIndex]?.text;
+
+        if (!docenteId) {
+            alert("⚠️ Por favor, seleccione un docente de la lista.");
+            return;
+        }
+
+        inicializarTabla();
+
+        try {
+            const response = await fetch(`/horario/buscarPorDocente?docenteId=${docenteId}`);
+
+            if (response.status === 400) {
+                alert("❌ Error 400: El servidor no entiende la solicitud.");
+                return;
+            }
+
+            const data = await response.json();
+
+            if (!data || data.length === 0) {
+                alert(`ℹ️ El docente ${nombreDocente} no tiene horarios registrados aún.`);
+                return;
+            }
+
+            data.forEach(h => {
+                const dia = h.diaSemana.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                const col = diasIdx[dia];
+                const horaKey = h.horaInicio.split(':').slice(0,2).join(':');
+
+                const fila = document.querySelector(`tr[data-hora="${horaKey}"]`);
+                if (fila && col) {
+                    fila.cells[col].innerHTML = `
+                        <div class="p-1">
+                            <span class="materia-badge">${h.materia}</span>
+                            <span class="curso-badge">${h.curso} - ${h.paralelo}</span>
+                        </div>`;
+                }
+            });
+
+            alert(`✅ Horario de ${nombreDocente} cargado con éxito.`);
+
+        } catch (error) {
+            console.error(error);
+            alert("⚠️ Hubo un error al conectar con la base de datos.");
+        }
+    }
+
+    window.onload = inicializarTabla;
+</script>
 </body>
 </html>

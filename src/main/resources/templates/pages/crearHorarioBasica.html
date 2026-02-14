@@ -32,6 +32,7 @@
                         <i class="fas fa-caret-down arrow-icon"></i>
                     </div>
                     <div class="dropdown-options">
+
                         <div class="dropdown-item" onclick="selectItem('curso', 'Inicial 1')">Inicial 1</div>
                         <div class="dropdown-item" onclick="selectItem('curso', 'Inicial 2')">Inicial 2</div>
                         <hr class="border-gray-200 my-1">
@@ -42,6 +43,10 @@
                         <div class="dropdown-item" onclick="selectItem('curso', '5to. Básica')">5to. Básica</div>
                         <div class="dropdown-item" onclick="selectItem('curso', '6to. Básica')">6to. Básica</div>
                         <div class="dropdown-item" onclick="selectItem('curso', '7mo. Básica')">7mo. Básica</div>
+                        <hr class="border-gray-200 my-1">
+                        <div class="dropdown-item" onclick="selectItem('curso', '8vo EGB')">8vo EGB</div>
+                        <div class="dropdown-item" onclick="selectItem('curso', '9no EGB')">9no EGB</div>
+                        <div class="dropdown-item" onclick="selectItem('curso', '10mo EGB')">10mo EGB</div>
                     </div>
                 </div>
             </div>
@@ -117,12 +122,14 @@
                     <td><button class="add-btn" onclick="openModal(this)">+</button></td>
                 </tr>
                 <tr>
-                    <td class="time-col text-center">10:00 - 10:30</td>
-                    <td><button class="add-btn">R</button></td>
-                    <td><button class="add-btn">E</button></td>
-                    <td><button class="add-btn">C</button></td>
-                    <td><button class="add-btn">R</button></td>
-                    <td><button class="add-btn">EO</button></td>
+                    <td class="time-col text-center font-bold">10:00 - 10:30</td>
+                    <td colspan="5" class="p-2">
+                        <div class="h-full py-3 flex items-center justify-center bg-gray-50 rounded-lg border-2 border-dashed border-gray-300 text-gray-400 font-bold shadow-inner transition-all hover:bg-gray-100">
+                            <i class="fas fa-mug-hot text-gray-300 mr-4 text-m"></i>
+                            <span class="tracking-[0.8em] text-3xl font-black text-gray-400">RECREO</span>
+                            <i class="fas fa-cookie-bite text-gray-300 ml-1 text-m"></i>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td class="time-col text-center">10:30 - 11:15</td>
@@ -198,7 +205,17 @@
                     <td><button class="add-btn" onclick="openModal(this)">+</button></td>
                 </tr>
                 <tr>
-                    <td class="time-col text-center">16:00 - 16:45</td>
+                    <td class="time-col text-center font-bold">16:00 - 16:30</td>
+                    <td colspan="5" class="p-2">
+                        <div class="h-full py-3 flex items-center justify-center bg-gray-50 rounded-lg border-2 border-dashed border-gray-300 text-gray-400 font-bold shadow-inner transition-all hover:bg-gray-100">
+                            <i class="fas fa-mug-hot text-gray-300 mr-4 text-m"></i>
+                            <span class="tracking-[0.8em] text-3xl font-black text-gray-400">RECREO</span>
+                            <i class="fas fa-cookie-bite text-gray-300 ml-1 text-m"></i>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="time-col text-center">16:30 - 17:15</td>
                     <td><button class="add-btn" onclick="openModal(this)">+</button></td>
                     <td><button class="add-btn" onclick="openModal(this)">+</button></td>
                     <td><button class="add-btn" onclick="openModal(this)">+</button></td>
@@ -206,7 +223,7 @@
                     <td><button class="add-btn" onclick="openModal(this)">+</button></td>
                 </tr>
                 <tr>
-                    <td class="time-col text-center">16:45 - 17:30</td>
+                    <td class="time-col text-center">17:15 - 18:00</td>
                     <td><button class="add-btn" onclick="openModal(this)">+</button></td>
                     <td><button class="add-btn" onclick="openModal(this)">+</button></td>
                     <td><button class="add-btn" onclick="openModal(this)">+</button></td>
@@ -457,14 +474,24 @@
         const jornada = cell.closest('.schedule-section').querySelector('.section-title').innerText.includes("Matutina") ? "Matutina" : "Vespertina";
 
         // Actualizar visualmente la celda
-        cell.innerHTML = `
-            <div class="p-1 border border-blue-200 bg-blue-50 rounded">
-                <div class="text-[10px] font-bold text-blue-900 leading-tight">${materia}</div>
-                <div class="text-[9px] text-gray-700 truncate">${docenteNombre}</div>
-                <button class="text-[8px] text-red-500 mt-1 hover:underline w-full" onclick="resetCell(this)">Borrar</button>
+cell.innerHTML = `
+    <div class="relative group w-full h-full flex flex-col justify-center px-4 py-4 bg-emerald-50 border-l-4 border-l-emerald-500 transition-all duration-300 hover:bg-emerald-100">
+        <div class="flex flex-col gap-1.5">
+            <span class="text-[15px] font-black text-emerald-900 uppercase tracking-tight leading-none">
+                ${materia}
+            </span>
+            <div class="flex items-center gap-2 text-[13px] text-emerald-700">
+                <i class="fas fa-chalkboard-user opacity-80"></i>
+                <span class="truncate font-bold">${docenteNombre}</span>
             </div>
-        `;
+        </div>
 
+        <button onclick="resetCell(this)"
+                class="absolute top-1 right-1 w-7 h-7 flex items-center justify-center bg-white text-emerald-600 rounded-full opacity-0 group-hover:opacity-100 hover:bg-red-500 hover:text-white transition-all duration-200 shadow-md">
+            <i class="fas fa-times text-[12px]"></i>
+        </button>
+    </div>
+`;
         // Agregar al array temporal
         const nuevoRegistro = {
             curso: document.getElementById('textCurso').innerText,

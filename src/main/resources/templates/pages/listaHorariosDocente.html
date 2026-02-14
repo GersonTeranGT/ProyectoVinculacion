@@ -12,8 +12,8 @@
         @media print { .no-print, nav, footer { display: none !important; } }
         .table-manual { border-collapse: collapse; width: 100%; table-layout: fixed; border: 1px solid #e5e7eb; }
         .table-manual th, .table-manual td { border: 1px solid #e5e7eb; height: 70px; vertical-align: middle; text-align: center; }
-        .materia-badge { font-weight: bold; color: #1e40af; font-size: 0.75rem; text-transform: uppercase; display: block; }
-        .curso-badge { color: #6b7280; font-size: 0.65rem; font-weight: bold; display: block; }
+        .materia-badge { font-weight: bold; color: #1e40af; font-size: 1rem; text-transform: uppercase; display: block; }
+        .curso-badge { color: black; font-size: 1rem; font-weight: bold; display: block; }
         .highlight-select { background-color: #fef9c3; transition: background 0.3s; }
     </style>
 </head>
@@ -55,13 +55,13 @@
         <div class="overflow-x-auto">
             <table class="table-manual w-full">
                 <thead class="bg-gray-100">
-                <tr class="uppercase text-xs text-gray-500">
-                    <th class="p-4">Hora</th>
-                    <th>Lunes</th>
-                    <th>Martes</th>
-                    <th>Miércoles</th>
-                    <th>Jueves</th>
-                    <th>Viernes</th>
+                <tr class="uppercase text-sm md:text-base font-bold text-black-700 border-b-2 border-gray-200">
+                    <th class="p-6 text-left bg-gray-50">Hora</th>
+                    <th class="p-6">Lunes</th>
+                    <th class="p-6">Martes</th>
+                    <th class="p-6">Miércoles</th>
+                    <th class="p-6">Jueves</th>
+                    <th class="p-6">Viernes</th>
                 </tr>
                 </thead>
                 <tbody id="cuerpoTabla">

@@ -10,10 +10,30 @@
     <link rel="stylesheet" th:href="@{/css/footer.css}">
     <style>
         @media print { .no-print, nav, footer { display: none !important; } }
-        .table-manual { border-collapse: collapse; width: 100%; table-layout: fixed; border: 1px solid #e5e7eb; }
-        .table-manual th, .table-manual td { border: 1px solid #e5e7eb; height: 80px; vertical-align: middle; background-color: white; }
-        .materia-text { font-weight: bold; color: #1e40af; font-size: 0.75rem; text-transform: uppercase; display: block; }
-        .docente-text { color: #6b7280; font-size: 0.65rem; font-style: italic; display: block; }
+        .table-manual {
+            border-collapse: collapse;
+            width: 100%;
+            table-layout: fixed;
+            border: 1px solid #d1d5db;
+        }
+        .table-manual th {
+            border: 1px solid #d1d5db;
+            padding: 15px;
+            background-color: #f3f4f6;
+            color: #000000;
+            font-size: 1.1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+        .table-manual td {
+            border: 1px solid #d1d5db;
+            height: 85px;
+            vertical-align: middle;
+            background-color: white;
+            text-align: center;
+        }
+        .materia-text { font-weight: bold; color: #1e40af; font-size: 1rem; text-transform: uppercase; display: block; }
+        .docente-text { color: #000000; font-size: 1rem; font-style: italic; display: block; }
     </style>
 </head>
 <body class="bg-gray-50">

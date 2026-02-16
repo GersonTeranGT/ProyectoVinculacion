@@ -9,12 +9,140 @@
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
     <link rel="stylesheet" th:href="@{/css/footer.css}">
     <style>
-        @media print { .no-print, nav, footer { display: none !important; } }
-        .table-manual { border-collapse: collapse; width: 100%; table-layout: fixed; border: 1px solid #e5e7eb; }
-        .table-manual th, .table-manual td { border: 1px solid #e5e7eb; height: 70px; vertical-align: middle; text-align: center; }
-        .materia-badge { font-weight: bold; color: #1e40af; font-size: 1rem; text-transform: uppercase; display: block; }
-        .curso-badge { color: black; font-size: 1rem; font-weight: bold; display: block; }
-        .highlight-select { background-color: #fef9c3; transition: background 0.3s; }
+        @media print {
+            .no-print, nav, footer { display: none !important; }
+        }
+
+        /* Estilos de impresión para HORARIO POR DOCENTE - Vertical */
+        @media print {
+            @page {
+                size: portrait;
+                margin: 0.8cm;
+            }
+
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                background-color: white;
+            }
+
+            .table-manual {
+                border-collapse: collapse;
+                width: 100%;
+                table-layout: fixed;
+                border: 1px solid #e5e7eb;
+                page-break-inside: avoid;
+                font-size: 8px;
+            }
+
+            .table-manual th {
+                border: 1px solid #e5e7eb;
+                padding: 4px !important;
+                background-color: #f3f4f6 !important;
+                color: #000000;
+                font-size: 0.7rem;
+                font-weight: 800;
+                text-transform: uppercase;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .table-manual td {
+                border: 1px solid #e5e7eb;
+                height: 25px !important;
+                padding: 2px !important;
+                vertical-align: middle;
+                background-color: white;
+                text-align: center;
+            }
+
+            .materia-badge {
+                font-weight: bold;
+                color: #1e40af;
+                font-size: 0.65rem !important;
+                text-transform: uppercase;
+                display: block;
+                line-height: 1.1;
+            }
+
+            .curso-badge {
+                color: black;
+                font-size: 0.6rem !important;
+                font-weight: bold;
+                display: block;
+                line-height: 1.1;
+            }
+
+            .recreo-fila td {
+                background-color: #f3f4f6 !important;
+                color: #6b7280 !important;
+                font-weight: bold;
+                font-size: 0.7rem;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .bg-gray-50 {
+                background-color: #f9fafb !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            /* Ajustar altura de filas para que quepan 12 filas + recreos */
+            tbody tr {
+                height: 22px !important;
+            }
+
+            /* Eliminar página en blanco extra */
+            .main-container, .max-w-7xl {
+                page-break-after: avoid;
+            }
+
+            body > *:not(.main-container):not(.px-8) {
+                display: none;
+            }
+        }
+
+        /* Estilos normales (pantalla) - se mantienen igual */
+        .table-manual {
+            border-collapse: collapse;
+            width: 100%;
+            table-layout: fixed;
+            border: 1px solid #e5e7eb;
+        }
+        .table-manual th, .table-manual td {
+            border: 1px solid #e5e7eb;
+            height: 70px;
+            vertical-align: middle;
+            text-align: center;
+        }
+        .materia-badge {
+            font-weight: bold;
+            color: #1e40af;
+            font-size: 1rem;
+            text-transform: uppercase;
+            display: block;
+        }
+        .curso-badge {
+            color: black;
+            font-size: 1rem;
+            font-weight: bold;
+            display: block;
+        }
+        .highlight-select {
+            background-color: #fef9c3;
+            transition: background 0.3s;
+        }
+        .recreo-fila td {
+            background-color: #f3f4f6 !important;
+            color: #6b7280 !important;
+            font-weight: bold;
+        }
+
+        /* Evitar saltos de página no deseados */
+        tr {
+            page-break-inside: avoid;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -70,7 +198,7 @@
         </div>
     </div>
 
-    <div class="flex justify-center no-print mb-20">
+    <div class="flex justify-center no-print mb-20 gap-4">
         <button onclick="window.print()"
                 class="bg-gray-800 text-white py-2 px-10 rounded-full font-bold shadow-md hover:bg-black transition-all">
             IMPRIMIR HORARIO <i class="fas fa-print ml-2"></i>
@@ -82,7 +210,45 @@
 
 <script>
     const diasIdx = { 'LUNES': 1, 'MARTES': 2, 'MIERCOLES': 3, 'MIÉRCOLES': 3, 'JUEVES': 4, 'VIERNES': 5 };
-    const horas = ['07:00', '07:45', '08:30', '09:15', '10:30', '11:15', '13:00', '13:45', '14:30', '15:45', '16:30', '17:15', '18:00'];
+
+    function generarFilasDocente() {
+        const cuerpo = document.getElementById('cuerpoTabla');
+        cuerpo.innerHTML = '';
+
+        // Jornada Matutina
+        const horasMatutina = {
+            simples: ['07:00', '07:45', '08:30', '09:15', 'RECREO', '10:30', '11:15'],
+            mostrar: ['07:00 - 07:45', '07:45 - 08:30', '08:30 - 09:15', '09:15 - 10:00', 'RECREO', '10:30 - 11:15', '11:15 - 12:00']
+        };
+
+        // Jornada Vespertina
+        const horasVespertina = {
+            simples: ['13:00', '13:45', '14:30', '15:15', 'RECREO', '16:30', '17:15'],
+            mostrar: ['13:00 - 13:45', '13:45 - 14:30', '14:30 - 15:15', '15:15 - 16:00', 'RECREO', '16:30 - 17:15', '17:15 - 18:00']
+        };
+
+        // Primero generamos la jornada matutina
+        horasMatutina.simples.forEach((horaSimple, index) => {
+            const horaMostrar = horasMatutina.mostrar[index];
+
+            if (horaSimple === 'RECREO') {
+                cuerpo.innerHTML += `<tr class="recreo-fila"><td class="text-center font-bold p-2">10:00 - 10:30</td><td colspan="5" class="text-center font-bold">RECREO</td></tr>`;
+            } else {
+                cuerpo.innerHTML += `<tr data-hora="${horaSimple}" data-jornada="MATUTINA"><td class="bg-gray-50 font-bold text-gray-600">${horaMostrar}</td><td></td><td></td><td></td><td></td><td></td></tr>`;
+            }
+        });
+
+        // Luego generamos la jornada vespertina
+        horasVespertina.simples.forEach((horaSimple, index) => {
+            const horaMostrar = horasVespertina.mostrar[index];
+
+            if (horaSimple === 'RECREO') {
+                cuerpo.innerHTML += `<tr class="recreo-fila"><td class="text-center font-bold p-2">16:00 - 16:30</td><td colspan="5" class="text-center font-bold">RECREO</td></tr>`;
+            } else {
+                cuerpo.innerHTML += `<tr data-hora="${horaSimple}" data-jornada="VESPERTINA"><td class="bg-gray-50 font-bold text-gray-600">${horaMostrar}</td><td></td><td></td><td></td><td></td><td></td></tr>`;
+            }
+        });
+    }
 
     // FILTRADO DINÁMICO MEJORADO
     function filtrarDocentes() {
@@ -101,24 +267,12 @@
             }
         }
 
-        // Si hay una coincidencia clara mientras escribe, la selecciona automáticamente
         if (primeraCoincidencia && input.length > 2) {
             select.value = primeraCoincidencia;
             select.classList.add('highlight-select');
         } else {
             select.classList.remove('highlight-select');
         }
-    }
-
-    function inicializarTabla() {
-        const cuerpo = document.getElementById('cuerpoTabla');
-        cuerpo.innerHTML = '';
-        horas.forEach(h => {
-            const fila = document.createElement('tr');
-            fila.setAttribute('data-hora', h);
-            fila.innerHTML = `<td class="bg-gray-50 font-bold text-gray-600">${h}</td><td></td><td></td><td></td><td></td><td></td>`;
-            cuerpo.appendChild(fila);
-        });
     }
 
     async function cargarHorarioDocente() {
@@ -131,7 +285,7 @@
             return;
         }
 
-        inicializarTabla();
+        generarFilasDocente();
 
         try {
             const response = await fetch(`/horario/buscarPorDocente?docenteId=${docenteId}`);
@@ -171,7 +325,7 @@
         }
     }
 
-    window.onload = inicializarTabla;
+    window.onload = generarFilasDocente;
 </script>
 </body>
 </html>

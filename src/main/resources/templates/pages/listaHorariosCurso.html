@@ -9,7 +9,125 @@
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
     <link rel="stylesheet" th:href="@{/css/footer.css}">
     <style>
-        @media print { .no-print, nav, footer { display: none !important; } }
+        @media print {
+            .no-print, nav, footer { display: none !important; }
+        }
+
+        /* Estilos de impresión para HORARIO POR CURSO - Horizontal */
+        @media print {
+            @page {
+                size: landscape;
+                margin: 0.8cm;
+            }
+
+            body {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                background-color: white;
+                margin: 0;
+                padding: 0;
+            }
+
+            /* Mostrar solo el contenedor principal */
+            .max-w-7xl {
+                display: block !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 10px !important;
+            }
+
+            #contMatutina {
+                display: block !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            #tituloJornada {
+                display: block !important;
+                font-size: 1.2rem !important;
+                margin-bottom: 0.5rem !important;
+                text-align: center;
+            }
+
+            .table-manual {
+                border-collapse: collapse;
+                width: 100%;
+                table-layout: fixed;
+                border: 1px solid #d1d5db;
+                page-break-inside: avoid;
+                font-size: 10px;
+            }
+
+            .table-manual th {
+                border: 1px solid #d1d5db;
+                padding: 6px !important;
+                background-color: #f3f4f6 !important;
+                color: #000000;
+                font-size: 0.9rem;
+                font-weight: 800;
+                text-transform: uppercase;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .table-manual td {
+                border: 1px solid #d1d5db;
+                height: 45px !important;
+                padding: 3px !important;
+                vertical-align: middle;
+                background-color: white;
+                text-align: center;
+            }
+
+            .materia-text {
+                font-weight: bold;
+                color: #1e40af;
+                font-size: 0.8rem;
+                text-transform: uppercase;
+                display: block;
+                line-height: 1.2;
+            }
+
+            .docente-text {
+                color: #000000;
+                font-size: 0.75rem;
+                font-style: italic;
+                display: block;
+                line-height: 1.2;
+            }
+
+            /* Asegurar que las filas de recreo se vean */
+            .bg-gray-100 {
+                background-color: #f3f4f6 !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .bg-gray-100 td {
+                background-color: #f3f4f6 !important;
+                color: #4b5563 !important;
+            }
+
+            /* Eliminar páginas en blanco extra */
+            .main-container, .max-w-7xl, #contMatutina, table {
+                page-break-after: avoid;
+                page-break-before: avoid;
+            }
+
+            /* No ocultar nada más que lo necesario */
+            body > *:not(.max-w-7xl):not(nav):not(footer) {
+                display: none;
+            }
+
+            /* Mostrar explícitamente el contenedor del horario */
+            .px-8.mb-10 {
+                display: block !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+        }
+
+        /* Estilos normales (pantalla) - se mantienen igual */
         .table-manual {
             border-collapse: collapse;
             width: 100%;
@@ -34,6 +152,11 @@
         }
         .materia-text { font-weight: bold; color: #1e40af; font-size: 1rem; text-transform: uppercase; display: block; }
         .docente-text { color: #000000; font-size: 1rem; font-style: italic; display: block; }
+
+        /* Evitar saltos de página no deseados */
+        tr {
+            page-break-inside: avoid;
+        }
     </style>
 </head>
 <body class="bg-gray-50">

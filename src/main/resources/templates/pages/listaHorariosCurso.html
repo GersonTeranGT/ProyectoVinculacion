@@ -28,7 +28,6 @@
                 padding: 0;
             }
 
-            /* Mostrar solo el contenedor principal */
             .max-w-7xl {
                 display: block !important;
                 max-width: 100% !important;
@@ -96,7 +95,6 @@
                 line-height: 1.2;
             }
 
-            /* Asegurar que las filas de recreo se vean */
             .bg-gray-100 {
                 background-color: #f3f4f6 !important;
                 -webkit-print-color-adjust: exact;
@@ -108,18 +106,15 @@
                 color: #4b5563 !important;
             }
 
-            /* Eliminar páginas en blanco extra */
             .main-container, .max-w-7xl, #contMatutina, table {
                 page-break-after: avoid;
                 page-break-before: avoid;
             }
 
-            /* No ocultar nada más que lo necesario */
             body > *:not(.max-w-7xl):not(nav):not(footer) {
                 display: none;
             }
 
-            /* Mostrar explícitamente el contenedor del horario */
             .px-8.mb-10 {
                 display: block !important;
                 padding: 0 !important;
@@ -127,7 +122,7 @@
             }
         }
 
-        /* Estilos normales (pantalla) - se mantienen igual */
+        /* Estilos normales (pantalla) */
         .table-manual {
             border-collapse: collapse;
             width: 100%;
@@ -149,13 +144,151 @@
             vertical-align: middle;
             background-color: white;
             text-align: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
         }
-        .materia-text { font-weight: bold; color: #1e40af; font-size: 1rem; text-transform: uppercase; display: block; }
-        .docente-text { color: #000000; font-size: 1rem; font-style: italic; display: block; }
+        .table-manual td:hover {
+            background-color: #f0f9ff;
+        }
+        .materia-text {
+            font-weight: bold;
+            color: #1e40af;
+            font-size: 1rem;
+            text-transform: uppercase;
+            display: block;
+        }
+        .docente-text {
+            color: #000000;
+            font-size: 1rem;
+            font-style: italic;
+            display: block;
+        }
 
-        /* Evitar saltos de página no deseados */
         tr {
             page-break-inside: avoid;
+        }
+
+        /* Modal de Edición */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e5e7eb;
+        }
+
+        .modal-body {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            ring: 2px solid #3b82f6;
+        }
+
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            padding-top: 15px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .btn-cancelar {
+            background-color: #6b7280;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-guardar {
+            background-color: #3b82f6;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn-cancelar:hover, .btn-guardar:hover {
+            filter: brightness(1.1);
+        }
+
+        .btn-eliminar-todo {
+            background-color: #dc2626;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 9999px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-eliminar-todo:hover {
+            background-color: #b91c1c;
+        }
+
+        .btn-imprimir {
+            background-color: #1f2937;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 9999px;
+            font-weight: bold;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-imprimir:hover {
+            background-color: #111827;
         }
     </style>
 </head>
@@ -238,9 +371,46 @@
     </div>
 
     <div class="flex flex-col items-center mt-10 no-print mb-20">
-        <button onclick="window.print()" class="bg-gray-800 text-white py-2 px-10 rounded-full font-bold shadow-md">
-            IMPRIMIR <i class="fas fa-print ml-2"></i>
-        </button>
+        <div class="flex gap-4">
+            <button onclick="exportarAExcel()" class="bg-green-600 text-white py-2 px-10 rounded-full font-bold shadow-md hover:bg-green-700">
+                <i class="fas fa-file-excel mr-2"></i>EXCEL
+            </button>
+            <button onclick="window.print()" class="btn-imprimir">
+                IMPRIMIR <i class="fas fa-print ml-2"></i>
+            </button>
+            <button onclick="eliminarHorarioCompleto()" class="btn-eliminar-todo">
+                ELIMINAR TODO <i class="fas fa-trash ml-2"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Edición Simplificado -->
+<div id="editModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="text-xl font-bold"><i class="fas fa-edit mr-2 text-blue-600"></i>Cambiar Docente</h3>
+            <span class="close-modal cursor-pointer text-gray-500 hover:text-gray-700 text-2xl" onclick="cerrarModalEdicion()">&times;</span>
+        </div>
+        <div class="modal-body">
+            <input type="hidden" id="editId">
+
+            <div class="form-group">
+                <label>Materia</label>
+                <input type="text" id="editMateria" class="form-control" readonly>
+            </div>
+
+            <div class="form-group">
+                <label>Docente</label>
+                <select id="editDocente" class="form-control" onchange="actualizarMateriaPorDocenteEdit()">
+                    <option value="">Cargando...</option>
+                </select>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn-cancelar" onclick="cerrarModalEdicion()">Cancelar</button>
+            <button class="btn-guardar" onclick="guardarCambios()">Cambiar Docente</button>
+        </div>
     </div>
 </div>
 
@@ -248,61 +418,71 @@
 
 <script>
     const diasIdx = { 'LUNES': 1, 'MARTES': 2, 'MIERCOLES': 3, 'MIÉRCOLES': 3, 'JUEVES': 4, 'VIERNES': 5 };
+    let celdaEnEdicion = null;
+    let docentesCache = [];
 
     function generarFilas(jornada) {
-    const cuerpo = document.getElementById('cuerpoTabla');
-    cuerpo.innerHTML = '';
+        const cuerpo = document.getElementById('cuerpoTabla');
+        cuerpo.innerHTML = '';
 
-    if (jornada === 'Matutina') {
-        const horasSimples = ['07:00', '07:45', '08:30', '09:15', 'RECREO', '10:30', '11:15'];
-        const horasMostrar = ['07:00 - 07:45', '07:45 - 08:30', '08:30 - 09:15', '09:15 - 10:00', 'RECREO', '10:30 - 11:15', '11:15 - 12:00'];
+        if (jornada === 'Matutina') {
+            const horasSimples = ['07:00', '07:45', '08:30', '09:15', 'RECREO', '10:30', '11:15'];
+            const horasMostrar = ['07:00 - 07:45', '07:45 - 08:30', '08:30 - 09:15', '09:15 - 10:00', 'RECREO', '10:30 - 11:15', '11:15 - 12:00'];
 
-        horasSimples.forEach((horaSimple, index) => {
-            const horaMostrar = horasMostrar[index];
+            horasSimples.forEach((horaSimple, index) => {
+                const horaMostrar = horasMostrar[index];
 
-            if (horaSimple === 'RECREO') {
-                cuerpo.innerHTML += `<tr class="bg-gray-100"><td class="text-center font-bold text-gray-400 p-2">10:00 - 10:30</td><td colspan="5" class="text-center font-bold text-gray-400">RECREO</td></tr>`;
-            } else {
-                cuerpo.innerHTML += `<tr data-hora="${horaSimple}"><td class="p-4 bg-gray-50 text-center font-bold">${horaMostrar}</td><td></td><td></td><td></td><td></td><td></td></tr>`;
-            }
-        });
-    } else { // Jornada Vespertina
-        const horasSimples = ['13:00', '13:45', '14:30', '15:15', 'RECREO', '16:30', '17:15'];
-        const horasMostrar = ['13:00 - 13:45', '13:45 - 14:30', '14:30 - 15:15', '15:15 - 16:00', 'RECREO', '16:30 - 17:15', '17:15 - 18:00'];
+                if (horaSimple === 'RECREO') {
+                    cuerpo.innerHTML += `<tr class="bg-gray-100"><td class="text-center font-bold text-gray-400 p-2">10:00 - 10:30</td><td colspan="5" class="text-center font-bold text-gray-400">RECREO</td></tr>`;
+                } else {
+                    cuerpo.innerHTML += `<tr data-hora="${horaSimple}"><td class="p-4 bg-gray-50 text-center font-bold">${horaMostrar}</td><td></td><td></td><td></td><td></td><td></td></tr>`;
+                }
+            });
+        } else { // Jornada Vespertina
+            const horasSimples = ['13:00', '13:45', '14:30', '15:15', 'RECREO', '16:30', '17:15'];
+            const horasMostrar = ['13:00 - 13:45', '13:45 - 14:30', '14:30 - 15:15', '15:15 - 16:00', 'RECREO', '16:30 - 17:15', '17:15 - 18:00'];
 
-        horasSimples.forEach((horaSimple, index) => {
-            const horaMostrar = horasMostrar[index];
+            horasSimples.forEach((horaSimple, index) => {
+                const horaMostrar = horasMostrar[index];
 
-            if (horaSimple === 'RECREO') {
-                cuerpo.innerHTML += `<tr class="bg-gray-100"><td class="text-center font-bold text-gray-400 p-2">16:00 - 16:30</td><td colspan="5" class="text-center font-bold text-gray-400">RECREO</td></tr>`;
-            } else {
-                cuerpo.innerHTML += `<tr data-hora="${horaSimple}"><td class="p-4 bg-gray-50 text-center font-bold">${horaMostrar}</td><td></td><td></td><td></td><td></td><td></td></tr>`;
-            }
-        });
+                if (horaSimple === 'RECREO') {
+                    cuerpo.innerHTML += `<tr class="bg-gray-100"><td class="text-center font-bold text-gray-400 p-2">16:00 - 16:30</td><td colspan="5" class="text-center font-bold text-gray-400">RECREO</td></tr>`;
+                } else {
+                    cuerpo.innerHTML += `<tr data-hora="${horaSimple}"><td class="p-4 bg-gray-50 text-center font-bold">${horaMostrar}</td><td></td><td></td><td></td><td></td><td></td></tr>`;
+                }
+            });
+        }
     }
-}
 
     async function cargarHorarios() {
         const curso = document.getElementById('selectCurso').value;
         const paralelo = document.getElementById('selectParalelo').value;
         const jornada = document.getElementById('selectJornada').value;
 
-        if (!curso || !paralelo) return alert("Seleccione curso y paralelo.");
+        if (!curso || !paralelo) {
+            alert("Seleccione curso y paralelo.");
+            return;
+        }
 
         document.getElementById('tituloJornada').innerText = "Jornada " + jornada;
         generarFilas(jornada);
 
         try {
             const params = new URLSearchParams({ curso, paralelo, jornada });
-            // CAMBIO CLAVE: La ruta ahora es /horario/buscar
             const response = await fetch(`/horario/buscar?${params.toString()}`);
 
-            if (response.status === 400) return alert("❌ Error 400: Revisa tu controlador Java.");
+            if (response.status === 400) {
+                alert("❌ Error 400: Revisa tu controlador Java.");
+                return;
+            }
             if (!response.ok) throw new Error("Error " + response.status);
 
             const data = await response.json();
 
-            if (data.length === 0) return alert("ℹ️ No hay datos para esta selección.");
+            if (data.length === 0) {
+                alert("ℹ️ No hay datos para esta selección.");
+                return;
+            }
 
             data.forEach(h => {
                 const dia = h.diaSemana.toUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
@@ -311,7 +491,10 @@
 
                 const fila = document.querySelector(`tr[data-hora="${horaKey}"]`);
                 if (fila && col) {
-                    fila.cells[col].innerHTML = `
+                    const celda = fila.cells[col];
+                    celda.setAttribute('data-horario-id', h.id);
+                    celda.setAttribute('onclick', `editarCelda(this, ${h.id})`);
+                    celda.innerHTML = `
                         <div class="text-center">
                             <span class="materia-text">${h.materia}</span>
                             <span class="docente-text">${h.docente?.nombre || ''}</span>
@@ -323,6 +506,248 @@
             alert("⚠️ Error: " + e.message);
         }
     }
+
+    async function cargarDocentes() {
+        try {
+            const response = await fetch('/api/docentes');
+            docentesCache = await response.json();
+        } catch (e) {
+            console.error("Error cargando docentes:", e);
+        }
+    }
+
+    async function editarCelda(elemento, horarioId) {
+        try {
+            const response = await fetch(`/horario/buscarPorId/${horarioId}`);
+            if (!response.ok) throw new Error("No se pudo obtener el horario");
+
+            const horario = await response.json();
+
+            celdaEnEdicion = {
+                elemento: elemento,
+                horarioId: horarioId,
+                celda: elemento.closest('td')
+            };
+
+            document.getElementById('editId').value = horario.id;
+            document.getElementById('editMateria').value = horario.materia;
+
+            // Cargar docentes en el select
+            const select = document.getElementById('editDocente');
+            if (docentesCache.length === 0) {
+                await cargarDocentes();
+            }
+
+            select.innerHTML = '<option value="">Seleccione docente...</option>';
+            docentesCache.forEach(d => {
+                const option = document.createElement('option');
+                option.value = d.id;
+                option.textContent = d.nombre;
+                option.setAttribute('data-materia', d.materia || '');
+                if (horario.docente && d.id === horario.docente.id) {
+                    option.selected = true;
+                }
+                select.appendChild(option);
+            });
+
+            document.getElementById('editModal').style.display = 'flex';
+
+        } catch (error) {
+            alert("⚠️ Error al cargar datos: " + error.message);
+        }
+    }
+
+    function actualizarMateriaPorDocenteEdit() {
+        const select = document.getElementById('editDocente');
+        const selectedOption = select.options[select.selectedIndex];
+        if (selectedOption && selectedOption.value) {
+            const materia = selectedOption.getAttribute('data-materia');
+            if (materia) {
+                document.getElementById('editMateria').value = materia;
+            }
+        }
+    }
+
+    async function guardarCambios() {
+        if (!celdaEnEdicion) return;
+
+        const selectDocente = document.getElementById('editDocente');
+        if (!selectDocente.value) {
+            alert("Seleccione un docente");
+            return;
+        }
+
+        const docenteNombre = selectDocente.options[selectDocente.selectedIndex].text;
+        const materia = document.getElementById('editMateria').value;
+
+        const horarioActualizado = {
+            id: celdaEnEdicion.horarioId,
+            materia: materia,
+            docente: { id: parseInt(selectDocente.value) }
+        };
+
+        try {
+            const response = await fetch(`/horario/actualizar/${celdaEnEdicion.horarioId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(horarioActualizado)
+            });
+
+            if (response.ok) {
+                // Actualizar la celda visualmente
+                celdaEnEdicion.elemento.innerHTML = `
+                    <div class="text-center">
+                        <span class="materia-text">${materia}</span>
+                        <span class="docente-text">${docenteNombre}</span>
+                    </div>`;
+
+                alert("✅ Horario actualizado correctamente");
+                cerrarModalEdicion();
+            } else {
+                const error = await response.text();
+                alert("❌ Error al actualizar: " + error);
+            }
+        } catch (error) {
+            alert("⚠️ Error de conexión: " + error.message);
+        }
+    }
+
+    async function eliminarHorarioCompleto() {
+        const curso = document.getElementById('selectCurso').value;
+        const paralelo = document.getElementById('selectParalelo').value;
+        const jornada = document.getElementById('selectJornada').value;
+
+        if (!curso || !paralelo) {
+            alert("Seleccione curso y paralelo primero.");
+            return;
+        }
+
+        if (!confirm(`¿Está seguro de eliminar TODO el horario de ${curso} - ${paralelo} (${jornada})? Esta acción no se puede deshacer.`)) {
+            return;
+        }
+
+        try {
+            const params = new URLSearchParams({ curso, paralelo, jornada });
+            const response = await fetch(`/horario/buscar?${params.toString()}`);
+            const horarios = await response.json();
+
+            if (horarios.length === 0) {
+                alert("No hay horarios para eliminar.");
+                return;
+            }
+
+            let eliminados = 0;
+            for (const h of horarios) {
+                const deleteResponse = await fetch(`/horario/eliminar/${h.id}`, {
+                    method: 'DELETE'
+                });
+                if (deleteResponse.ok) eliminados++;
+            }
+
+            // Recargar la tabla vacía
+            generarFilas(jornada);
+            alert(`✅ ${eliminados} horarios eliminados correctamente`);
+
+        } catch (error) {
+            alert("⚠️ Error al eliminar: " + error.message);
+        }
+    }
+
+    function cerrarModalEdicion() {
+        document.getElementById('editModal').style.display = 'none';
+        celdaEnEdicion = null;
+    }
+
+    // Precargar docentes al iniciar
+    window.onload = function() {
+        cargarDocentes();
+    };
+    function exportarAExcel() {
+    const curso = document.getElementById('selectCurso').value;
+    const paralelo = document.getElementById('selectParalelo').value;
+    const jornada = document.getElementById('selectJornada').value;
+
+    if (!curso || !paralelo) {
+        alert("Primero debe seleccionar un curso y paralelo");
+        return;
+    }
+
+    // Obtener la tabla
+    const tabla = document.getElementById('tablaPrincipal');
+    if (!tabla) return;
+
+    // Crear array de datos para Excel
+    const datos = [];
+
+    // Título del horario
+    datos.push([`HORARIO: ${curso} - ${paralelo} (${jornada})`]);
+    datos.push([]); // Fila vacía
+
+    // Encabezados
+    const encabezados = ['Hora'];
+    const diasSemana = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
+    encabezados.push(...diasSemana);
+    datos.push(encabezados);
+
+    // Datos de las filas
+    const filas = tabla.querySelectorAll('tbody tr');
+    filas.forEach(fila => {
+        const celdas = fila.querySelectorAll('td');
+        if (celdas.length > 0) {
+            const filaDatos = [];
+
+            // Primera celda (hora)
+            const horaCelda = celdas[0];
+            filaDatos.push(horaCelda.innerText.trim());
+
+            // Verificar si es fila de recreo (tiene colspan)
+            if (celdas.length === 1 && fila.classList.contains('bg-gray-100')) {
+                // Es la fila de recreo con colspan
+                filaDatos.push('RECREO', '', '', '', '');
+            } else {
+                // Filas normales
+                for (let i = 1; i < celdas.length; i++) {
+                    const celda = celdas[i];
+                    const materiaSpan = celda.querySelector('.materia-text');
+                    const docenteSpan = celda.querySelector('.docente-text');
+
+                    if (materiaSpan && docenteSpan) {
+                        filaDatos.push(`${materiaSpan.innerText} (${docenteSpan.innerText})`);
+                    } else {
+                        filaDatos.push(''); // Celda vacía
+                    }
+                }
+            }
+
+            datos.push(filaDatos);
+        }
+    });
+
+    // Crear libro de Excel
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.aoa_to_sheet(datos);
+
+    // Ajustar ancho de columnas
+    const colWidths = [
+        { wch: 15 }, // Hora
+        { wch: 30 }, // Lunes
+        { wch: 30 }, // Martes
+        { wch: 30 }, // Miércoles
+        { wch: 30 }, // Jueves
+        { wch: 30 }  // Viernes
+    ];
+    ws['!cols'] = colWidths;
+
+    // Añadir la hoja al libro
+    XLSX.utils.book_append_sheet(wb, ws, 'Horario');
+
+    // Generar nombre del archivo
+    const nombreArchivo = `Horario_${curso}_${paralelo}_${jornada}.xlsx`;
+
+    // Descargar archivo
+    XLSX.writeFile(wb, nombreArchivo);
+}
 </script>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
 </body>
 </html>

@@ -15,6 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/horario")
@@ -58,8 +59,6 @@ public class HorarioController {
 
         return "pages/listaHorariosDocente";
     }
-
-
 
     @PostMapping("/guardarLote")
     @ResponseBody
@@ -163,5 +162,69 @@ public class HorarioController {
             System.err.println("Error: " + e.getMessage());
         }
         return null;
+    }
+
+    // Metodo para eliminar horario por curso
+    @DeleteMapping("/eliminar/{id}")
+    @ResponseBody
+    public ResponseEntity<?> eliminarHorario(@PathVariable Long id) {
+        try {
+            if (!horarioRepository.existsById(id)) {
+                return ResponseEntity.status(404).body("Horario no encontrado");
+            }
+            horarioRepository.deleteById(id);
+            return ResponseEntity.ok().body(Map.of("mensaje", "Horario eliminado correctamente"));
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error al eliminar: " + e.getMessage());
+        }
+    }
+
+    @PutMapping("/actualizar/{id}")
+    @ResponseBody
+    public ResponseEntity<?> actualizarHorario(@PathVariable Long id, @RequestBody Map<String, Object> payload) {
+        try {
+            Optional<Horario> horarioOpt = horarioRepository.findById(id);
+            if (!horarioOpt.isPresent()) {
+                return ResponseEntity.status(404).body("Horario no encontrado");
+            }
+
+            Horario horario = horarioOpt.get();
+
+            // Actualizar solo materia y docente
+            if (payload.containsKey("materia")) {
+                horario.setMateria((String) payload.get("materia"));
+            }
+
+            if (payload.containsKey("docente")) {
+                Map<String, Object> docenteMap = (Map<String, Object>) payload.get("docente");
+                if (docenteMap != null && docenteMap.containsKey("id")) {
+                    Long docenteId = ((Number) docenteMap.get("id")).longValue();
+                    Optional<Docente> docente = docenteRepository.findById(docenteId);
+                    if (docente.isPresent()) {
+                        horario.setDocente(docente.get());
+                    }
+                }
+            }
+
+            horarioRepository.save(horario);
+            return ResponseEntity.ok().body(Map.of("mensaje", "Horario actualizado correctamente"));
+
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error al actualizar: " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/buscarPorId/{id}")
+    @ResponseBody
+    public ResponseEntity<?> buscarPorId(@PathVariable Long id) {
+        try {
+            Optional<Horario> horario = horarioRepository.findById(id);
+            if (horario.isPresent()) {
+                return ResponseEntity.ok(horario.get());
+            }
+            return ResponseEntity.status(404).body("Horario no encontrado");
+        } catch (Exception e) {
+            return ResponseEntity.status(500).body("Error: " + e.getMessage());
+        }
     }
 }

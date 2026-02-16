@@ -74,11 +74,11 @@
                 <thead>
                 <tr>
                     <th class="text-center">Hora</th>
-                    <th>Lunes</th>
-                    <th>Martes</th>
-                    <th>Miércoles</th>
-                    <th>Jueves</th>
-                    <th>Viernes</th>
+                    <th>LUNES</th>
+                    <th>MARTES</th>
+                    <th>MIÉRCOLES</th>
+                    <th>JUEVES</th>
+                    <th>VIERNES</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -122,11 +122,11 @@
                 <thead>
                 <tr>
                     <th class="text-center">Hora</th>
-                    <th>Lunes</th>
-                    <th>Martes</th>
-                    <th>Miércoles</th>
-                    <th>Jueves</th>
-                    <th>Viernes</th>
+                    <th>LUNES</th>
+                    <th>MARTES</th>
+                    <th>MIÉRCOLES</th>
+                    <th>JUEVES</th>
+                    <th>VIERNES</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -209,10 +209,12 @@
     let horariosTemporales = [];
     let docentesCache = [];
 
-    // --- MODAL Y DOCENTES ---
     function openModal(button) {
         const curso = document.getElementById('textCurso').innerText;
-        if (curso.includes("8vo / 9no")) return alert("Por favor, selecciona primero el Curso y el Paralelo.");
+        const paralelo = document.getElementById('textParalelo').innerText;
+        if (curso.includes("Seleccione") || paralelo.includes("Seleccione")) {
+            return alert("⚠️ Por favor, selecciona primero el Curso y el Paralelo.");
+        }
         currentButton = button;
         document.getElementById('classModal').style.display = 'flex';
         if (docentesCache.length === 0) cargarDocentes();
@@ -242,10 +244,11 @@
 
     function actualizarMateriaPorDocente() {
         const sel = document.getElementById('modalDocente');
-        document.getElementById('modalMateria').value = sel.options[sel.selectedIndex].getAttribute('data-materia');
+        if (sel.selectedIndex !== -1) {
+            document.getElementById('modalMateria').value = sel.options[sel.selectedIndex].getAttribute('data-materia');
+        }
     }
 
-    // --- DROPDOWNS ---
     function toggleCustomDropdown(id) {
         document.getElementById(id).classList.toggle('active');
     }
@@ -255,47 +258,61 @@
         document.getElementById(type === 'curso' ? 'dropdownCurso' : 'dropdownParalelo').classList.remove('active');
     }
 
-    // --- LÓGICA DE GUARDADO ---
-    function guardarClase() {
+    async function guardarClase() {
         const select = document.getElementById('modalDocente');
-        if (!select.value) return;
+        if (!select.value) return alert("Seleccione un docente");
 
         const cell = currentButton.parentElement;
         const dia = cell.closest('table').querySelectorAll('thead th')[cell.cellIndex].innerText.toUpperCase();
         const [inicio, fin] = cell.closest('tr').querySelector('.time-col').innerText.split(' - ');
-        const jornada = cell.closest('.schedule-section').querySelector('.section-title').innerText.includes("Matutina") ? "Matutina" : "Vespertina";
-        const tempId = Date.now();
 
+        const curso = document.getElementById('textCurso').innerText;
+        const paralelo = document.getElementById('textParalelo').innerText.replace("Paralelo ", "");
+        const horaInicioEnvio = inicio + ":00";
+        const docenteId = select.value;
+
+        // --- VALIDACIÓN DE CRUCE ---
+        try {
+            const res = await fetch(`/horario/validarCruce?docenteId=${docenteId}&diaSemana=${dia}&horaInicio=${horaInicioEnvio}&curso=${encodeURIComponent(curso)}&paralelo=${encodeURIComponent(paralelo)}`);
+            if (res.ok) {
+                const conflicto = await res.json();
+                if (conflicto) {
+                    if (conflicto.curso === curso && conflicto.paralelo === paralelo) {
+                        alert(`❌ ESPACIO OCUPADO: Ya existe ${conflicto.materia} aquí.`);
+                        return;
+                    }
+                    alert(`ℹ️ AVISO: El docente ya tiene clase en ${conflicto.curso} (${conflicto.paralelo}) a esta hora.`);
+                }
+            }
+        } catch (e) { console.log("Sin conflictos en DB"); }
+
+        const tempId = Date.now();
         const registro = {
             tempId,
-            curso: document.getElementById('textCurso').innerText,
-            paralelo: document.getElementById('textParalelo').innerText.replace("Paralelo ", ""),
-            jornada: jornada,
+            curso: curso,
+            paralelo: paralelo,
+            jornada: cell.closest('.schedule-section').querySelector('.section-title').innerText.includes("Matutina") ? "Matutina" : "Vespertina",
             diaSemana: dia,
-            horaInicio: inicio + ":00", // Formato LocalTime
-            horaFin: fin + ":00",       // Formato LocalTime
+            horaInicio: horaInicioEnvio,
+            horaFin: fin + ":00",
             materia: document.getElementById('modalMateria').value,
-            docente: { id: parseInt(select.value) }
+            docente: { id: parseInt(docenteId) }
         };
 
         horariosTemporales.push(registro);
         cell.innerHTML = `
-         <div class="relative group w-full h-full flex flex-col justify-center px-4 py-4 bg-emerald-50 border-l-4 border-l-emerald-500 transition-all duration-300 hover:bg-emerald-100">
-        <div class="flex flex-col gap-1.5">
-            <span class="text-[15px] font-black text-emerald-900 uppercase tracking-tight leading-none">
-                 ${registro.materia}
-            </span>
-            <div class="flex items-center gap-2 text-[13px] text-emerald-700">
-                <i class="fas fa-chalkboard-user opacity-80"></i>
-                <span class="truncate font-bold">${select.options[select.selectedIndex].text}</span>
-            </div>
-        </div>
-
-        <button onclick="resetCell(this, ${tempId})"
-                class="absolute top-1 right-1 w-7 h-7 flex items-center justify-center bg-white text-emerald-600 rounded-full opacity-0 group-hover:opacity-100 hover:bg-red-500 hover:text-white transition-all duration-200 shadow-md">
-            <i class="fas fa-times text-[12px]"></i>
-        </button>
-    </div>`;
+            <div class="relative group w-full h-full flex flex-col justify-center px-4 py-4 bg-emerald-50 border-l-4 border-l-emerald-500 transition-all duration-300 hover:bg-emerald-100">
+                <div class="flex flex-col gap-1.5">
+                    <span class="text-[15px] font-black text-emerald-900 uppercase tracking-tight leading-none">${registro.materia}</span>
+                    <div class="flex items-center gap-2 text-[13px] text-emerald-700">
+                        <i class="fas fa-chalkboard-user opacity-80"></i>
+                        <span class="truncate font-bold">${select.options[select.selectedIndex].text}</span>
+                    </div>
+                </div>
+                <button onclick="resetCell(this, ${tempId})" class="absolute top-1 right-1 w-7 h-7 flex items-center justify-center bg-white text-emerald-600 rounded-full opacity-0 group-hover:opacity-100 hover:bg-red-500 hover:text-white transition-all shadow-md">
+                    <i class="fas fa-times text-[12px]"></i>
+                </button>
+            </div>`;
         closeModal();
     }
 
@@ -306,10 +323,9 @@
 
     async function enviarJornada(jornadaNombre) {
         const data = horariosTemporales.filter(h => h.jornada === jornadaNombre);
-        if (data.length === 0) return alert("No hay datos para guardar en la jornada " + jornadaNombre);
+        if (data.length === 0) return alert("No hay datos para guardar.");
 
-        if (confirm(`¿Guardar registros de la jornada ${jornadaNombre}?`)) {
-            // Quitamos el tempId antes de enviar a la entidad Horario
+        if (confirm(`¿Guardar jornada ${jornadaNombre}?`)) {
             const finalData = data.map(({tempId, ...rest}) => rest);
             const res = await fetch('/horario/guardarLote', {
                 method: 'POST',
@@ -317,9 +333,10 @@
                 body: JSON.stringify(finalData)
             });
             if (res.ok) {
-                alert("✅ Jornada " + jornadaNombre + " guardada.");
-                horariosTemporales = horariosTemporales.filter(h => h.jornada !== jornadaNombre);
+                alert("✅ Guardado exitoso.");
                 location.reload();
+            } else {
+                alert("❌ Error al guardar.");
             }
         }
     }

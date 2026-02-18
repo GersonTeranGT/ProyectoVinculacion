@@ -212,43 +212,43 @@
     const diasIdx = { 'LUNES': 1, 'MARTES': 2, 'MIERCOLES': 3, 'MIÉRCOLES': 3, 'JUEVES': 4, 'VIERNES': 5 };
 
     function generarFilasDocente() {
-        const cuerpo = document.getElementById('cuerpoTabla');
-        cuerpo.innerHTML = '';
+    const cuerpo = document.getElementById('cuerpoTabla');
+    cuerpo.innerHTML = '';
 
-        // Jornada Matutina
-        const horasMatutina = {
-            simples: ['07:00', '07:45', '08:30', '09:15', 'RECREO', '10:30', '11:15'],
-            mostrar: ['07:00 - 07:45', '07:45 - 08:30', '08:30 - 09:15', '09:15 - 10:00', 'RECREO', '10:30 - 11:15', '11:15 - 12:00']
-        };
+    // Jornada Matutina - AHORA CON 3 HORAS DESPUÉS DEL RECREO
+    const horasMatutina = {
+        simples: ['07:00', '07:45', '08:30', '09:15', 'RECREO', '10:30', '11:15', '12:00'],
+        mostrar: ['07:00 - 07:45', '07:45 - 08:30', '08:30 - 09:15', '09:15 - 10:00', 'RECREO', '10:30 - 11:15', '11:15 - 12:00', '12:00 - 12:45']
+    };
 
-        // Jornada Vespertina
-        const horasVespertina = {
-            simples: ['13:00', '13:45', '14:30', '15:15', 'RECREO', '16:30', '17:15'],
-            mostrar: ['13:00 - 13:45', '13:45 - 14:30', '14:30 - 15:15', '15:15 - 16:00', 'RECREO', '16:30 - 17:15', '17:15 - 18:00']
-        };
+    // Jornada Vespertina - AHORA CON 3 HORAS DESPUÉS DEL RECREO
+    const horasVespertina = {
+        simples: ['13:00', '13:45', '14:30', '15:15', 'RECREO', '16:30', '17:15', '18:00'],
+        mostrar: ['13:00 - 13:45', '13:45 - 14:30', '14:30 - 15:15', '15:15 - 16:00', 'RECREO', '16:30 - 17:15', '17:15 - 18:00', '18:00 - 18:45']
+    };
 
-        // Primero generamos la jornada matutina
-        horasMatutina.simples.forEach((horaSimple, index) => {
-            const horaMostrar = horasMatutina.mostrar[index];
+    // Primero generamos la jornada matutina
+    horasMatutina.simples.forEach((horaSimple, index) => {
+        const horaMostrar = horasMatutina.mostrar[index];
 
-            if (horaSimple === 'RECREO') {
-                cuerpo.innerHTML += `<tr class="recreo-fila"><td class="text-center font-bold p-2">10:00 - 10:30</td><td colspan="5" class="text-center font-bold">RECREO</td></tr>`;
-            } else {
-                cuerpo.innerHTML += `<tr data-hora="${horaSimple}" data-jornada="MATUTINA"><td class="bg-gray-50 font-bold text-gray-600">${horaMostrar}</td><td></td><td></td><td></td><td></td><td></td></tr>`;
-            }
-        });
+        if (horaSimple === 'RECREO') {
+            cuerpo.innerHTML += `<tr class="recreo-fila"><td class="text-center font-bold p-2">10:00 - 10:30</td><td colspan="5" class="text-center font-bold">RECREO</td></tr>`;
+        } else {
+            cuerpo.innerHTML += `<tr data-hora="${horaSimple}" data-jornada="MATUTINA"><td class="bg-gray-50 font-bold text-gray-600">${horaMostrar}</td><td></td><td></td><td></td><td></td><td></td></tr>`;
+        }
+    });
 
-        // Luego generamos la jornada vespertina
-        horasVespertina.simples.forEach((horaSimple, index) => {
-            const horaMostrar = horasVespertina.mostrar[index];
+    // Luego generamos la jornada vespertina
+    horasVespertina.simples.forEach((horaSimple, index) => {
+        const horaMostrar = horasVespertina.mostrar[index];
 
-            if (horaSimple === 'RECREO') {
-                cuerpo.innerHTML += `<tr class="recreo-fila"><td class="text-center font-bold p-2">16:00 - 16:30</td><td colspan="5" class="text-center font-bold">RECREO</td></tr>`;
-            } else {
-                cuerpo.innerHTML += `<tr data-hora="${horaSimple}" data-jornada="VESPERTINA"><td class="bg-gray-50 font-bold text-gray-600">${horaMostrar}</td><td></td><td></td><td></td><td></td><td></td></tr>`;
-            }
-        });
-    }
+        if (horaSimple === 'RECREO') {
+            cuerpo.innerHTML += `<tr class="recreo-fila"><td class="text-center font-bold p-2">16:00 - 16:30</td><td colspan="5" class="text-center font-bold">RECREO</td></tr>`;
+        } else {
+            cuerpo.innerHTML += `<tr data-hora="${horaSimple}" data-jornada="VESPERTINA"><td class="bg-gray-50 font-bold text-gray-600">${horaMostrar}</td><td></td><td></td><td></td><td></td><td></td></tr>`;
+        }
+    });
+}
 
     // FILTRADO DINÁMICO MEJORADO
     function filtrarDocentes() {

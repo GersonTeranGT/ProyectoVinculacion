@@ -372,7 +372,8 @@
 
     <div class="flex flex-col items-center mt-10 no-print mb-20">
         <div class="flex gap-4">
-            <button onclick="exportarAExcel()" class="bg-green-600 text-white py-2 px-10 rounded-full font-bold shadow-md hover:bg-green-700">
+            <button onclick="exportarAExcel()"
+                    class="bg-green-600 text-white py-2 px-10 rounded-full font-bold shadow-md hover:bg-green-700">
                 <i class="fas fa-file-excel mr-2"></i>EXCEL
             </button>
             <button onclick="window.print()" class="btn-imprimir">
@@ -390,7 +391,8 @@
     <div class="modal-content">
         <div class="modal-header">
             <h3 class="text-xl font-bold"><i class="fas fa-edit mr-2 text-blue-600"></i>Cambiar Docente</h3>
-            <span class="close-modal cursor-pointer text-gray-500 hover:text-gray-700 text-2xl" onclick="cerrarModalEdicion()">&times;</span>
+            <span class="close-modal cursor-pointer text-gray-500 hover:text-gray-700 text-2xl"
+                  onclick="cerrarModalEdicion()">&times;</span>
         </div>
         <div class="modal-body">
             <input type="hidden" id="editId">
@@ -422,37 +424,37 @@
     let docentesCache = [];
 
     function generarFilas(jornada) {
-        const cuerpo = document.getElementById('cuerpoTabla');
-        cuerpo.innerHTML = '';
+    const cuerpo = document.getElementById('cuerpoTabla');
+    cuerpo.innerHTML = '';
 
-        if (jornada === 'Matutina') {
-            const horasSimples = ['07:00', '07:45', '08:30', '09:15', 'RECREO', '10:30', '11:15'];
-            const horasMostrar = ['07:00 - 07:45', '07:45 - 08:30', '08:30 - 09:15', '09:15 - 10:00', 'RECREO', '10:30 - 11:15', '11:15 - 12:00'];
+    if (jornada === 'Matutina') {
+        const horasSimples = ['07:00', '07:45', '08:30', '09:15', 'RECREO', '10:30', '11:15', '12:00'];
+        const horasMostrar = ['07:00 - 07:45', '07:45 - 08:30', '08:30 - 09:15', '09:15 - 10:00', 'RECREO', '10:30 - 11:15', '11:15 - 12:00', '12:00 - 12:45'];
 
-            horasSimples.forEach((horaSimple, index) => {
-                const horaMostrar = horasMostrar[index];
+        horasSimples.forEach((horaSimple, index) => {
+            const horaMostrar = horasMostrar[index];
 
-                if (horaSimple === 'RECREO') {
-                    cuerpo.innerHTML += `<tr class="bg-gray-100"><td class="text-center font-bold text-gray-400 p-2">10:00 - 10:30</td><td colspan="5" class="text-center font-bold text-gray-400">RECREO</td></tr>`;
-                } else {
-                    cuerpo.innerHTML += `<tr data-hora="${horaSimple}"><td class="p-4 bg-gray-50 text-center font-bold">${horaMostrar}</td><td></td><td></td><td></td><td></td><td></td></tr>`;
-                }
-            });
-        } else { // Jornada Vespertina
-            const horasSimples = ['13:00', '13:45', '14:30', '15:15', 'RECREO', '16:30', '17:15'];
-            const horasMostrar = ['13:00 - 13:45', '13:45 - 14:30', '14:30 - 15:15', '15:15 - 16:00', 'RECREO', '16:30 - 17:15', '17:15 - 18:00'];
+            if (horaSimple === 'RECREO') {
+                cuerpo.innerHTML += `<tr class="bg-gray-100"><td class="text-center font-bold text-gray-400 p-2">10:00 - 10:30</td><td colspan="5" class="text-center font-bold text-gray-400">RECREO</td></tr>`;
+            } else {
+                cuerpo.innerHTML += `<tr data-hora="${horaSimple}"><td class="p-4 bg-gray-50 text-center font-bold">${horaMostrar}</td><td></td><td></td><td></td><td></td><td></td></tr>`;
+            }
+        });
+    } else { // Jornada Vespertina - CORREGIDA CON 3 HORAS DESPUÉS DEL RECREO
+        const horasSimples = ['13:00', '13:45', '14:30', '15:15', 'RECREO', '16:30', '17:15', '18:00'];
+        const horasMostrar = ['13:00 - 13:45', '13:45 - 14:30', '14:30 - 15:15', '15:15 - 16:00', 'RECREO', '16:30 - 17:15', '17:15 - 18:00', '18:00 - 18:45'];
 
-            horasSimples.forEach((horaSimple, index) => {
-                const horaMostrar = horasMostrar[index];
+        horasSimples.forEach((horaSimple, index) => {
+            const horaMostrar = horasMostrar[index];
 
-                if (horaSimple === 'RECREO') {
-                    cuerpo.innerHTML += `<tr class="bg-gray-100"><td class="text-center font-bold text-gray-400 p-2">16:00 - 16:30</td><td colspan="5" class="text-center font-bold text-gray-400">RECREO</td></tr>`;
-                } else {
-                    cuerpo.innerHTML += `<tr data-hora="${horaSimple}"><td class="p-4 bg-gray-50 text-center font-bold">${horaMostrar}</td><td></td><td></td><td></td><td></td><td></td></tr>`;
-                }
-            });
-        }
+            if (horaSimple === 'RECREO') {
+                cuerpo.innerHTML += `<tr class="bg-gray-100"><td class="text-center font-bold text-gray-400 p-2">16:00 - 16:30</td><td colspan="5" class="text-center font-bold text-gray-400">RECREO</td></tr>`;
+            } else {
+                cuerpo.innerHTML += `<tr data-hora="${horaSimple}"><td class="p-4 bg-gray-50 text-center font-bold">${horaMostrar}</td><td></td><td></td><td></td><td></td><td></td></tr>`;
+            }
+        });
     }
+}
 
     async function cargarHorarios() {
         const curso = document.getElementById('selectCurso').value;

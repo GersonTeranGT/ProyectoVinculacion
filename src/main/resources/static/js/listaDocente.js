@@ -63,26 +63,20 @@ document.addEventListener('DOMContentLoaded', () => {
         searchMateriaInput.addEventListener('keyup', filterTable);
     }
 
-    // --- 4. CONFIRMACIÓN DE ELIMINACIÓN ---
+    // --- 4. CONFIRMACIÓN DE ELIMINACIÓN---
     const deleteButtons = document.querySelectorAll('.btn-delete');
 
     deleteButtons.forEach(btn => {
         btn.addEventListener('click', function(e) {
-            e.preventDefault();
             const row = this.closest('tr');
             const nombreDocente = row.querySelector('.name-col')?.textContent.trim() || 'docente';
 
             const confirmacion = confirm(`¿Estás seguro de que deseas eliminar permanentemente a: ${nombreDocente}?`);
 
-            if (confirmacion) {
-                row.style.transition = "opacity 0.3s";
-                row.style.opacity = "0";
-                setTimeout(() => row.remove(), 300);
-
-                // Aquí puedes agregar el fetch para eliminar realmente
-                const deleteUrl = this.closest('a').getAttribute('href');
-                // fetch(deleteUrl, { method: 'GET' });
+            if (!confirmacion) {
+                e.preventDefault(); // Solo prevenimos si NO confirma
             }
+            // Si confirma, el enlace funciona normalmente y redirige al backend
         });
     });
 });

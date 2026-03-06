@@ -12,15 +12,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.itsqmet.service.MateriaService;
+
 @Controller
 public class DocenteController {
 
     @Autowired
     private DocenteService docenteService;
 
+    @Autowired
+    private MateriaService materiaService;
+
     @GetMapping("/nuevoDocente")
     public String form(Model model) {
         model.addAttribute("docente", new Docente());
+
+        model.addAttribute("listaMaterias", materiaService.listarTodas());
+
         return "pages/formularioDocente";
     }
 
@@ -41,6 +49,10 @@ public class DocenteController {
     public String editarDocente(@PathVariable Long id, Model model) {
         Docente docente = docenteService.buscarPorId(id);
         model.addAttribute("docente", docente);
+
+        model.addAttribute("listaMaterias", materiaService.listarTodas());
+
+
         return "pages/formularioDocente";
     }
 

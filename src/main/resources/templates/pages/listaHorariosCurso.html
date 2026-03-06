@@ -9,12 +9,26 @@
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
     <link rel="stylesheet" th:href="@{/css/footer.css}">
     <style>
+        /* --- CAMBIO: Clase para controlar visibilidad en impresión --- */
+        .print-only { display: none; }
+
         @media print {
             .no-print, nav, footer { display: none !important; }
-        }
 
-        /* Estilos de impresión para HORARIO POR CURSO - Horizontal */
-        @media print {
+            /* --- CAMBIO: Mostrar el curso al imprimir --- */
+            .print-only {
+                display: block !important;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            #detalleCursoPrint {
+                font-size: 1.5rem;
+                font-weight: bold;
+                text-transform: uppercase;
+                border-bottom: 2px solid #000;
+                padding-bottom: 5px;
+            }
+
             @page {
                 size: landscape;
                 margin: 0.8cm;
@@ -353,6 +367,10 @@
     </div>
 
     <div id="contMatutina" class="px-8 mb-10">
+        <div class="print-only">
+            <h1 id="detalleCursoPrint">HORARIO DE CLASES</h1>
+        </div>
+
         <p id="tituloJornada" class="font-bold text-gray-900 mb-4 text-2xl uppercase">Jornada Seleccionada</p>
         <table class="table-manual" id="tablaPrincipal">
             <thead>
@@ -386,7 +404,6 @@
     </div>
 </div>
 
-<!-- Modal de Edición Simplificado -->
 <div id="editModal" class="modal-overlay" style="display: none;">
     <div class="modal-content">
         <div class="modal-header">
@@ -465,6 +482,9 @@
             alert("Seleccione curso y paralelo.");
             return;
         }
+
+        /* --- CAMBIO: Actualizar el título dinámico para la impresión --- */
+        document.getElementById('detalleCursoPrint').innerText = `HORARIO DE CLASES: ${curso} "${paralelo}" - Jornada ${jornada}`;
 
         document.getElementById('tituloJornada').innerText = "Jornada " + jornada;
         generarFilas(jornada);

@@ -9,12 +9,26 @@
     <link rel="stylesheet" th:href="@{/css/navbar.css}">
     <link rel="stylesheet" th:href="@{/css/footer.css}">
     <style>
+        /* --- CAMBIO: Clase para controlar visibilidad en impresión --- */
+        .print-only { display: none; }
+
         @media print {
             .no-print, nav, footer { display: none !important; }
-        }
 
-        /* Estilos de impresión para HORARIO POR DOCENTE - Vertical */
-        @media print {
+            /* --- CAMBIO: Mostrar el encabezado al imprimir --- */
+            .print-only {
+                display: block !important;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            #detalleDocentePrint {
+                font-size: 1.4rem;
+                font-weight: bold;
+                text-transform: uppercase;
+                border-bottom: 2px solid #000;
+                padding-bottom: 5px;
+            }
+
             @page {
                 size: portrait;
                 margin: 0.8cm;
@@ -88,12 +102,10 @@
                 print-color-adjust: exact;
             }
 
-            /* Ajustar altura de filas para que quepan 12 filas + recreos */
             tbody tr {
                 height: 22px !important;
             }
 
-            /* Eliminar página en blanco extra */
             .main-container, .max-w-7xl {
                 page-break-after: avoid;
             }
@@ -103,7 +115,7 @@
             }
         }
 
-        /* Estilos normales (pantalla) - se mantienen igual */
+        /* Estilos normales (pantalla) */
         .table-manual {
             border-collapse: collapse;
             width: 100%;
@@ -139,7 +151,6 @@
             font-weight: bold;
         }
 
-        /* Evitar saltos de página no deseados */
         tr {
             page-break-inside: avoid;
         }
@@ -150,7 +161,7 @@
 <nav th:replace="~{fragments/navbar :: navbar}"></nav>
 
 <div class="max-w-7xl mx-auto p-4 mt-10 main-container">
-    <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Horario por Docente</h2>
+    <h2 class="text-3xl font-bold text-center text-gray-800 mb-12 no-print">Horario por Docente</h2>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 px-8 no-print items-end">
         <div>
@@ -180,6 +191,10 @@
     </div>
 
     <div class="px-8 mb-10">
+        <div class="print-only">
+            <h1 id="detalleDocentePrint">HORARIO GENERAL DEL DOCENTE</h1>
+        </div>
+
         <div class="overflow-x-auto">
             <table class="table-manual w-full">
                 <thead class="bg-gray-100">
@@ -212,45 +227,38 @@
     const diasIdx = { 'LUNES': 1, 'MARTES': 2, 'MIERCOLES': 3, 'MIÉRCOLES': 3, 'JUEVES': 4, 'VIERNES': 5 };
 
     function generarFilasDocente() {
-    const cuerpo = document.getElementById('cuerpoTabla');
-    cuerpo.innerHTML = '';
+        const cuerpo = document.getElementById('cuerpoTabla');
+        cuerpo.innerHTML = '';
 
-    // Jornada Matutina - AHORA CON 3 HORAS DESPUÉS DEL RECREO
-    const horasMatutina = {
-        simples: ['07:00', '07:45', '08:30', '09:15', 'RECREO', '10:30', '11:15', '12:00'],
-        mostrar: ['07:00 - 07:45', '07:45 - 08:30', '08:30 - 09:15', '09:15 - 10:00', 'RECREO', '10:30 - 11:15', '11:15 - 12:00', '12:00 - 12:45']
-    };
+        const horasMatutina = {
+            simples: ['07:00', '07:45', '08:30', '09:15', 'RECREO', '10:30', '11:15', '12:00'],
+            mostrar: ['07:00 - 07:45', '07:45 - 08:30', '08:30 - 09:15', '09:15 - 10:00', 'RECREO', '10:30 - 11:15', '11:15 - 12:00', '12:00 - 12:45']
+        };
 
-    // Jornada Vespertina - AHORA CON 3 HORAS DESPUÉS DEL RECREO
-    const horasVespertina = {
-        simples: ['13:00', '13:45', '14:30', '15:15', 'RECREO', '16:30', '17:15', '18:00'],
-        mostrar: ['13:00 - 13:45', '13:45 - 14:30', '14:30 - 15:15', '15:15 - 16:00', 'RECREO', '16:30 - 17:15', '17:15 - 18:00', '18:00 - 18:45']
-    };
+        const horasVespertina = {
+            simples: ['13:00', '13:45', '14:30', '15:15', 'RECREO', '16:30', '17:15', '18:00'],
+            mostrar: ['13:00 - 13:45', '13:45 - 14:30', '14:30 - 15:15', '15:15 - 16:00', 'RECREO', '16:30 - 17:15', '17:15 - 18:00', '18:00 - 18:45']
+        };
 
-    // Primero generamos la jornada matutina
-    horasMatutina.simples.forEach((horaSimple, index) => {
-        const horaMostrar = horasMatutina.mostrar[index];
+        horasMatutina.simples.forEach((horaSimple, index) => {
+            const horaMostrar = horasMatutina.mostrar[index];
+            if (horaSimple === 'RECREO') {
+                cuerpo.innerHTML += `<tr class="recreo-fila"><td class="text-center font-bold p-2">10:00 - 10:30</td><td colspan="5" class="text-center font-bold">RECREO</td></tr>`;
+            } else {
+                cuerpo.innerHTML += `<tr data-hora="${horaSimple}" data-jornada="MATUTINA"><td class="bg-gray-50 font-bold text-gray-600">${horaMostrar}</td><td></td><td></td><td></td><td></td><td></td></tr>`;
+            }
+        });
 
-        if (horaSimple === 'RECREO') {
-            cuerpo.innerHTML += `<tr class="recreo-fila"><td class="text-center font-bold p-2">10:00 - 10:30</td><td colspan="5" class="text-center font-bold">RECREO</td></tr>`;
-        } else {
-            cuerpo.innerHTML += `<tr data-hora="${horaSimple}" data-jornada="MATUTINA"><td class="bg-gray-50 font-bold text-gray-600">${horaMostrar}</td><td></td><td></td><td></td><td></td><td></td></tr>`;
-        }
-    });
+        horasVespertina.simples.forEach((horaSimple, index) => {
+            const horaMostrar = horasVespertina.mostrar[index];
+            if (horaSimple === 'RECREO') {
+                cuerpo.innerHTML += `<tr class="recreo-fila"><td class="text-center font-bold p-2">16:00 - 16:30</td><td colspan="5" class="text-center font-bold">RECREO</td></tr>`;
+            } else {
+                cuerpo.innerHTML += `<tr data-hora="${horaSimple}" data-jornada="VESPERTINA"><td class="bg-gray-50 font-bold text-gray-600">${horaMostrar}</td><td></td><td></td><td></td><td></td><td></td></tr>`;
+            }
+        });
+    }
 
-    // Luego generamos la jornada vespertina
-    horasVespertina.simples.forEach((horaSimple, index) => {
-        const horaMostrar = horasVespertina.mostrar[index];
-
-        if (horaSimple === 'RECREO') {
-            cuerpo.innerHTML += `<tr class="recreo-fila"><td class="text-center font-bold p-2">16:00 - 16:30</td><td colspan="5" class="text-center font-bold">RECREO</td></tr>`;
-        } else {
-            cuerpo.innerHTML += `<tr data-hora="${horaSimple}" data-jornada="VESPERTINA"><td class="bg-gray-50 font-bold text-gray-600">${horaMostrar}</td><td></td><td></td><td></td><td></td><td></td></tr>`;
-        }
-    });
-}
-
-    // FILTRADO DINÁMICO MEJORADO
     function filtrarDocentes() {
         const input = document.getElementById('inputBusqueda').value.toUpperCase();
         const select = document.getElementById('selectDocente');
@@ -285,18 +293,19 @@
             return;
         }
 
+        /* --- CAMBIO: Actualizar el título dinámico para la impresión --- */
+        document.getElementById('detalleDocentePrint').innerText = `HORARIO DEL DOCENTE: ${nombreDocente}`;
+
         generarFilasDocente();
 
         try {
             const response = await fetch(`/horario/buscarPorDocente?docenteId=${docenteId}`);
-
             if (response.status === 400) {
-                alert("❌ Error 400: El servidor no entiende la solicitud.");
+                alert("❌ Error 400");
                 return;
             }
 
             const data = await response.json();
-
             if (!data || data.length === 0) {
                 alert(`ℹ️ El docente ${nombreDocente} no tiene horarios registrados aún.`);
                 return;
@@ -307,21 +316,23 @@
                 const col = diasIdx[dia];
                 const horaKey = h.horaInicio.split(':').slice(0,2).join(':');
 
-                const fila = document.querySelector(`tr[data-hora="${horaKey}"]`);
-                if (fila && col) {
-                    fila.cells[col].innerHTML = `
-                        <div class="p-1">
-                            <span class="materia-badge">${h.materia}</span>
-                            <span class="curso-badge">${h.curso} - ${h.paralelo}</span>
-                        </div>`;
-                }
+                const filas = document.querySelectorAll(`tr[data-hora="${horaKey}"]`);
+                filas.forEach(fila => {
+                    if (fila && col) {
+                        fila.cells[col].innerHTML = `
+                            <div class="p-1">
+                                <span class="materia-badge">${h.materia}</span>
+                                <span class="curso-badge">${h.curso} - ${h.paralelo}</span>
+                            </div>`;
+                    }
+                });
             });
 
-            alert(`✅ Horario de ${nombreDocente} cargado con éxito.`);
+            alert(`✅ Horario de ${nombreDocente} cargado.`);
 
         } catch (error) {
             console.error(error);
-            alert("⚠️ Hubo un error al conectar con la base de datos.");
+            alert("⚠️ Error de conexión.");
         }
     }
 

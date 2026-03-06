@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Materias | U.E. Aida Gallegos</title>
+    <link rel="icon" th:href="@{/images/faviconLogo.png}">
+    <link rel="stylesheet" th:href="@{/css/navbar.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Contenedor centralizado */
+        .content-wrapper {
+            min-height: calc(100vh - 160px); /* Ajuste según altura de nav/footer */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+        }
+        .materia-card {
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            padding: 2.5rem;
+        }
+        /* Estilos de la tabla */
+        .materia-table {
+            width: 100%;
+            margin-top: 1.5rem;
+        }
+        .materia-table tr {
+            border-bottom: 1px solid #f3f4f6;
+            transition: background 0.2s;
+        }
+        .materia-table tr:hover {
+            background-color: #f9fafb;
+        }
+        .materia-table td {
+            padding: 12px 8px;
+        }
+        /* Botón estilo el tuyo */
+        .btn-submit {
+            background-color: #1a56db;
+            color: white;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            width: 100%;
+            transition: background 0.3s;
+        }
+        .btn-submit:hover {
+            background-color: #1e429f;
+        }
+        .scroll-area {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="content-wrapper">
+    <div class="materia-card">
+        <div class="text-center mb-8">
+            <h2 class="text-3xl font-extrabold text-gray-800">Materias</h2>
+            <p class="text-gray-500 font-medium">Unidad Educativa Aida Gallegos</p>
+        </div>
+
+        <form th:action="@{/materias/guardar}" th:object="${materia}" method="post">
+            <input type="hidden" th:field="*{id}">
+
+            <div class="mb-4">
+                <label class="block text-sm font-bold text-gray-700 mb-2 text-left">Nombre de la Materia</label>
+                <div class="relative flex items-center">
+                    <i class="fas fa-book absolute left-3 text-gray-400"></i>
+                    <input type="text" th:field="*{nombre}"
+                           placeholder="Ej: Matemáticas Avanzadas"
+                           class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                           required>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit mb-6">
+                <i class="fas fa-save mr-2"></i> [[${materia.id != null ? 'ACTUALIZAR' : 'GUARDAR MATERIA'}]]
+            </button>
+        </form>
+
+        <hr class="border-gray-100">
+
+        <div class="mt-6 text-left">
+            <h3 class="text-lg font-bold text-gray-700 mb-4">Materias actuales</h3>
+
+            <div class="scroll-area">
+                <table class="materia-table">
+                    <tbody>
+                    <tr th:each="m : ${materias}">
+                        <td class="text-gray-700 font-medium" th:text="${m.nombre}"></td>
+                        <td class="text-right">
+                            <a th:href="@{/materias/editar/{id}(id=${m.id})}"
+                               class="text-blue-600 hover:text-blue-800 mr-4 transition">
+                                <i class="fas fa-pen"></i>
+                            </a>
+                            <a th:href="@{/materias/eliminar/{id}(id=${m.id})}"
+                               onclick="return confirm('¿Seguro que deseas eliminar esta materia?')"
+                               class="text-red-500 hover:text-red-700 transition">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <tr th:if="${#lists.isEmpty(materias)}">
+                        <td colspan="2" class="text-center py-4 text-gray-400 italic">No hay materias.</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="mt-8 pt-4 border-t border-gray-50 text-center">
+            <a href="/nuevoDocente" class="text-blue-500 hover:text-blue-700 font-bold text-sm">
+                <i class="fas fa-user-plus mr-1"></i> Ir a Registro de Docentes
+            </a>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+</body>
+</html>
